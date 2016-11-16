@@ -9,9 +9,6 @@
 // include Windows and Direct3D headers
 #include <windows.h>
 #include <windowsx.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dx10.h>
 #include <DirectXMath.h>
 
 // include the Direct3D Library file
@@ -31,7 +28,7 @@ private:
 	// Structors
 public:
 	// Constructor
-	Window_DX(Game* game, int width, int height, HINSTANCE hInstance, int nCmdShow);
+	Window_DX(Game* game, int width, int height);
 
 	// Destructor
 	virtual ~Window_DX();
@@ -45,7 +42,7 @@ public:
 
 
 	// Initialise window
-	virtual void Initialise();
+	void Initialise() override;
 };
 
 

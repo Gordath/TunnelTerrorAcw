@@ -2,6 +2,8 @@
 
 void TunnelTerrorGame::Initialise(Window* window)
 {
+	Game::Initialise(window);
+
 
 }
 

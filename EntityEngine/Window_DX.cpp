@@ -6,12 +6,12 @@
 
 /******************************************************************************************************************/
 
-Window_DX::Window_DX(Game* game, int width, int height, HINSTANCE hInstance, int nCmdShow)
+Window_DX::Window_DX(Game* game, int width, int height)
 	: Window(game, width, height)
 {
 
 	// Reset RNG
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	WNDCLASSEX wc;
 
@@ -20,8 +20,8 @@ Window_DX::Window_DX(Game* game, int width, int height, HINSTANCE hInstance, int
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = Window_DX::WindowProc;
-	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hInstance = GetModuleHandle(nullptr);
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.lpszClassName = L"WindowClass";
 
 	RegisterClassEx(&wc);
@@ -37,12 +37,12 @@ Window_DX::Window_DX(Game* game, int width, int height, HINSTANCE hInstance, int
 		300,
 		wr.right - wr.left,
 		wr.bottom - wr.top,
-		NULL,
-		NULL,
-		hInstance,
-		NULL);
+		nullptr,
+		nullptr,
+		GetModuleHandle(nullptr),
+		nullptr);
 
-	ShowWindow(_hWnd, nCmdShow);
+	ShowWindow(_hWnd, SW_SHOWDEFAULT);
 }
 
 /******************************************************************************************************************/
@@ -93,7 +93,7 @@ void Window_DX::Initialise()
 	MSG msg;
 	while (!_game->GetQuitFlag())
 	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
