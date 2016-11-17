@@ -106,8 +106,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - DirextX|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BUILD_DIRECTX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>EntityEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>

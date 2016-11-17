@@ -28,7 +28,7 @@ void Renderer_DX::ClearScreen()
 
 void Renderer_DX::Destroy()
 {
-	_swapchain->SetFullscreenState(FALSE, NULL);    // switch to windowed mode
+	_swapchain->SetFullscreenState(false, nullptr);    // switch to windowed mode
 
 	// close and release all existing COM objects
 	_layout->Release();
@@ -57,9 +57,9 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour)
 
 	// Need to update uniform buffer here
 	D3D11_MAPPED_SUBRESOURCE ms;
-	_context->Map(_uniformBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);		// map the buffer
+	_context->Map(_uniformBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);		// map the buffer
 	memcpy(ms.pData, &uniforms, sizeof(UniformBuffer));								// copy the data
-	_context->Unmap(_uniformBuffer, NULL);											// unmap the buffer
+	_context->Unmap(_uniformBuffer, 0);											// unmap the buffer
 	_context->VSSetConstantBuffers(0, 1, &_uniformBuffer);
 	_context->PSSetConstantBuffers(0, 1, &_uniformBuffer);
 
@@ -88,29 +88,29 @@ void Renderer_DX::Initialise(int width, int height)
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;    // allow full-screen switching
 
 	// create a device, device context and swap chain using the information in the scd struct
-	D3D11CreateDeviceAndSwapChain(NULL,
+	D3D11CreateDeviceAndSwapChain(nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
+		nullptr,
+		0,
+		nullptr,
+		0,
 		D3D11_SDK_VERSION,
 		&scd,
 		&_swapchain,
 		&_device,
-		NULL,
+		nullptr,
 		&_context);
 
 	// get the address of the back buffer
 	ID3D11Texture2D *p_backbuffer;
-	_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&p_backbuffer);
+	_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&p_backbuffer));
 
 	// use the back buffer address to create the render target
-	_device->CreateRenderTargetView(p_backbuffer, NULL, &_backbuffer);
+	_device->CreateRenderTargetView(p_backbuffer, nullptr, &_backbuffer);
 	p_backbuffer->Release();
 
 	// set the render target as the back buffer
-	_context->OMSetRenderTargets(1, &_backbuffer, NULL);
+	_context->OMSetRenderTargets(1, &_backbuffer, nullptr);
 
 
 	// Set the viewport
@@ -143,16 +143,16 @@ void Renderer_DX::InitialiseShaders()
 {
 	// load and compile the two shaders
 	ID3D10Blob *VS, *PS;
-	D3DX11CompileFromFile(L"shaders.hlsl", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, 0, 0);
-	D3DX11CompileFromFile(L"shaders.hlsl", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, 0, 0);
+	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "VShader", "vs_4_0", 0, 0, nullptr, &VS, nullptr, nullptr);
+	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "PShader", "ps_4_0", 0, 0, nullptr, &PS, nullptr, nullptr);
 
 	// encapsulate both shaders into shader objects
-	_device->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &_vertexShader);
-	_device->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &_pixelShader);
+	_device->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), nullptr, &_vertexShader);
+	_device->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), nullptr, &_pixelShader);
 
 	// set the shader objects
-	_context->VSSetShader(_vertexShader, 0, 0);
-	_context->PSSetShader(_pixelShader, 0, 0);
+	_context->VSSetShader(_vertexShader, nullptr, 0);
+	_context->PSSetShader(_pixelShader, nullptr, 0);
 
 	// create the input layout object
 	D3D11_INPUT_ELEMENT_DESC ied[] =

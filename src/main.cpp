@@ -1,7 +1,6 @@
 #include "tunnel_terror_game.h"
 #include "Window_DX.h"
 
-
 int main(int argc, char *argv[])
 {
 

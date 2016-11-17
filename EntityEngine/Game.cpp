@@ -3,7 +3,8 @@
 #include "GameObject.h"
 #include "KeyPressMessage.h"
 
-Game* Game::TheGame = NULL;
+
+Game* Game::TheGame = nullptr;
 
 /******************************************************************************************************************/
 
