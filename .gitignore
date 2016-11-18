@@ -243,3 +243,4 @@ ModelManifest.xml
 *.tlog
 *.lastbuildstate
 *.idb
+CSLib/

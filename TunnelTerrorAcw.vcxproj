@@ -64,8 +64,8 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - DirextX|Win32'">
-    <IncludePath>C:\Users\agelo\Documents\Visual Studio 2015\Projects\TunnelTerrorAcw\EntityEngine;C:\usr\include;C:\Users\agelo\Documents\Visual Studio 2015\Projects\TunnelTerrorAcw\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\usr\lib;C:\Users\agelo\Documents\Visual Studio 2015\Projects\TunnelTerrorAcw\Debug - DirectX;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutiontDir)EntityEngine;C:\usr\include;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\usr\lib;$(SolutionDir)Debug - DirectX;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'">
     <ClCompile>
