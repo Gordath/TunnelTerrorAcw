@@ -7,11 +7,12 @@
 /******************************************************************************************************************/
 
 GameObject::GameObject(std::string type)
-	:	_angle(0),
-		_scale(1),
-		_position(0,0),
-		_alive(true),
-		_type(type)
+	: _angle(0),
+	  _scale(1),
+	  _position(0, 0),
+	  _alive(true),
+	  _deleteFlag(false),
+	  _type(type)
 {
 }
 
@@ -90,8 +91,8 @@ void GameObject::Start()
 {
 	// Initialise all objects
 	for (ComponentMapIterator i = _components.begin();
-		i != _components.end();
-		++i)
+	     i != _components.end();
+	     ++i)
 	{
 		i->second->Start();
 	}
@@ -104,8 +105,8 @@ void GameObject::Update(double deltaTime)
 {
 	// Update all objects
 	for (ComponentMapIterator i = _components.begin();
-		i != _components.end();
-		++i)
+	     i != _components.end();
+	     ++i)
 	{
 		i->second->Update(deltaTime);
 	}
@@ -118,8 +119,8 @@ void GameObject::End()
 {
 	// End all objects
 	for (ComponentMapIterator i = _components.begin();
-		i != _components.end();
-		++i)
+	     i != _components.end();
+	     ++i)
 	{
 		GameObjectComponent* component = i->second;
 		component->End();
@@ -135,7 +136,6 @@ void GameObject::End()
 // Resets the game object to the start state (similar to Start(), but may be called more than once)
 void GameObject::Reset()
 {
-
 }
 
 /******************************************************************************************************************/

@@ -9,9 +9,9 @@ void TunnelTerrorGame::Initialise(Window* window)
 	_renderer->SetClearColour(Colour{ 0.3f, 0.3f, 0.3f, 1.0f });
 
 	Mesh *triangle = new Mesh();
-	triangle->AddVertex({ -1, 0, 0.0, 1.0, 0.0, 0.0, 1.0 });
-	triangle->AddVertex({ 0, 1, 0.0, 0.0, 1.0, 0.0, 1.0 });
-	triangle->AddVertex({ 1, 0, 0.0, 0.0, 0.0, 1.0, 1.0 });
+	triangle->AddVertex({ 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f });
+	triangle->AddVertex({ 0.45f, -0.5, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f });
+	triangle->AddVertex({ -0.45f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f });
 
 	AddMesh("triangle", triangle);
 
