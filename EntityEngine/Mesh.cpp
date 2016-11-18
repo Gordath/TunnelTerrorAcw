@@ -6,7 +6,6 @@
 #include "VBO_GL.h"
 #endif
 #include "Vector4.h"
-#include <iostream>
 #include <fstream>
 using namespace std;
 
@@ -14,7 +13,7 @@ using namespace std;
 
 Mesh::Mesh()
 	:	_locked(false),
-		_vbo(NULL)
+		_vbo(nullptr)
 	
 {
 }
@@ -24,7 +23,7 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
 	delete _vbo;
-	_vbo = NULL;
+	_vbo = nullptr;
 }
 
 /******************************************************************************************************************/
@@ -74,7 +73,7 @@ bool Mesh::Clear()
 void Mesh::Reset()
 {
 	delete _vbo;
-	_vbo = NULL;
+	_vbo = nullptr;
 	_locked = false;
 }
 

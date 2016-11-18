@@ -56,9 +56,6 @@
     <ClCompile Include="VBO.cpp">
       <Filter>Platform Independent</Filter>
     </ClCompile>
-    <ClCompile Include="Vector4.cpp">
-      <Filter>Platform Independent</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Platform Independent</Filter>
     </ClCompile>
@@ -99,6 +96,9 @@
       <Filter>Pattern Classes</Filter>
     </ClCompile>
     <ClCompile Include="MultiMesh.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
       <Filter>Platform Independent</Filter>
     </ClCompile>
   </ItemGroup>
@@ -159,9 +159,6 @@
     <ClInclude Include="VBO.h">
       <Filter>Platform Independent</Filter>
     </ClInclude>
-    <ClInclude Include="Vector4.h">
-      <Filter>Platform Independent</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Platform Independent</Filter>
     </ClInclude>
@@ -208,6 +205,9 @@
       <Filter>Pattern Classes</Filter>
     </ClInclude>
     <ClInclude Include="MultiMesh.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
       <Filter>Platform Independent</Filter>
     </ClInclude>
   </ItemGroup>

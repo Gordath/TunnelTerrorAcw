@@ -23,7 +23,7 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 {
-	if (_renderer == NULL) return;
+	if (_renderer == nullptr) return;
 	for (GameObject* obj : list)
 	{
 		if (obj->IsAlive())

@@ -5,7 +5,7 @@
 /******************************************************************************************************************/
 
 VBO_DX::VBO_DX()
-	: _vbo(NULL)
+	: _vbo(nullptr)
 {
 }
 
@@ -21,7 +21,7 @@ VBO_DX::~VBO_DX()
 
 void VBO_DX::Create(Renderer* renderer, Vertex vertices[], int numVertices)
 {
-	Renderer_DX* rendererDX = (Renderer_DX*)renderer;
+	Renderer_DX* rendererDX = static_cast<Renderer_DX*>(renderer);
 
 	_numVertices = numVertices;
 
@@ -33,20 +33,20 @@ void VBO_DX::Create(Renderer* renderer, Vertex vertices[], int numVertices)
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;       // use as a vertex buffer
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;    // allow CPU to write in buffer
 
-	rendererDX->GetDevice()->CreateBuffer(&bd, NULL, &_vbo);        // create the buffer
+	rendererDX->GetDevice()->CreateBuffer(&bd, nullptr, &_vbo);        // create the buffer
 
 	// copy the vertices into the buffer
 	D3D11_MAPPED_SUBRESOURCE ms;
-	rendererDX->GetContext()->Map(_vbo, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);		// map the buffer
+	rendererDX->GetContext()->Map(_vbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);		// map the buffer
 	memcpy(ms.pData, vertices, sizeof(Vertex) * numVertices);			// copy the data
-	rendererDX->GetContext()->Unmap(_vbo, NULL);											// unmap the buffer
+	rendererDX->GetContext()->Unmap(_vbo, 0);											// unmap the buffer
 }
 
 /******************************************************************************************************************/
 
 void VBO_DX::Draw(Renderer* renderer)
 {
-	Renderer_DX* rendererDX = (Renderer_DX*)renderer;
+	Renderer_DX* rendererDX = static_cast<Renderer_DX*>(renderer);
 
 	// select which vertex buffer to display
 	UINT stride = sizeof(Vertex);
@@ -54,7 +54,7 @@ void VBO_DX::Draw(Renderer* renderer)
 	rendererDX->GetContext()->IASetVertexBuffers(0, 1, &_vbo, &stride, &offset);
 
 	// select which primtive type we are using
-	rendererDX->GetContext()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	rendererDX->GetContext()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// draw the vertex buffer to the back buffer
 	rendererDX->GetContext()->Draw(_numVertices, 0);
