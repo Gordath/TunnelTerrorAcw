@@ -244,4 +244,4 @@ ModelManifest.xml
 *.lastbuildstate
 *.idb
 CSLib/
-Debug - DirectX/
+EntityEngine/Debug - DirectX/*
