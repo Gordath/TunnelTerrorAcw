@@ -17,23 +17,47 @@ void TunnelTerrorGame::Initialise(Window* window)
 	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
 	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
 
-//	//right
-//	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
-//	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
-//
-//	//left
-//	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
-//	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
-//	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	//right
+	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
 
-	AddMesh("triangle", cube);
+	//left
+	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+
+	//back
+	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	
+	//top
+	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	
+	//bottom
+	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+
+	AddMesh("cube", cube);
 
 	for (auto mesh : _meshes) {
 		mesh.second->CreateVBO(_renderer);
