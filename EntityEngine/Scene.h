@@ -43,11 +43,13 @@ public:
 	/// Respond to input
 	virtual void OnKeyboard(int key, bool down)			= 0;
 
+	virtual void OnMouseMove(int x, int y)				= 0;
+
 	// Respond to messages
 	virtual void OnMessage(Message* msg)				;
 
 	/// Update current scene
-	virtual void Update(double deltaTime)				;
+	virtual void Update(double deltaTime, long time)	;
 
 	/// Render current scene
 	virtual void Render(RenderSystem* renderer)			= 0;

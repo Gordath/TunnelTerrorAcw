@@ -54,6 +54,14 @@ void SceneManager::OnKeyboard(int key, bool down)
 
 /******************************************************************************************************************/
 
+void SceneManager::OnMouseMove(int x, int y)
+{
+	Scene *currentScene = GetCurrentScene();
+	if (currentScene) {
+		currentScene->OnMouseMove(x, y);
+	}
+}
+
 void SceneManager::OnMessage(Message* msg)
 {
 	Scene* currentScene = GetCurrentScene();
@@ -66,12 +74,12 @@ void SceneManager::OnMessage(Message* msg)
 /******************************************************************************************************************/
 
 /// Update current scene
-void SceneManager::Update(double deltaTime)
+void SceneManager::Update(double deltaTime, long time)
 {
 	Scene* currentScene = GetCurrentScene();
 	if (currentScene)
 	{
-		currentScene->Update(deltaTime);
+		currentScene->Update(deltaTime, time);
 	}
 }
 

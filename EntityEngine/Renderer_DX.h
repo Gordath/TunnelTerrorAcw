@@ -23,6 +23,7 @@ protected:
 	ID3D11Device*			_device;                // the pointer to our Direct3D device interface
 	ID3D11DeviceContext*	_context;				// the pointer to our Direct3D device context
 	ID3D11RenderTargetView* _backbuffer;			// the pointer to our back buffer
+	ID3D11DepthStencilView* _depthStencil;
 	ID3D11InputLayout*		_layout;				// the pointer to the input layout
 	ID3D11VertexShader*		_vertexShader;			// the pointer to the vertex shader
 	ID3D11PixelShader*		_pixelShader;			// the pointer to the pixel shader

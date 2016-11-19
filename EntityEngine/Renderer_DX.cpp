@@ -1,3 +1,4 @@
+#include "Window.h"
 #if BUILD_DIRECTX
 
 #include "Renderer_DX.h"
@@ -22,6 +23,7 @@ Renderer_DX::~Renderer_DX()
 void Renderer_DX::ClearScreen()
 {
 	_context->ClearRenderTargetView(_backbuffer, D3DXCOLOR(_clearColour.r(), _clearColour.g(), _clearColour.b(), _clearColour.a()));
+	_context->ClearDepthStencilView(_depthStencil, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 /******************************************************************************************************************/
@@ -36,6 +38,7 @@ void Renderer_DX::Destroy()
 	_pixelShader->Release();
 	_swapchain->Release();
 	_backbuffer->Release();
+	_depthStencil->Release();
 	_device->Release();
 	_context->Release();
 
@@ -109,8 +112,30 @@ void Renderer_DX::Initialise(int width, int height)
 	_device->CreateRenderTargetView(p_backbuffer, nullptr, &_backbuffer);
 	p_backbuffer->Release();
 
+	D3D11_TEXTURE2D_DESC depth_attachment_desc;
+	ZeroMemory(&depth_attachment_desc, sizeof(depth_attachment_desc));
+	depth_attachment_desc.Width = Window::TheWindow->_width;
+	depth_attachment_desc.Height = Window::TheWindow->_height;
+	depth_attachment_desc.MipLevels = 1;
+	depth_attachment_desc.ArraySize = 1;
+	depth_attachment_desc.Format = DXGI_FORMAT_D32_FLOAT;
+	depth_attachment_desc.SampleDesc.Count = 4;
+	depth_attachment_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	HRESULT res{0};
+	ID3D11Texture2D *p_depth;
+	res = _device->CreateTexture2D(&depth_attachment_desc, nullptr, &p_depth);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
+	ZeroMemory(&dsvd, sizeof(dsvd));
+	dsvd.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
+
+	res = _device->CreateDepthStencilView(p_depth, &dsvd, &_depthStencil);
+	p_depth->Release();
+
 	// set the render target as the back buffer
-	_context->OMSetRenderTargets(1, &_backbuffer, nullptr);
+	_context->OMSetRenderTargets(1, &_backbuffer, _depthStencil);
 
 
 	// Set the viewport
@@ -121,6 +146,8 @@ void Renderer_DX::Initialise(int width, int height)
 	viewport.TopLeftY = 0;
 	viewport.Width = width;
 	viewport.Height = height;
+	viewport.MinDepth = 0;
+	viewport.MaxDepth = 1;
 
 	_context->RSSetViewports(1, &viewport);
 

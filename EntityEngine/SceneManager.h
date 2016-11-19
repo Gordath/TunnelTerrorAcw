@@ -39,11 +39,13 @@ public:
 	/// Respond to input
 	void OnKeyboard(int key, bool down)	;
 
+	void OnMouseMove(int x, int y)		;
+
 	/// Respond to messages
 	void OnMessage(Message* msg)		;
 
 	/// Update current scene
-	void Update(double deltaTime)		;
+	void Update(double deltaTime, long time = 0)		;
 
 	/// Render current scene
 	void Render(RenderSystem* renderer)	;

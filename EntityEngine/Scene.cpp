@@ -13,9 +13,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	for (size_t i = 0; i < _gameObjects.size(); i++)
-	{
-		delete _gameObjects[i];
+	for (auto gameObject : _gameObjects) {
+		delete gameObject;
 	}
 	_gameObjects.clear();
 }
@@ -26,21 +25,19 @@ Scene::~Scene()
 
 void Scene::OnMessage(Message* msg)
 {
-	for (int i = 0; i < (int)_gameObjects.size(); i++)
-	{
-		if (_gameObjects[i]->IsAlive())
-		{
-			_gameObjects[i]->OnMessage(msg);
+	for (auto gameObject : _gameObjects) {
+		if (gameObject->IsAlive()) {
+			gameObject->OnMessage(msg);
 		}
 	}
 }
 
 /******************************************************************************************************************/
 
-void Scene::Update(double deltaTime)
+void Scene::Update(double deltaTime, long time)
 {
 	// Delete game objects
-	for (int i = 0; i < (int)_gameObjects.size(); i++)
+	for (size_t i = 0; i < _gameObjects.size(); i++)
 	{
 		if (_gameObjects[i]->ShouldBeDeleted())
 		{

@@ -55,6 +55,12 @@ void Game::OnKeyboard(int key, bool down)
 
 /******************************************************************************************************************/
 
+void Game::OnMouseMove(int x, int y)
+{
+	_sceneManager.OnMouseMove(x, y);
+}
+
+
 void Game::Run()
 {
 	// Get delta time

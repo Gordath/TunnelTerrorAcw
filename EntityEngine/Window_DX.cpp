@@ -56,23 +56,22 @@ Window_DX::~Window_DX()
 // This is the main message handler for the program
 LRESULT CALLBACK Window_DX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message)
-	{
+	switch (message) {
 	case WM_DESTROY:
-	{
 		PostQuitMessage(0);
 		return 0;
-	}
-		break;
 	case WM_KEYDOWN:
-	{
 		TheWindow->GetGame()->OnKeyboard(wParam, true);
-	}
 		break;
 	case WM_KEYUP:
-	{
 		TheWindow->GetGame()->OnKeyboard(wParam, false);
-	}
+		break;
+	case WM_MOUSEMOVE:
+		TheWindow->_cursorX = GET_X_LPARAM(lParam);
+		TheWindow->_cursorY = GET_Y_LPARAM(lParam);
+		TheWindow->GetGame()->OnMouseMove(TheWindow->_cursorX, TheWindow->_cursorY);
+		break;
+	default:
 		break;
 	}
 

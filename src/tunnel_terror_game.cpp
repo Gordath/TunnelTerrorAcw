@@ -8,12 +8,32 @@ void TunnelTerrorGame::Initialise(Window* window)
 
 	_renderer->SetClearColour(Colour{ 0.3f, 0.3f, 0.3f, 1.0f });
 
-	Mesh *triangle = new Mesh();
-	triangle->AddVertex({ 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f });
-	triangle->AddVertex({ 0.45f, -0.5, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f });
-	triangle->AddVertex({ -0.45f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f });
+	Mesh *cube = new Mesh();
+	//front
+	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
 
-	AddMesh("triangle", triangle);
+//	//right
+//	cube->AddVertex({ 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+//	cube->AddVertex({ 0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ 0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+//
+//	//left
+//	cube->AddVertex({ -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+//	cube->AddVertex({ -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f });
+//	cube->AddVertex({ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f });
+
+	AddMesh("triangle", cube);
 
 	for (auto mesh : _meshes) {
 		mesh.second->CreateVBO(_renderer);
@@ -40,7 +60,7 @@ void TunnelTerrorGame::Render()
 void TunnelTerrorGame::Run()
 {
 	Game::Run();
-	_sceneManager.Update(_deltaTime);
+	_sceneManager.Update(_deltaTime, _currentTime);
 	Render();
 }
 

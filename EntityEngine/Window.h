@@ -19,6 +19,7 @@ public:
 	Game*									_game;
 	Renderer*								_renderer;
 	int										_width, _height;
+	int										_cursorX, _cursorY;
 
 
 	// Structors

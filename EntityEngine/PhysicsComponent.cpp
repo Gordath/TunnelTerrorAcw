@@ -47,7 +47,7 @@ void PhysicsComponent::OnMessage(Message* msg)
 {
 	if (msg->GetMessageType() == "thrust")
 	{
-		ThrustMessage* tm = (ThrustMessage*)msg;
+		ThrustMessage* tm = static_cast<ThrustMessage*>(msg);
 		_velocity += tm->GetThrust();
 	}
 }
@@ -69,7 +69,7 @@ void PhysicsComponent::LimitToMaximumSpeed(float max)
 
 /******************************************************************************************************************/
 
-Vector4 PhysicsComponent::GetObjectPosition()
+Vector4 PhysicsComponent::GetObjectPosition() const
 {
 	return _parent->GetPosition();
 }

@@ -66,6 +66,8 @@ public:
 	// Renderer
 	Renderer* GetRenderer()					const	{ return _renderer; }
 
+	Window* GetWindow()						const	{ return _window; }
+
 	// Functions
 public:
 	void AddGameObject(GameObject* obj)				{ _sceneManager.AddGameObject(obj); }
@@ -76,6 +78,8 @@ public:
 
 	// Keyboard input
 	virtual void OnKeyboard(int key, bool down);
+
+	virtual void OnMouseMove(int x, int y);
 
 	// Draw everything
 	virtual void Render() = 0;
@@ -100,5 +104,5 @@ inline Mesh* Game::GetMesh(std::string name)
 		return i->second;
 	}
 	// Not found
-	return NULL;
+	return nullptr;
 }
