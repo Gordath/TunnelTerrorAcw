@@ -39,6 +39,7 @@ protected:
 
 	// Constructors
 public:
+	GameObject() = default;
 	GameObject(std::string type);
 	virtual ~GameObject();
 

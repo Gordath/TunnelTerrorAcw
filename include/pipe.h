@@ -10,7 +10,7 @@ private:
 	float _curveSegments;
 	float _pipeSegments;
 
-	Vector4 getPointOnTorus(float u, float v) const;
+	
 
 public:
 	Pipe() = default;
@@ -23,11 +23,13 @@ public:
 	{
 	}
 
+	Vector4 getPointOnTorus(float u, float v) const;
+
 	void setCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 
 	void setPipeRadius(float pipeRadius) { _pipeRadius = pipeRadius; }
 
-	void setCurveSegmanets(float curveSegments) { _curveSegments = curveSegments;  }
+	void setCurveSegments(float curveSegments) { _curveSegments = curveSegments;  }
 
 	void setPipeSegments(float pipeSegments) { _pipeSegments = pipeSegments; }
 
