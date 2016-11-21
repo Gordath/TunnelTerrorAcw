@@ -56,7 +56,7 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour)
 
 	UniformBuffer uniforms;
 	memcpy(&uniforms.MVM, &MVM[0][0], sizeof(DirectX::XMFLOAT4X4));
-	colour.copyToArray((float*)&uniforms.Colour);
+	colour.copyToArray(reinterpret_cast<float*>(&uniforms.Colour));
 
 	// Need to update uniform buffer here
 	D3D11_MAPPED_SUBRESOURCE ms;
@@ -66,7 +66,16 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour)
 	_context->VSSetConstantBuffers(0, 1, &_uniformBuffer);
 	_context->PSSetConstantBuffers(0, 1, &_uniformBuffer);
 
-	mesh->GetVBO()->Draw(this);
+	mesh->GetVBO()->Bind(this);
+
+	//if the mesh has indices bind the IBO and draw indexed
+	if (mesh->NumIndices()) {
+		mesh->GetIBO()->Bind(this);
+		mesh->GetIBO()->Draw(this);
+	}
+	else { //draw normally
+		mesh->GetVBO()->Draw(this);
+	}
 }
 
 /******************************************************************************************************************/

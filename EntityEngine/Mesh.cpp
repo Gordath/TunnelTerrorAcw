@@ -7,13 +7,15 @@
 #endif
 #include "Vector4.h"
 #include <fstream>
+#include "IBO_DX.h"
 using namespace std;
 
 /******************************************************************************************************************/
 
 Mesh::Mesh()
 	:	_locked(false),
-		_vbo(nullptr)
+		_vbo(nullptr),
+		_ibo(nullptr)
 	
 {
 }
@@ -24,6 +26,9 @@ Mesh::~Mesh()
 {
 	delete _vbo;
 	_vbo = nullptr;
+
+	delete _ibo;
+	_ibo = nullptr;
 }
 
 /******************************************************************************************************************/
@@ -50,10 +55,8 @@ bool Mesh::DeleteVertex(int i)
 		_vertices.erase(_vertices.begin() + i);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	
+	return false;
 }
 
 /******************************************************************************************************************/
@@ -79,19 +82,27 @@ void Mesh::Reset()
 
 /******************************************************************************************************************/
 
-VBO* Mesh::CreateVBO(Renderer* renderer)
+void Mesh::CreateBuffers(Renderer* renderer)
 {
 	_locked = true;
 
 #if BUILD_DIRECTX
-	_vbo = new VBO_DX();
+	_vbo = new VBO_DX;
+	if (_indices.size()) {
+		_ibo = new IBO_DX;
+	}
 #else
 	_vbo = new VBO_GL();
+	if (_indices.size()) {
+		_ibo = new IBO_GL;
+	}
 #endif
 
 	_vbo->Create(renderer, _vertices.data(), NumVertices());
 
-	return _vbo;
+	if (_ibo) {
+		_ibo->Create(renderer, _indices.data(), NumIndices());
+	}
 }
 
 /******************************************************************************************************************/
@@ -110,6 +121,22 @@ float Mesh::CalculateMaxSize()
 		}
 	}
 	return sqrt(max);
+}
+
+
+void Mesh::GenerateIndices()
+{
+	int quad_count = _vertices.size() / 4;
+	int triangle_count = quad_count * 2;
+
+	_indices.resize(triangle_count * 3);
+
+	for (int i = 0, j = 0; i < _indices.size(); i += 6, j +=4) {
+		_indices[i] = j;
+		_indices[i + 1] = _indices[i + 4] = j + 1;
+		_indices[i + 2] = _indices[i + 3] = j + 2;
+		_indices[i + 5] = j + 3;
+	}
 }
 
 /******************************************************************************************************************/

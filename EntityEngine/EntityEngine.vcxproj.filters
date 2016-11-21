@@ -53,9 +53,6 @@
     <ClCompile Include="VBO_GL.cpp">
       <Filter>OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="VBO.cpp">
-      <Filter>Platform Independent</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Platform Independent</Filter>
     </ClCompile>
@@ -100,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="Vector4.cpp">
       <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="IBO_DX.cpp">
+      <Filter>DirectX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +209,12 @@
     </ClInclude>
     <ClInclude Include="Vector4.h">
       <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="IBO.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="IBO_DX.h">
+      <Filter>DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

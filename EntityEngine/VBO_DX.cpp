@@ -35,7 +35,7 @@ void VBO_DX::Create(Renderer* renderer, Vertex vertices[], int numVertices)
 
 	rendererDX->GetDevice()->CreateBuffer(&bd, nullptr, &_vbo);        // create the buffer
 
-	// copy the vertices into the buffer
+	//copy the vertices into the buffer
 	D3D11_MAPPED_SUBRESOURCE ms;
 	rendererDX->GetContext()->Map(_vbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);		// map the buffer
 	memcpy(ms.pData, vertices, sizeof(Vertex) * numVertices);			// copy the data
@@ -44,7 +44,7 @@ void VBO_DX::Create(Renderer* renderer, Vertex vertices[], int numVertices)
 
 /******************************************************************************************************************/
 
-void VBO_DX::Draw(Renderer* renderer)
+void VBO_DX::Bind(Renderer* renderer)
 {
 	Renderer_DX* rendererDX = static_cast<Renderer_DX*>(renderer);
 
@@ -55,11 +55,15 @@ void VBO_DX::Draw(Renderer* renderer)
 
 	// select which primtive type we are using
 	rendererDX->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	// draw the vertex buffer to the back buffer
-	rendererDX->GetContext()->Draw(_numVertices, 0);
-
 }
+
+void VBO_DX::Draw(Renderer* renderer)
+{
+	Renderer_DX* rendererDx = static_cast<Renderer_DX*>(renderer);
+
+	rendererDx->GetContext()->Draw(_numVertices, 0);
+}
+
 
 /******************************************************************************************************************/
 

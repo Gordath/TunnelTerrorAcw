@@ -42,7 +42,7 @@ void MultiMesh::CreateVBOs(Renderer* renderer)
 {
 	for (MeshIterator i = _meshes.begin(); i != _meshes.end(); ++i)
 	{
-		i->second->CreateVBO(renderer);
+		i->second->CreateBuffers(renderer);
 	}
 }
 
