@@ -1,6 +1,7 @@
 #ifndef PIPE_H_
 #define PIPE_H_
 #include "GameObject.h"
+#include "Mesh.h"
 
 class Pipe : public GameObject {
 private:
@@ -10,18 +11,14 @@ private:
 	float _curveSegments;
 	float _pipeSegments;
 
-	
+	void createFirstRing(float u, Vertex* vertArr) const;
+	void createRing(float u, int i, Vertex* vertArr) const;
+	Mesh* generateMesh() const;
 
 public:
 	Pipe() = default;
 
-	Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeSegments) : GameObject("pipe"),
-	                                                                                     _curveRadius(curveRadius),
-	                                                                                     _pipeRadius(pipeRadius),
-	                                                                                     _curveSegments(curveSegments),
-	                                                                                     _pipeSegments(pipeSegments)
-	{
-	}
+	Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeSegments, Renderer* renderer);
 
 	Vector4 getPointOnTorus(float u, float v) const;
 

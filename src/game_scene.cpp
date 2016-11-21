@@ -7,19 +7,21 @@
 
 void GameScene::Initialise()
 {
-	Pipe *pipe = new Pipe(4, 1, 20, 10);
+	Pipe *pipe = new Pipe(4, 1, 20, 10, _sceneManager->GetGame()->GetRenderer());
 
-	float uDelta = (2.0f * PI) / pipe->getCurveSegments();
-	float vDelta = (2.0f * PI) / pipe->getPipeSegments();
-	for (int u = 0; u < pipe->getCurveSegments(); ++u) {
-		for (int v = 0; v < pipe->getPipeSegments(); ++v) {
-			Vector4 p = pipe->getPointOnTorus(u * uDelta, v * vDelta);
-			DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
-			dd->SetScale(0.2f);
-			dd->SetPosition(p);
-			_gameObjects.push_back(dd);
-		}
-	}
+	_gameObjects.push_back(pipe);
+
+//	float uDelta = (2.0f * PI) / pipe->getCurveSegments();
+//	float vDelta = (2.0f * PI) / pipe->getPipeSegments();
+//	for (int u = 0; u < pipe->getCurveSegments(); ++u) {
+//		for (int v = 0; v < pipe->getPipeSegments(); ++v) {
+//			Vector4 p = pipe->getPointOnTorus(u * uDelta, v * vDelta);
+//			DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
+//			dd->SetScale(0.2f);
+//			dd->SetPosition(p);
+//			_gameObjects.push_back(dd);
+//		}
+//	}
 	
 
 //	DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
@@ -50,8 +52,8 @@ void GameScene::Update(double deltaTime, long time)
 	MVM *= proj;
 	MVM = glm::translate(MVM, glm::vec3{ 0.0, 0.0, 20.0f });
 
-	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1 ,0 });
-	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0 ,0 });
+	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
+	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
 void GameScene::Render(RenderSystem* renderer)

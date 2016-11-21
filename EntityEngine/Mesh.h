@@ -35,8 +35,8 @@ public:
 	Vertex GetVertex(int i)	const	{ return _vertices[i]; }
 	Vertex& GetVertexRef(int i)		{ return _vertices[i]; }
 
-	// Functions
-public:
+	void SetVertexData(Vertex *verts, int count);
+
 	void CreateBuffers(Renderer* r)				;
 	bool AddVertex(Vertex v)					;
 	bool Clear()								;

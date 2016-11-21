@@ -33,6 +33,12 @@ Mesh::~Mesh()
 
 /******************************************************************************************************************/
 
+void Mesh::SetVertexData(Vertex *verts, int count)
+{
+	_vertices.resize(count);
+	memcpy(_vertices.data(), verts, sizeof(Vertex) * count);
+}
+
 bool Mesh::AddVertex(Vertex v)
 {
 	if (!_locked)
