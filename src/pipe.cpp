@@ -8,20 +8,20 @@ void Pipe::createFirstRing(float u, Vertex *vertArr) const
 	Vector4 posA = getPointOnTorus(0.0f, 0.0f);
 	Vector4 posB = getPointOnTorus(u, 0.0f);
 
-	Vertex vertexA{ posA.x(), posA.y(), posA.z(), 1.0f, 0.0f, 0.0f };
-	Vertex vertexB{ posB.x(), posB.y(), posB.z(), 1.0f, 0.0f, 0.0f };
+	Vertex vertexA{ posA.x(), posA.y(), posA.z(), 1.0f, 1.0f, 1.0f };
+	Vertex vertexB{ posB.x(), posB.y(), posB.z(), 1.0f, 1.0f, 1.0f };
 
 	for (int v = 1, i = 0; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertexA;
 
 		Vector4 tmpPos{ getPointOnTorus(0.0f, v * vStep) };
-		Vertex tmpVert{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 0.0f, 0.0f };
+		Vertex tmpVert{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 1.0f, 1.0f };
 		
 		vertArr[i + 1] = vertexA = tmpVert;
 		vertArr[i + 2] = vertexB;
 
 		tmpPos = getPointOnTorus(u, v * vStep);
-		tmpVert = Vertex{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 0.0f, 0.0f };
+		tmpVert = Vertex{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 1.0f, 1.0f };
 
 		vertArr[i + 3] = vertexB = tmpVert;
 	}
@@ -33,7 +33,7 @@ void Pipe::createRing(float u, int i, Vertex* vertArr) const
 	int ringOffset = _pipeSegments * 4;
 
 	Vector4 pos = getPointOnTorus(u, 0.0f);
-	Vertex vertex{ pos.x(), pos.y(), pos.z(), 1.0f, 0.0f, 0.0f };
+	Vertex vertex{ pos.x(), pos.y(), pos.z(), 1.0f, 1.0f, 1.0f };
 	for (int v = 1; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertArr[i - ringOffset + 2];
 		vertArr[i + 1] = vertArr[i - ringOffset + 3];
@@ -41,7 +41,7 @@ void Pipe::createRing(float u, int i, Vertex* vertArr) const
 
 		pos = getPointOnTorus(u, v * vStep);
 
-		vertArr[i + 3] = vertex = Vertex{pos.x(), pos.y(), pos.z(), 1.0f, 0.0f, 0.0f};
+		vertArr[i + 3] = vertex = Vertex{pos.x(), pos.y(), pos.z(), 1.0f, 1.0f, 1.0f};
 	}
 }
 
