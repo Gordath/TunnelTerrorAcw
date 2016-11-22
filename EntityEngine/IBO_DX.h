@@ -10,7 +10,10 @@ protected:
 
 	// Structors
 public:
-	IBO_DX() : _ibo(nullptr) {}
+	IBO_DX() : _ibo(nullptr)
+	{
+	}
+
 	~IBO_DX();
 
 	void Create(Renderer* renderer, unsigned int indices[], int numIndices) override;

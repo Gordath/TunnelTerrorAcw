@@ -11,34 +11,32 @@ private:
 	float _curveSegments;
 	float _pipeSegments;
 
-	void createFirstRing(float u, Vertex* vertArr) const;
-	void createRing(float u, int i, Vertex* vertArr) const;
-	Mesh* generateMesh() const;
+	void CreateFirstRing(float u, Vertex* vertArr) const;
+	void CreateRing(float u, int i, Vertex* vertArr) const;
+	Mesh* GenerateMesh() const;
 
 public:
 	Pipe() = default;
 
 	Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeSegments, Renderer* renderer);
 
-	Vector4 getPointOnTorus(float u, float v) const;
+	Vector4 GetPointOnTorus(float u, float v) const;
 
-	void setCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
+	void SetCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 
-	void setPipeRadius(float pipeRadius) { _pipeRadius = pipeRadius; }
+	void SetPipeRadius(float pipeRadius) { _pipeRadius = pipeRadius; }
 
-	void setCurveSegments(float curveSegments) { _curveSegments = curveSegments;  }
+	void SetCurveSegments(float curveSegments) { _curveSegments = curveSegments; }
 
-	void setPipeSegments(float pipeSegments) { _pipeSegments = pipeSegments; }
+	void SetPipeSegments(float pipeSegments) { _pipeSegments = pipeSegments; }
 
-	float getCurveRadius() const { return _curveRadius; }
+	float SetCurveRadius() const { return _curveRadius; }
 
-	float getPipeRadius() const { return _pipeRadius; }
+	float GetPipeRadius() const { return _pipeRadius; }
 
-	float getCurveSegments() const { return _curveSegments; }
+	float GetCurveSegments() const { return _curveSegments; }
 
-	float getPipeSegments() const { return _pipeSegments; }
-
-
+	float GetPipeSegments() const { return _pipeSegments; }
 };
 
 #endif //PIPE_H_

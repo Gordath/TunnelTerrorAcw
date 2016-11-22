@@ -18,9 +18,6 @@ public:
 	RenderComponent(GameObject* gob);
 	virtual ~RenderComponent();
 
-
-	// Gets/Sets
-public:
 	Mesh* GetMesh()							const	{ return _mesh; }
 	void SetMesh(Mesh* m)							{ _mesh = m; }
 
@@ -35,20 +32,16 @@ public:
 	float GetScale()						const	{ return _parent->GetScale(); }
 	Vector4 GetPosition()					const	{ return _parent->GetPosition(); }
 
-
-	// Functions
-public:
-
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start();
+	void Start() override;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime);
+	void Update(double deltaTime) override;
 
 	// Message handler (called when message occurs)
-	virtual void OnMessage(Message* msg);
+	void OnMessage(Message* msg) override;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End();
+	void End() override;
 
 };

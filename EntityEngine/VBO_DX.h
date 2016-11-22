@@ -8,21 +8,18 @@
 
 // DirectX specific VBO class
 class VBO_DX :
-	public VBO
-{
-	// Data
+		public VBO {
 protected:
 	ID3D11Buffer* _vbo;
 
-	// Structors
 public:
 	VBO_DX();
 	virtual ~VBO_DX();
 
-	// Functions
-public:
 	void Create(Renderer* renderer, Vertex vertices[], int numVertices) override;
+
 	void Bind(Renderer* renderer) override;
+
 	void Draw(Renderer* renderer) override;
 };
 

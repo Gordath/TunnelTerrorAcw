@@ -8,7 +8,7 @@ class Message;
 
 
 class GameObjectComponent
-	: public Observer // Implement observer pattern
+		: public Observer // Implement observer pattern
 {
 	// Data
 protected:
@@ -22,27 +22,27 @@ public:
 
 	// Copy/assignment
 private:
-	GameObjectComponent(const GameObjectComponent&);
-	GameObjectComponent& operator=(const GameObjectComponent&);
+	GameObjectComponent(const GameObjectComponent&) = delete;
+	GameObjectComponent& operator=(const GameObjectComponent&) = delete;
 
 	// Gets/Sets
 public:
-	GameObject* GetGameObject()			const	{ return _parent; }
-	std::string GetComponentType()		const	{ return _componentType; }
+	GameObject* GetGameObject() const { return _parent; }
+	std::string GetComponentType() const { return _componentType; }
 
 
 	// Functions
 public:
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start()					= 0;
+	virtual void Start() = 0;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime)	= 0;
+	virtual void Update(double deltaTime) = 0;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End()						= 0;
+	virtual void End() = 0;
 
 	// Broadcast a message to all objects
-	void BroadcastMessage(Message* msg)		;
+	void BroadcastMessage(Message* msg);
 };

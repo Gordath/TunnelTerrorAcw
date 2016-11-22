@@ -18,7 +18,6 @@ GameObjectComponent::GameObjectComponent(std::string type, GameObject* parent)
 
 GameObjectComponent::~GameObjectComponent()
 {
-
 }
 
 /******************************************************************************************************************/

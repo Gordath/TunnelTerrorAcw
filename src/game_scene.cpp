@@ -11,11 +11,11 @@ void GameScene::Initialise()
 
 	_gameObjects.push_back(pipe);
 
-//	float uDelta = (2.0f * PI) / pipe->getCurveSegments();
-//	float vDelta = (2.0f * PI) / pipe->getPipeSegments();
-//	for (int u = 0; u < pipe->getCurveSegments(); ++u) {
-//		for (int v = 0; v < pipe->getPipeSegments(); ++v) {
-//			Vector4 p = pipe->getPointOnTorus(u * uDelta, v * vDelta);
+//	float uDelta = (2.0f * PI) / pipe->GetCurveSegments();
+//	float vDelta = (2.0f * PI) / pipe->GetPipeSegments();
+//	for (int u = 0; u < pipe->GetCurveSegments(); ++u) {
+//		for (int v = 0; v < pipe->GetPipeSegments(); ++v) {
+//			Vector4 p = pipe->GetPointOnTorus(u * uDelta, v * vDelta);
 //			DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
 //			dd->SetScale(0.2f);
 //			dd->SetPosition(p);

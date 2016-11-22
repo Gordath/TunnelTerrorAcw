@@ -2,12 +2,11 @@
 #include "GameObjectComponent.h"
 
 class LifeTimerComponent
-	: public GameObjectComponent
-{
+		: public GameObjectComponent {
 	// Data
 protected:
-	double		_startingLifeTime;		// Default starting lifetime (s)
-	double		_timeLeft;				// Lifespan left (s)
+	double _startingLifeTime; // Default starting lifetime (s)
+	double _timeLeft; // Lifespan left (s)
 
 
 	// Structors
@@ -15,20 +14,15 @@ public:
 	LifeTimerComponent(GameObject* gob, double lifeTime);
 	virtual ~LifeTimerComponent();
 
-	// Gets/Sets
-public:
-	double GetStartingLifeTime()		const	{ return _startingLifeTime; }
-	void SetStartingLifeTime(double v)			{ _startingLifeTime = v; }
-	
-	double GetLifeTimeLeft()			const	{ return _timeLeft; }
-	void SetLifeTimeLeft(double v)				{ _timeLeft = v; }
-	void DecreaseLifeTime(double v)				{ _timeLeft -= v; }
-	void ResetLifeTime()						{ _timeLeft = _startingLifeTime; }
+	double GetStartingLifeTime() const { return _startingLifeTime; }
+	void SetStartingLifeTime(double v) { _startingLifeTime = v; }
 
-	double GetPercentLifeLeft()			const	{ return _startingLifeTime > 0 ? _timeLeft / _startingLifeTime : 0; }
+	double GetLifeTimeLeft() const { return _timeLeft; }
+	void SetLifeTimeLeft(double v) { _timeLeft = v; }
+	void DecreaseLifeTime(double v) { _timeLeft -= v; }
+	void ResetLifeTime() { _timeLeft = _startingLifeTime; }
 
-	// Functions
-public:
+	double GetPercentLifeLeft() const { return _startingLifeTime > 0 ? _timeLeft / _startingLifeTime : 0; }
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
 	virtual void Start();

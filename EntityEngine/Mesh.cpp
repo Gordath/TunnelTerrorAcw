@@ -13,10 +13,10 @@ using namespace std;
 /******************************************************************************************************************/
 
 Mesh::Mesh()
-	:	_locked(false),
-		_vbo(nullptr),
-		_ibo(nullptr)
-	
+	: _locked(false),
+	  _vbo(nullptr),
+	  _ibo(nullptr)
+
 {
 }
 
@@ -33,7 +33,7 @@ Mesh::~Mesh()
 
 /******************************************************************************************************************/
 
-void Mesh::SetVertexData(Vertex *verts, int count)
+void Mesh::SetVertexData(Vertex* verts, int count)
 {
 	_vertices.resize(count);
 	memcpy(_vertices.data(), verts, sizeof(Vertex) * count);
@@ -41,13 +41,11 @@ void Mesh::SetVertexData(Vertex *verts, int count)
 
 bool Mesh::AddVertex(Vertex v)
 {
-	if (!_locked)
-	{
+	if (!_locked) {
 		_vertices.push_back(v);
 		return true;
 	}
-	else
-	{
+	else {
 		return false;
 	}
 }
@@ -56,12 +54,11 @@ bool Mesh::AddVertex(Vertex v)
 
 bool Mesh::DeleteVertex(int i)
 {
-	if (!_locked)
-	{
+	if (!_locked) {
 		_vertices.erase(_vertices.begin() + i);
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -69,8 +66,7 @@ bool Mesh::DeleteVertex(int i)
 
 bool Mesh::Clear()
 {
-	if (!_locked)
-	{
+	if (!_locked) {
 		_vertices.clear();
 		return true;
 	}
@@ -116,13 +112,11 @@ void Mesh::CreateBuffers(Renderer* renderer)
 float Mesh::CalculateMaxSize()
 {
 	float max = 0;
-	for (int i = 0; i < NumVertices(); i++)
-	{
+	for (int i = 0; i < NumVertices(); i++) {
 		Vertex& v = _vertices[i];
 		Vector4 vec(v.x, v.y, v.z, 1);
 		float dist = vec.lengthSquared();
-		if (dist > max)
-		{
+		if (dist > max) {
 			max = dist;
 		}
 	}
@@ -137,7 +131,7 @@ void Mesh::GenerateIndices()
 
 	_indices.resize(triangle_count * 3);
 
-	for (int i = 0, j = 0; i < _indices.size(); i += 6, j +=4) {
+	for (int i = 0, j = 0; i < _indices.size(); i += 6 , j += 4) {
 		_indices[i] = j;
 		_indices[i + 1] = _indices[i + 4] = j + 1;
 		_indices[i + 2] = _indices[i + 3] = j + 2;
@@ -150,12 +144,10 @@ void Mesh::GenerateIndices()
 bool Mesh::LoadFromFile(std::string filename)
 {
 	ifstream in(filename);
-	if (in)
-	{
+	if (in) {
 		int numVertices;
 		in >> numVertices;
-		for (int i = 0; i < numVertices; i++)
-		{
+		for (int i = 0; i < numVertices; i++) {
 			Vertex v;
 			in >> v.x;
 			in >> v.y;
@@ -168,8 +160,7 @@ bool Mesh::LoadFromFile(std::string filename)
 		}
 		return true;
 	}
-	else
-	{
+	else {
 		// Could not open file
 		return false;
 	}
@@ -181,8 +172,7 @@ bool Mesh::LoadFromStream(std::ifstream& in)
 {
 	int numVertices;
 	in >> numVertices;
-	for (int i = 0; i < numVertices; i++)
-	{
+	for (int i = 0; i < numVertices; i++) {
 		Vertex v;
 		in >> v.x;
 		in >> v.y;

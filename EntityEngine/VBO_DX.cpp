@@ -28,18 +28,18 @@ void VBO_DX::Create(Renderer* renderer, Vertex vertices[], int numVertices)
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 
-	bd.Usage = D3D11_USAGE_DYNAMIC;                // write access access by CPU and GPU
-	bd.ByteWidth = sizeof(Vertex) * numVertices;   // size is the VERTEX struct * num vertices
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;       // use as a vertex buffer
-	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;    // allow CPU to write in buffer
+	bd.Usage = D3D11_USAGE_DYNAMIC; // write access access by CPU and GPU
+	bd.ByteWidth = sizeof(Vertex) * numVertices; // size is the VERTEX struct * num vertices
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER; // use as a vertex buffer
+	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE; // allow CPU to write in buffer
 
-	rendererDX->GetDevice()->CreateBuffer(&bd, nullptr, &_vbo);        // create the buffer
+	rendererDX->GetDevice()->CreateBuffer(&bd, nullptr, &_vbo); // create the buffer
 
 	//copy the vertices into the buffer
 	D3D11_MAPPED_SUBRESOURCE ms;
-	rendererDX->GetContext()->Map(_vbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);		// map the buffer
-	memcpy(ms.pData, vertices, sizeof(Vertex) * numVertices);			// copy the data
-	rendererDX->GetContext()->Unmap(_vbo, 0);											// unmap the buffer
+	rendererDX->GetContext()->Map(_vbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms); // map the buffer
+	memcpy(ms.pData, vertices, sizeof(Vertex) * numVertices); // copy the data
+	rendererDX->GetContext()->Unmap(_vbo, 0); // unmap the buffer
 }
 
 /******************************************************************************************************************/

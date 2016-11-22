@@ -7,4 +7,3 @@ DebugDummy::DebugDummy(Mesh* mesh) : GameObject("debugDummy")
 	rc->SetMesh(mesh);
 	rc->ShouldDraw(true);
 }
-

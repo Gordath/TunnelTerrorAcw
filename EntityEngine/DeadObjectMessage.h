@@ -3,27 +3,13 @@
 
 class GameObject;
 
-class DeadObjectMessage
-	: public Message
-{
-	// Data
+class DeadObjectMessage : public Message {
 protected:
 	GameObject* _deadObject;
 
-	// Structors
 public:
 	DeadObjectMessage(GameObject* deadObject);
 	virtual ~DeadObjectMessage();
 
-
-	// Gets/Sets
-public:
-	GameObject* GetDeadObject()		const	{ return _deadObject; }
-
-
-
-	// Functions
-public:
-
-
+	GameObject* GetDeadObject() const { return _deadObject; }
 };

@@ -13,24 +13,17 @@ class Mesh;
 
 // Platform independent renderer base class
 // Basically represents a graphics context and its active shaders
-class Renderer
-{
+class Renderer {
 	// Data
 public:
-	Colour										_clearColour;	// Screen clear colour
+	Colour _clearColour; // Screen clear colour
 
-	// Structors
-public:
-	Renderer()									;
-	virtual ~Renderer()							;
+	Renderer();
+	virtual ~Renderer();
 
-	// Gets/sets
-public:
-	Colour GetClearColour()				const	{ return _clearColour; }
-	void SetClearColour(Colour c)				{ _clearColour = c; }
+	Colour GetClearColour() const { return _clearColour; }
+	void SetClearColour(Colour c) { _clearColour = c; }
 
-	// Functions
-public:
 	virtual void ClearScreen() = 0;
 
 	virtual void Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour) = 0;
@@ -39,7 +32,6 @@ public:
 	virtual void Destroy() = 0;
 
 	virtual void Initialise(int width, int height) = 0;
-	
+
 	virtual void SwapBuffers() = 0;
 };
-

@@ -7,7 +7,7 @@ using namespace std;
 /******************************************************************************************************************/
 
 MultiMesh::MultiMesh()
-	
+
 {
 }
 
@@ -29,8 +29,7 @@ void MultiMesh::Clear()
 
 void MultiMesh::Reset()
 {
-	for (MeshIterator i = _meshes.begin(); i != _meshes.end(); ++i)
-	{
+	for (MeshIterator i = _meshes.begin(); i != _meshes.end(); ++i) {
 		delete i->second;
 	}
 	_meshes.clear();
@@ -40,8 +39,7 @@ void MultiMesh::Reset()
 
 void MultiMesh::CreateVBOs(Renderer* renderer)
 {
-	for (MeshIterator i = _meshes.begin(); i != _meshes.end(); ++i)
-	{
+	for (MeshIterator i = _meshes.begin(); i != _meshes.end(); ++i) {
 		i->second->CreateBuffers(renderer);
 	}
 }
@@ -51,16 +49,14 @@ void MultiMesh::CreateVBOs(Renderer* renderer)
 bool MultiMesh::LoadFromFile(std::string filename)
 {
 	ifstream in(filename);
-	if (in)
-	{
+	if (in) {
 		int numObjects;
 		in >> numObjects;
-		
-		for (size_t i = 0; i < numObjects; i++)
-		{
+
+		for (size_t i = 0; i < numObjects; i++) {
 			string name;
 			in >> name;
-			
+
 			Mesh* m = new Mesh();
 			m->LoadFromStream(in);
 
@@ -68,8 +64,7 @@ bool MultiMesh::LoadFromFile(std::string filename)
 		}
 		return true;
 	}
-	else
-	{
+	else {
 		// Could not open file
 		return false;
 	}
@@ -77,11 +72,10 @@ bool MultiMesh::LoadFromFile(std::string filename)
 
 /******************************************************************************************************************/
 
-Mesh* MultiMesh::GetMesh(std::string key)	const
+Mesh* MultiMesh::GetMesh(std::string key) const
 {
 	auto var = _meshes.find(key);
-	if (var != _meshes.end())
-	{
+	if (var != _meshes.end()) {
 		return var->second;
 	}
 	return nullptr;

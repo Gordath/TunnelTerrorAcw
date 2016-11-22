@@ -8,17 +8,15 @@
 
 LifeTimerComponent::LifeTimerComponent(GameObject* gob, double startingLife)
 	: GameObjectComponent("lifetimer", gob),
-	_startingLifeTime(startingLife),
-	_timeLeft(startingLife)
+	  _startingLifeTime(startingLife),
+	  _timeLeft(startingLife)
 {
-
 }
 
 /******************************************************************************************************************/
 
 LifeTimerComponent::~LifeTimerComponent()
 {
-
 }
 
 /******************************************************************************************************************/
@@ -38,10 +36,9 @@ void LifeTimerComponent::Update(double deltaTime)
 {
 	DecreaseLifeTime(deltaTime);
 
-	if (_timeLeft < 0)
-	{
+	if (_timeLeft < 0) {
 		_timeLeft = 0;
-		
+
 		// Send dead message
 		DeadObjectMessage msg(_parent);
 		_parent->OnMessage(&msg);

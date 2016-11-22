@@ -9,16 +9,14 @@
 
 PhysicsComponent::PhysicsComponent(GameObject* gob)
 	: GameObjectComponent("physics", gob),
-	_velocity(0.0f, 0.0f, 0.0f, 0.0f)
+	  _velocity(0.0f, 0.0f, 0.0f, 0.0f)
 {
-
 }
 
 /******************************************************************************************************************/
 
 PhysicsComponent::~PhysicsComponent()
 {
-
 }
 
 /******************************************************************************************************************/
@@ -36,8 +34,6 @@ void PhysicsComponent::Start()
 // Main update function (called every frame)
 void PhysicsComponent::Update(double deltaTime)
 {
-
-
 }
 
 /******************************************************************************************************************/
@@ -45,8 +41,7 @@ void PhysicsComponent::Update(double deltaTime)
 // Message handler (called when message occurs)
 void PhysicsComponent::OnMessage(Message* msg)
 {
-	if (msg->GetMessageType() == "thrust")
-	{
+	if (msg->GetMessageType() == "thrust") {
 		ThrustMessage* tm = static_cast<ThrustMessage*>(msg);
 		_velocity += tm->GetThrust();
 	}

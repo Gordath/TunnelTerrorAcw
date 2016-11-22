@@ -8,7 +8,7 @@ private:
 	glm::mat4 _cameraMatrix;
 
 public:
-	void translate();
+	void Translate();
 };
 
 #endif //CAMERA_H_

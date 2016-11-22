@@ -30,7 +30,7 @@ void Renderer_DX::ClearScreen()
 
 void Renderer_DX::Destroy()
 {
-	_swapchain->SetFullscreenState(false, nullptr);    // switch to windowed mode
+	_swapchain->SetFullscreenState(false, nullptr); // switch to windowed mode
 
 	// close and release all existing COM objects
 	_layout->Release();
@@ -42,8 +42,7 @@ void Renderer_DX::Destroy()
 	_device->Release();
 	_context->Release();
 
-	if (_uniformBuffer)	
-	{
+	if (_uniformBuffer) {
 		_uniformBuffer->Release();
 	}
 }
@@ -60,9 +59,9 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour)
 
 	// Need to update uniform buffer here
 	D3D11_MAPPED_SUBRESOURCE ms;
-	_context->Map(_uniformBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);		// map the buffer
-	memcpy(ms.pData, &uniforms, sizeof(UniformBuffer));								// copy the data
-	_context->Unmap(_uniformBuffer, 0);											// unmap the buffer
+	_context->Map(_uniformBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms); // map the buffer
+	memcpy(ms.pData, &uniforms, sizeof(UniformBuffer)); // copy the data
+	_context->Unmap(_uniformBuffer, 0); // unmap the buffer
 	_context->VSSetConstantBuffers(0, 1, &_uniformBuffer);
 	_context->PSSetConstantBuffers(0, 1, &_uniformBuffer);
 
@@ -89,32 +88,32 @@ void Renderer_DX::Initialise(int width, int height)
 	ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
 
 	// fill the swap chain description struct
-	scd.BufferCount = 1;                                   // one back buffer
-	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;    // use 32-bit color
-	scd.BufferDesc.Width = width;                   // set the back buffer width
-	scd.BufferDesc.Height = height;                 // set the back buffer height
-	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;     // how swap chain is to be used
-	scd.OutputWindow = _hWnd;                              // the window to be used
-	scd.SampleDesc.Count = 4;                              // how many multisamples
-	scd.Windowed = TRUE;                                   // windowed/full-screen mode
-	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;    // allow full-screen switching
+	scd.BufferCount = 1; // one back buffer
+	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // use 32-bit color
+	scd.BufferDesc.Width = width; // set the back buffer width
+	scd.BufferDesc.Height = height; // set the back buffer height
+	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; // how swap chain is to be used
+	scd.OutputWindow = _hWnd; // the window to be used
+	scd.SampleDesc.Count = 4; // how many multisamples
+	scd.Windowed = TRUE; // windowed/full-screen mode
+	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // allow full-screen switching
 
 	// create a device, device context and swap chain using the information in the scd struct
 	D3D11CreateDeviceAndSwapChain(nullptr,
-		D3D_DRIVER_TYPE_HARDWARE,
-		nullptr,
-		0,
-		nullptr,
-		0,
-		D3D11_SDK_VERSION,
-		&scd,
-		&_swapchain,
-		&_device,
-		nullptr,
-		&_context);
+	                              D3D_DRIVER_TYPE_HARDWARE,
+	                              nullptr,
+	                              0,
+	                              nullptr,
+	                              0,
+	                              D3D11_SDK_VERSION,
+	                              &scd,
+	                              &_swapchain,
+	                              &_device,
+	                              nullptr,
+	                              &_context);
 
 	// get the address of the back buffer
-	ID3D11Texture2D *p_backbuffer;
+	ID3D11Texture2D* p_backbuffer;
 	_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&p_backbuffer));
 
 	// use the back buffer address to create the render target
@@ -132,7 +131,7 @@ void Renderer_DX::Initialise(int width, int height)
 	depth_attachment_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
 	HRESULT res{0};
-	ID3D11Texture2D *p_depth;
+	ID3D11Texture2D* p_depth;
 	res = _device->CreateTexture2D(&depth_attachment_desc, nullptr, &p_depth);
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
@@ -193,8 +192,8 @@ void Renderer_DX::InitialiseShaders()
 	// create the input layout object
 	D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
 
 	_device->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &_layout);

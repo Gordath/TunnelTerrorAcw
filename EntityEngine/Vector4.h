@@ -8,8 +8,7 @@
 //
 /////////////////////////////////
 
-class Vector4
-{
+class Vector4 {
 	////////////////////////////////
 	// Constants
 private:
@@ -21,7 +20,7 @@ private:
 	static const int _S = 0;
 	static const int _T = 1;
 	static const int _P = 2;
-	static const int _Q = 3;	
+	static const int _Q = 3;
 
 	static const int _R = 0;
 	static const int _G = 1;
@@ -46,7 +45,7 @@ public:
 	virtual ~Vector4();
 
 	// Create vector from individual floats, with defaults for z and w
-	Vector4(float x, float y, float z=0, float w=1);
+	Vector4(float x, float y, float z = 0, float w = 1);
 
 	// Create vector from an array of floats (either 1x2, 1x3, or 1x4)
 	explicit Vector4(float values[]);
@@ -62,47 +61,43 @@ public:
 	// Accessors
 public:
 	// For position/direction vectors
-	float x() const					{ return _elements[_X]; }
-	float y() const					{ return _elements[_Y]; }
-	float z() const					{ return _elements[_Z]; }
-	float w() const					{ return _elements[_W]; }
+	float x() const { return _elements[_X]; }
+	float y() const { return _elements[_Y]; }
+	float z() const { return _elements[_Z]; }
+	float w() const { return _elements[_W]; }
 
 	// For texture coordinates
-	float s() const					{ return _elements[_S]; }
-	float t() const					{ return _elements[_T]; }
-	float p() const					{ return _elements[_P]; } // AKA r but renamed p to avoid clash with colour R
-	float q() const					{ return _elements[_Q]; }
+	float s() const { return _elements[_S]; }
+	float t() const { return _elements[_T]; }
+	float p() const { return _elements[_P]; } // AKA r but renamed p to avoid clash with colour R
+	float q() const { return _elements[_Q]; }
 
 	// For colours
-	float r() const					{ return _elements[_R]; }
-	float g() const					{ return _elements[_G]; }
-	float b() const					{ return _elements[_B]; }
-	float a() const					{ return _elements[_A]; }
+	float r() const { return _elements[_R]; }
+	float g() const { return _elements[_G]; }
+	float b() const { return _elements[_B]; }
+	float a() const { return _elements[_A]; }
 
 	// Indexed get
-	float get(int i) const			{ return _elements[i]; }
+	float get(int i) const { return _elements[i]; }
 
 	// Get whole array
-	const float* xyzw() const		{ return _elements; }
+	const float* xyzw() const { return _elements; }
 
+	void x(float val) { _elements[_X] = val; }
+	void y(float val) { _elements[_Y] = val; }
+	void z(float val) { _elements[_Z] = val; }
+	void w(float val) { _elements[_W] = val; }
 
-	////////////////////////////////
-	// Mutators
-public:
-	void x(float val)				{ _elements[_X] = val; }
-	void y(float val)				{ _elements[_Y] = val; }
-	void z(float val)				{ _elements[_Z] = val; }
-	void w(float val)				{ _elements[_W] = val; }
+	void s(float val) { _elements[_S] = val; }
+	void t(float val) { _elements[_T] = val; }
+	void p(float val) { _elements[_P] = val; }
+	void q(float val) { _elements[_Q] = val; }
 
-	void s(float val)				{ _elements[_S] = val; }
-	void t(float val)				{ _elements[_T] = val; }
-	void p(float val)				{ _elements[_P] = val; }
-	void q(float val)				{ _elements[_Q] = val; }
-
-	void r(float val)				{ _elements[_R] = val; }
-	void g(float val)				{ _elements[_G] = val; }
-	void b(float val)				{ _elements[_B] = val; }
-	void a(float val)				{ _elements[_A] = val; }
+	void r(float val) { _elements[_R] = val; }
+	void g(float val) { _elements[_G] = val; }
+	void b(float val) { _elements[_B] = val; }
+	void a(float val) { _elements[_A] = val; }
 
 	// Assignment
 	void set(float x, float y, float z = 0, float w = 1);
@@ -114,36 +109,31 @@ public:
 	void set(const Vector4& other);
 
 	// Indexed assignment
-	void set(int index, float val)	{ _elements[index] = val; }
-
-
-	////////////////////////////////
-	// Functions
-public:
+	void set(int index, float val) { _elements[index] = val; }
 
 	// Copies content of vector to another array
-	void copyToArray(float targetArray[], int offset=0) const;
+	void copyToArray(float targetArray[], int offset = 0) const;
 
 	// MATHEMATICAL FUNCTIONS
 
 	// Adds another vector to this one
 	void add(const Vector4& other);
-	
+
 	// Adds a scalar to each element
 	void add(float val);
-	
+
 	// Subtracts another vector from this one
 	void subtract(const Vector4& other);
-	
+
 	// Subtracts a scalar from each element
 	void subtract(float val);
 
 	// Multiples this vector by another one
 	void multiply(const Vector4& other);
-	
+
 	// Multiples this vector a scalar
 	void multiply(float val);
-	
+
 	// Divides this vector by another one
 	void divide(const Vector4& other);
 
@@ -176,38 +166,35 @@ public:
 
 	// Bearing (angle in degrees) to a given position, relative to the current vector position
 	float bearingTo(const Vector4& position);
-	
-	////////////////////////////////
-	// Operators
-public:
-	void operator+=(const Vector4& other)	{ add(other); }
-	void operator+=(float val)				{ add(val); }
-	void operator-=(const Vector4& other)	{ subtract(other); }
-	void operator-=(float val)				{ subtract(val); }
-	void operator*=(const Vector4& other)	{ multiply(other); }
-	void operator*=(float val)				{ multiply(val); }
-	void operator/=(const Vector4& other)	{ divide(other); }
-	void operator/=(float val)				{ divide(val); }
+
+	void operator+=(const Vector4& other) { add(other); }
+	void operator+=(float val) { add(val); }
+	void operator-=(const Vector4& other) { subtract(other); }
+	void operator-=(float val) { subtract(val); }
+	void operator*=(const Vector4& other) { multiply(other); }
+	void operator*=(float val) { multiply(val); }
+	void operator/=(const Vector4& other) { divide(other); }
+	void operator/=(float val) { divide(val); }
 
 	// Indexed access
-	float operator[](int index) const 		{ return _elements[index]; }
+	float operator[](int index) const { return _elements[index]; }
 	//float& operator[](int index) 			{ return const_cast<float&>(static_cast<const Vector4&>(*this)[ index ] ); }
 
-	
+
 };
 
 ////////////////////////////////////
 // Auxiliary Operators
 
 // Console output
-std::ostream& operator << (std::ostream& o, const Vector4& m);
+std::ostream& operator <<(std::ostream& o, const Vector4& m);
 
 // Unary negation
-inline Vector4 operator-(const Vector4& a) 
-{ 
-	Vector4 result(a); 
-	result *= -1; 
-	return result; 
+inline Vector4 operator-(const Vector4& a)
+{
+	Vector4 result(a);
+	result *= -1;
+	return result;
 }
 
 ////////////////////////////////////
@@ -305,8 +292,7 @@ inline float Vector4::lengthSquared() const
 
 inline void Vector4::limitTo(float val)
 {
-	if (lengthSquared() > val * val)
-	{
+	if (lengthSquared() > val * val) {
 		normalise();
 		multiply(val);
 	}
@@ -315,16 +301,16 @@ inline void Vector4::limitTo(float val)
 inline float Vector4::dot(const Vector4& other) const
 {
 	return this->x() * other.x() +
-		   this->y() * other.y() +
-		   this->z() * other.z();
+			this->y() * other.y() +
+			this->z() * other.z();
 }
 
 inline float Vector4::dot4(const Vector4& other) const
 {
 	return this->x() * other.x() +
-		   this->y() * other.y() +
-		   this->z() * other.z() +
-		   this->w() * other.w();
+			this->y() * other.y() +
+			this->z() * other.z() +
+			this->w() * other.w();
 }
 
 inline void Vector4::cross(const Vector4& a, const Vector4& b)
@@ -356,12 +342,10 @@ inline float Vector4::bearingTo(const Vector4& position)
 	float ydiff = position.y() - y();
 	float xdiff = position.x() - x();
 
-	if (xdiff == 0 && ydiff > 0)
-	{
+	if (xdiff == 0 && ydiff > 0) {
 		return 0;
 	}
-	else if (xdiff == 0 && ydiff < 0)
-	{
+	else if (xdiff == 0 && ydiff < 0) {
 		return 180;
 	}
 

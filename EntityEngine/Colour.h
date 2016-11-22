@@ -7,9 +7,7 @@
 //
 /////////////////////////////////
 
-class Colour 
-	: public Vector4
-{
+class Colour : public Vector4 {
 
 	////////////////////////////////
 	// Structors
@@ -21,7 +19,7 @@ public:
 	virtual ~Colour();
 
 	// Create vector from individual floats, with defaults for a
-	Colour(float r, float g, float b, float a=1);
+	Colour(float r, float g, float b, float a = 1);
 
 	// Create vector from an array of floats (either 1x3, or 1x4)
 	explicit Colour(float values[]);
@@ -32,14 +30,8 @@ public:
 	// Assignment operator
 	Colour& operator=(const Colour& toCopy);
 
-	////////////////////////////////
-	// Functions
-public:
-	const float* rgba() const		{ return xyzw(); }
+	const float* rgba() const { return xyzw(); }
 
-	////////////////////////////////
-	// Static Functions
-public:
 	static Colour Red();
 	static Colour Blue();
 	static Colour Green();

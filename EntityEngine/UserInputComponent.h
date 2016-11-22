@@ -3,34 +3,21 @@
 #include "Vector4.h"
 
 class UserInputComponent
-	: public GameObjectComponent
-{
-	// Data
-protected:
-
-
-	// Structors
+		: public GameObjectComponent {
 public:
 	UserInputComponent(GameObject* gob);
 	virtual ~UserInputComponent();
 
-	// Gets/Sets
-public:
-
-
-	// Functions
-public:
-
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start();
+	void Start() override;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime);
+	void Update(double deltaTime) override;
 
 	// Message handler (called when message occurs)
-	virtual void OnMessage(Message* msg);
+	void OnMessage(Message* msg) override;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End();
+	void End() override;
 
 };

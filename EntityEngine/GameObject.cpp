@@ -29,8 +29,7 @@ GameObject::~GameObject()
 
 bool GameObject::AddComponent(GameObjectComponent* goc)
 {
-	if (_components.find(goc->GetComponentType()) != _components.end())
-	{
+	if (_components.find(goc->GetComponentType()) != _components.end()) {
 		// Error - already have this component!
 		return false;
 	}
@@ -51,8 +50,7 @@ bool GameObject::RemoveComponent(GameObjectComponent* goc)
 bool GameObject::RemoveComponent(std::string type)
 {
 	ComponentMapIterator i = _components.find(type);
-	if (i != _components.end())
-	{
+	if (i != _components.end()) {
 		// Remove it
 		_components.erase(i);
 
@@ -72,8 +70,7 @@ bool GameObject::RemoveComponent(std::string type)
 GameObjectComponent* GameObject::GetComponent(std::string type)
 {
 	ComponentMapIterator i = _components.find(type);
-	if (i != _components.end())
-	{
+	if (i != _components.end()) {
 		// Return it
 		return i->second;
 	}
@@ -92,8 +89,7 @@ void GameObject::Start()
 	// Initialise all objects
 	for (ComponentMapIterator i = _components.begin();
 	     i != _components.end();
-	     ++i)
-	{
+	     ++i) {
 		i->second->Start();
 	}
 }
@@ -106,8 +102,7 @@ void GameObject::Update(double deltaTime)
 	// Update all objects
 	for (ComponentMapIterator i = _components.begin();
 	     i != _components.end();
-	     ++i)
-	{
+	     ++i) {
 		i->second->Update(deltaTime);
 	}
 }
@@ -120,8 +115,7 @@ void GameObject::End()
 	// End all objects
 	for (ComponentMapIterator i = _components.begin();
 	     i != _components.end();
-	     ++i)
-	{
+	     ++i) {
 		GameObjectComponent* component = i->second;
 		component->End();
 		delete component;

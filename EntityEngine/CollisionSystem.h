@@ -5,24 +5,12 @@
 class CollisionComponent;
 
 // Moves objects around based on PhysicsComponents
-class CollisionSystem :
-	public System
-{
-	// Data
-protected:
-
-
-	// Structors
+class CollisionSystem : public System {
 public:
 	CollisionSystem();
 	virtual ~CollisionSystem();
 
-	// Get / sets
-public:
-
-	// Functions
-public:
 	bool CollideWith(const CollisionComponent* collidee, const CollisionComponent* collider);
-	virtual void Process(std::vector<GameObject*>& list, double deltaTime);
-};
 
+	void Process(std::vector<GameObject*>& list, double deltaTime) override;
+};

@@ -23,8 +23,7 @@ SceneManager::~SceneManager()
 void SceneManager::AddGameObject(GameObject* obj)
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		currentScene->AddGameObject(obj);
 	}
 }
@@ -34,8 +33,7 @@ void SceneManager::AddGameObject(GameObject* obj)
 std::vector<GameObject*>& SceneManager::GetGameObjects()
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		return currentScene->GetGameObjects();
 	}
 	return std::vector<GameObject*>();
@@ -46,8 +44,7 @@ std::vector<GameObject*>& SceneManager::GetGameObjects()
 void SceneManager::OnKeyboard(int key, bool down)
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		currentScene->OnKeyboard(key, down);
 	}
 }
@@ -56,7 +53,7 @@ void SceneManager::OnKeyboard(int key, bool down)
 
 void SceneManager::OnMouseMove(int x, int y)
 {
-	Scene *currentScene = GetCurrentScene();
+	Scene* currentScene = GetCurrentScene();
 	if (currentScene) {
 		currentScene->OnMouseMove(x, y);
 	}
@@ -65,8 +62,7 @@ void SceneManager::OnMouseMove(int x, int y)
 void SceneManager::OnMessage(Message* msg)
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		currentScene->OnMessage(msg);
 	}
 }
@@ -77,8 +73,7 @@ void SceneManager::OnMessage(Message* msg)
 void SceneManager::Update(double deltaTime, long time)
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		currentScene->Update(deltaTime, time);
 	}
 }
@@ -89,8 +84,7 @@ void SceneManager::Update(double deltaTime, long time)
 void SceneManager::Render(RenderSystem* renderer)
 {
 	Scene* currentScene = GetCurrentScene();
-	if (currentScene)
-	{
+	if (currentScene) {
 		currentScene->Render(renderer);
 	}
 }

@@ -3,9 +3,7 @@
 
 class GameObject;
 
-class CollisionMessage
-	: public Message
-{
+class CollisionMessage : public Message {
 	// Data
 protected:
 	GameObject* _collider;
@@ -16,15 +14,9 @@ public:
 	CollisionMessage(GameObject* collider, GameObject* collidee);
 	virtual ~CollisionMessage();
 
+	GameObject* GetCollider() const { return _collider; }
 
-	// Gets/Sets
-public:
-	GameObject* GetCollider()								const	{ return _collider; }
-	GameObject* GetCollidee()								const	{ return _collidee; }
-	GameObject* GetOtherCollisionObject(GameObject* obj)	const	{ return _collider == obj ? _collidee : _collider; }
+	GameObject* GetCollidee() const { return _collidee; }
 
-	// Functions
-public:
-
-
+	GameObject* GetOtherCollisionObject(GameObject* obj) const { return _collider == obj ? _collidee : _collider; }
 };

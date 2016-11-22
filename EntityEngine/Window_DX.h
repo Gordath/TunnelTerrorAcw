@@ -16,34 +16,19 @@
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "d3dx10.lib")
 
-// DirectX window
-class Window_DX :
-	public Window
-{
-	// Data
+class Window_DX : public Window {
 private:
 
-	HWND					_hWnd;
+	HWND _hWnd;
 
-	// Structors
 public:
-	// Constructor
 	Window_DX(Game* game, int width, int height);
 
-	// Destructor
 	virtual ~Window_DX();
 
-
-	// Functions
-public:
-
-	// Windows Message loop
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-
-	// Initialise window
 	void Initialise() override;
 };
-
 
 #endif

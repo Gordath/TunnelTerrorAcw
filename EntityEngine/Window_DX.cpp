@@ -9,7 +9,6 @@
 Window_DX::Window_DX(Game* game, int width, int height)
 	: Window(game, width, height)
 {
-
 	// Reset RNG
 	srand(time(nullptr));
 
@@ -26,21 +25,21 @@ Window_DX::Window_DX(Game* game, int width, int height)
 
 	RegisterClassEx(&wc);
 
-	RECT wr = { 0, 0, _width, _height };
+	RECT wr = {0, 0, _width, _height};
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
 
 	_hWnd = CreateWindowEx(NULL,
-		L"WindowClass",
-		L"Tunnel Terror",
-		WS_OVERLAPPEDWINDOW,
-		300,
-		300,
-		wr.right - wr.left,
-		wr.bottom - wr.top,
-		nullptr,
-		nullptr,
-		GetModuleHandle(nullptr),
-		nullptr);
+	                           L"WindowClass",
+	                           L"Tunnel Terror",
+	                           WS_OVERLAPPEDWINDOW,
+	                           300,
+	                           300,
+	                           wr.right - wr.left,
+	                           wr.bottom - wr.top,
+	                           nullptr,
+	                           nullptr,
+	                           GetModuleHandle(nullptr),
+	                           nullptr);
 
 	ShowWindow(_hWnd, SW_SHOWDEFAULT);
 }
@@ -90,10 +89,8 @@ void Window_DX::Initialise()
 	_game->Initialise(this);
 
 	MSG msg;
-	while (!_game->GetQuitFlag())
-	{
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
+	while (!_game->GetQuitFlag()) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 

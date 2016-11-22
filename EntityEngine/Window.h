@@ -7,36 +7,23 @@ class Renderer;
 
 // Generic window class
 // Handles window setup and input
-class Window
-{
+class Window {
 	// Constants and statics
 public:
 	// Singleton (sort of)
-	static Window*							TheWindow;
+	static Window* TheWindow;
 
-	// Data
-public:
-	Game*									_game;
-	Renderer*								_renderer;
-	int										_width, _height;
-	int										_cursorX, _cursorY;
+	Game* _game;
+	Renderer* _renderer;
+	int _width, _height;
+	int _cursorX, _cursorY;
 
-
-	// Structors
-public:
 	Window(Game* game, int width, int height);
 	virtual ~Window();
 
+	Game* GetGame() const { return _game; }
+	Renderer* GetRenderer() const { return _renderer; }
 
-	// Gets/sets
-public:
-	Game* GetGame()					const	{ return _game; }
-	Renderer* GetRenderer()			const	{ return _renderer; }
+	virtual void Initialise() = 0;
 
-
-	// Functions
-public:
-	virtual void Initialise()				= 0;
-	
 };
-

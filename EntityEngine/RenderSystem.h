@@ -5,10 +5,7 @@
 
 class RenderComponent;
 
-// Moves objects around based on PhysicsComponents
-class RenderSystem :
-	public System
-{
+class RenderSystem : public System {
 	// Data
 protected:
 	Renderer* _renderer;
@@ -19,15 +16,10 @@ public:
 	RenderSystem();
 	virtual ~RenderSystem();
 
-	// Get / sets
-public:
-	Renderer* GetRenderer()		const	{ return _renderer; }
-	void SetRenderer(Renderer* r)		{ _renderer = r; }
-	glm::mat4 GetMVM()			const	{ return _MVM; }
-	void SetMVM(glm::mat4 m)			{ _MVM = m; }
+	Renderer* GetRenderer() const { return _renderer; }
+	void SetRenderer(Renderer* r) { _renderer = r; }
+	glm::mat4 GetMVM() const { return _MVM; }
+	void SetMVM(glm::mat4 m) { _MVM = m; }
 
-	// Functions
-public:
-	virtual void Process(std::vector<GameObject*>& list, double deltaTime);
+	void Process(std::vector<GameObject*>& list, double deltaTime) override;
 };
-

@@ -14,11 +14,6 @@ typedef std::vector<Observer*>::iterator ObserverListIterator;
 /// This class should be inherited by objects that want to be observed and pass messages to their Observers
 class ObserverSubject
 {
-	// Constants
-public:
-
-
-	// Data
 protected:
 	// Listener registration
 	MessageListenerMap	_messageListeners;
@@ -33,8 +28,6 @@ public:
 	{
 	}
 
-	// Functions
-public:
 	/// Register an observer for a particular type of message
 	void RegisterListener(std::string msg, Observer* o);
 
@@ -43,6 +36,5 @@ public:
 
 	/// Broadcast a message to any listeners
 	void BroadcastMessage(Message* m);
-
 };
 

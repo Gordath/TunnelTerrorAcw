@@ -9,7 +9,10 @@ protected:
 	int _numIndices;
 
 public:
-	IBO() : _numIndices(0) {}
+	IBO() : _numIndices(0)
+	{
+	}
+
 	virtual ~IBO() = default;
 
 	virtual void Create(Renderer* renderer, unsigned int indices[], int numIndices) = 0;

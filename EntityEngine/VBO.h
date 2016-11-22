@@ -4,13 +4,15 @@
 class Renderer;
 
 // Abstract VBO class
-class VBO
-{
+class VBO {
 protected:
 	int _numVertices;
 
 public:
-	VBO() : _numVertices(0) {}
+	VBO() : _numVertices(0)
+	{
+	}
+
 	virtual ~VBO() = default;
 
 	virtual void Create(Renderer* renderer, Vertex vertices[], int numVertices) = 0;

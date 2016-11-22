@@ -7,7 +7,7 @@ class Mesh;
 
 class DebugDummy : public GameObject {
 public:
-	DebugDummy(Mesh *mesh);
+	DebugDummy(Mesh* mesh);
 };
 
 #endif //DEBUG_DUMMY_H_

@@ -6,17 +6,15 @@
 
 CollisionMessage::CollisionMessage(GameObject* collider, GameObject* collidee)
 	: Message("collision"),
-	_collider(collider),
-	_collidee(collidee)
+	  _collider(collider),
+	  _collidee(collidee)
 {
-
 }
 
 /******************************************************************************************************************/
 
 CollisionMessage::~CollisionMessage()
 {
-
 }
 
 /******************************************************************************************************************/

@@ -1,12 +1,12 @@
 #include "pipe.h"
 #include "RenderComponent.h"
 
-void Pipe::createFirstRing(float u, Vertex *vertArr) const
+void Pipe::CreateFirstRing(float u, Vertex *vertArr) const
 {
 	float vStep = (2.0f * PI) / _pipeSegments;
 
-	Vector4 posA = getPointOnTorus(0.0f, 0.0f);
-	Vector4 posB = getPointOnTorus(u, 0.0f);
+	Vector4 posA = GetPointOnTorus(0.0f, 0.0f);
+	Vector4 posB = GetPointOnTorus(u, 0.0f);
 
 	Vertex vertexA{ posA.x(), posA.y(), posA.z(), 1.0f, 1.0f, 1.0f };
 	Vertex vertexB{ posB.x(), posB.y(), posB.z(), 1.0f, 1.0f, 1.0f };
@@ -14,48 +14,48 @@ void Pipe::createFirstRing(float u, Vertex *vertArr) const
 	for (int v = 1, i = 0; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertexA;
 
-		Vector4 tmpPos{ getPointOnTorus(0.0f, v * vStep) };
+		Vector4 tmpPos{ GetPointOnTorus(0.0f, v * vStep) };
 		Vertex tmpVert{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 1.0f, 1.0f };
 		
 		vertArr[i + 1] = vertexA = tmpVert;
 		vertArr[i + 2] = vertexB;
 
-		tmpPos = getPointOnTorus(u, v * vStep);
-		tmpVert = Vertex{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, 1.0f, 1.0f };
+		posA = GetPointOnTorus(u, v * vStep);
+		tmpVert = Vertex{ posA.x(), posA.y(), posA.z(), 1.0f, 1.0f, 1.0f };
 
 		vertArr[i + 3] = vertexB = tmpVert;
 	}
 }
 
-void Pipe::createRing(float u, int i, Vertex* vertArr) const
+void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 {
 	float vStep = (2.0f * PI) / _pipeSegments;
 	int ringOffset = _pipeSegments * 4;
 
-	Vector4 pos = getPointOnTorus(u, 0.0f);
+	Vector4 pos = GetPointOnTorus(u, 0.0f);
 	Vertex vertex{ pos.x(), pos.y(), pos.z(), 1.0f, 1.0f, 1.0f };
 	for (int v = 1; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertArr[i - ringOffset + 2];
 		vertArr[i + 1] = vertArr[i - ringOffset + 3];
 		vertArr[i + 2] = vertex;
 
-		pos = getPointOnTorus(u, v * vStep);
+		pos = GetPointOnTorus(u, v * vStep);
 
 		vertArr[i + 3] = vertex = Vertex{pos.x(), pos.y(), pos.z(), 1.0f, 1.0f, 1.0f};
 	}
 }
 
-Mesh* Pipe::generateMesh() const
+Mesh* Pipe::GenerateMesh() const
 {
 	int vertCount = _pipeSegments * _curveSegments * 4;
 	Vertex *vertices = new Vertex[vertCount];
 
 	float uStep = (2.0f * PI) / _curveSegments;
-	createFirstRing(uStep, vertices);
+	CreateFirstRing(uStep, vertices);
 
 	int iDelta = _pipeSegments * 4;
 	for (int u = 2, i = iDelta; u <= _curveSegments; u++, i += iDelta) {
-		createRing(u * uStep, i, vertices);
+		CreateRing(u * uStep, i, vertices);
 	}
 
 	Mesh *m{ new Mesh };
@@ -75,7 +75,7 @@ Pipe::Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeS
                                                                                            _pipeSegments(pipeSegments)
 {
 	
-	Mesh* m = generateMesh();
+	Mesh* m = GenerateMesh();
 	m->GenerateIndices();
 
 	m->CreateBuffers(renderer);
@@ -84,7 +84,7 @@ Pipe::Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeS
 	rc->SetMesh(m);
 }
 
-Vector4 Pipe::getPointOnTorus(float u, float v) const
+Vector4 Pipe::GetPointOnTorus(float u, float v) const
 {
 	float r = _curveRadius + _pipeRadius * cos(v);
 	return Vector4{r * sin(u), r * cos(u), _pipeRadius * sin(v)};

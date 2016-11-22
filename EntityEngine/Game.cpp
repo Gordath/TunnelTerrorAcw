@@ -23,9 +23,8 @@ Game::Game()
 Game::~Game()
 {
 	for (MeshMapIterator i = _meshes.begin();
-		i != _meshes.end();
-		++i)
-	{
+	     i != _meshes.end();
+	     ++i) {
 		delete i->second;
 	}
 	_meshes.clear();
@@ -37,7 +36,7 @@ void Game::Initialise(Window* w)
 {
 	_window = w;
 	_renderer = w->GetRenderer();
-	
+
 	_renderSystem.SetRenderer(_renderer);
 }
 
@@ -67,8 +66,6 @@ void Game::Run()
 	double temp_time = clock();
 	_deltaTime = (temp_time - _currentTime) / CLOCKS_PER_SEC;
 	_currentTime = temp_time;
-
-
 }
 
 /******************************************************************************************************************/
