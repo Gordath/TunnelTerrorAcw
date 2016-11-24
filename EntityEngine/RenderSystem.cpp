@@ -28,7 +28,7 @@ void RenderSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 	{
 		if (obj->IsAlive())
 		{
-			if (RenderComponent* rc = (RenderComponent*)obj->GetComponent("render"))
+			if (RenderComponent* rc = static_cast<RenderComponent*>(obj->GetComponent("render")))
 			{
 				_renderer->Draw(rc, _MVM);
 			}

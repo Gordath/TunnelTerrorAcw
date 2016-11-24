@@ -16,9 +16,6 @@
     <Filter Include="GameObjects">
       <UniqueIdentifier>{5c203542-825c-45ef-92e0-38c5502f8e71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems">
-      <UniqueIdentifier>{82dc4c2d-eeee-474b-86c5-504bf6c38b01}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\tunnel_terror_game.cpp">
@@ -39,9 +36,6 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\pipe_system.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tunnel_terror_game.h">
@@ -58,9 +52,6 @@
     </ClInclude>
     <ClInclude Include="include\camera.h">
       <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\pipe_system.h">
-      <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

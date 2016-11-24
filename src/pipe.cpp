@@ -45,12 +45,13 @@ void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 	}
 }
 
-Mesh* Pipe::GenerateMesh() const
+Mesh* Pipe::GenerateMesh()
 {
 	int vertCount = _pipeSegments * _curveSegments * 4;
 	Vertex *vertices = new Vertex[vertCount];
 
-	float uStep = (2.0f * PI) / _curveSegments;
+	float uStep = (2.0f * PI) / _curveSegments * _curveDistance;
+	_angleZ = - uStep * _curveSegments;
 	CreateFirstRing(uStep, vertices);
 
 	int iDelta = _pipeSegments * 4;
@@ -89,3 +90,13 @@ Vector4 Pipe::GetPointOnTorus(float u, float v) const
 	float r = _curveRadius + _pipeRadius * cos(v);
 	return Vector4{r * sin(u), r * cos(u), _pipeRadius * sin(v)};
 }
+
+void Pipe::CalcXform()
+{
+	GameObject::CalcXform();
+
+	if (_parent) {
+		_Xform = _parent->GetXform() * _Xform * _extraXform;
+	}
+}
+

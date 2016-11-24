@@ -5,15 +5,18 @@
 
 class Pipe : public GameObject {
 private:
+	Pipe* _parent{ nullptr };
 	float _curveRadius;
 	float _pipeRadius;
 
-	float _curveSegments;
-	float _pipeSegments;
+	int _curveSegments;
+	int _pipeSegments;
+
+	float _curveDistance = 0.25f;
 
 	void CreateFirstRing(float u, Vertex* vertArr) const;
 	void CreateRing(float u, int i, Vertex* vertArr) const;
-	Mesh* GenerateMesh() const;
+	Mesh* GenerateMesh();
 
 public:
 	Pipe() = default;
@@ -21,6 +24,8 @@ public:
 	Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeSegments, Renderer* renderer);
 
 	Vector4 GetPointOnTorus(float u, float v) const;
+
+	void SetParent(Pipe* parent) { _parent = parent; }
 
 	void SetCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 
@@ -30,13 +35,15 @@ public:
 
 	void SetPipeSegments(float pipeSegments) { _pipeSegments = pipeSegments; }
 
-	float SetCurveRadius() const { return _curveRadius; }
+	float GetCurveRadius() const { return _curveRadius; }
 
 	float GetPipeRadius() const { return _pipeRadius; }
 
-	float GetCurveSegments() const { return _curveSegments; }
+	int GetCurveSegments() const { return _curveSegments; }
 
-	float GetPipeSegments() const { return _pipeSegments; }
+	int GetPipeSegments() const { return _pipeSegments; }
+
+	void CalcXform() override;
 };
 
 #endif //PIPE_H_

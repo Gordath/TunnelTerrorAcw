@@ -4,31 +4,34 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include "Window.h"
+#include <random>
 
 void GameScene::Initialise()
 {
-	Pipe *pipe = new Pipe(4, 1, 20, 10, _sceneManager->GetGame()->GetRenderer());
+	for (int i = 0, j = 1; i < MAX_PIPES; i++, j++) {
+		Pipe* pipe = pipes[i] = new Pipe(4, 1, 20, 10, _sceneManager->GetGame()->GetRenderer());
 
-	_gameObjects.push_back(pipe);
+		if (i == 0) {
+			pipe->SetAngleZ(0);
+		}
+		else {
+			pipe->SetParent(pipes[i - 1]);
 
-//	float uDelta = (2.0f * PI) / pipe->GetCurveSegments();
-//	float vDelta = (2.0f * PI) / pipe->GetPipeSegments();
-//	for (int u = 0; u < pipe->GetCurveSegments(); ++u) {
-//		for (int v = 0; v < pipe->GetPipeSegments(); ++v) {
-//			Vector4 p = pipe->GetPointOnTorus(u * uDelta, v * vDelta);
-//			DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
-//			dd->SetScale(0.2f);
-//			dd->SetPosition(p);
-//			_gameObjects.push_back(dd);
-//		}
-//	}
-	
+			float relativeRotation = toRad((rand() % pipe->GetCurveSegments()) * (360.0f / pipe->GetPipeSegments()));
 
-//	DebugDummy *dd = new DebugDummy(_sceneManager->GetGame()->GetMesh("cube"));
-//	dd->Reset();
-//	_gameObjects.push_back(dd);
+			pipe->SetPosition(Vector4{});
 
-	for(auto gameObject : _gameObjects) {
+			glm::mat4 extraXForm = glm::mat4(1);
+			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, 4, 0.0f });
+			extraXForm = glm::rotate(extraXForm, relativeRotation, glm::vec3{ 1.0f, 0.0f, 0.0f });
+			extraXForm = glm::translate(extraXForm, glm::vec3{0.0f, -4, 0.0f});
+
+			pipe->SetExtraXForm(extraXForm);
+		}
+		_gameObjects.push_back(pipe);
+	}
+
+	for (auto gameObject : _gameObjects) {
 		gameObject->Start();
 	}
 }
@@ -50,10 +53,10 @@ void GameScene::Update(double deltaTime, long time)
 	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(toRad(60.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
 	MVM = glm::mat4{ 1.0f };
 	MVM *= proj;
-	MVM = glm::translate(MVM, glm::vec3{ 0.0, 0.0, 20.0f });
+	MVM = glm::translate(MVM, glm::vec3{ 0.0, 0.0, 300.0f });
 
 	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
-	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
+//	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
 void GameScene::Render(RenderSystem* renderer)

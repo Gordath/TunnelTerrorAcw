@@ -4,6 +4,7 @@
 #include "Vector4.h"
 #include "MathsHelper.h"
 #include "ObserverSubject.h"
+#include <GL/GLM/detail/type_mat4x4.hpp>
 
 // Forward references
 class GameObjectComponent;
@@ -20,9 +21,21 @@ typedef std::vector<GameObjectComponent*>::iterator ComponentListIterator;
 class GameObject : public ObserverSubject {
 protected:
 	std::string _type; // Type of the object
-	float _angle; // Angle of object in degrees
-	float _scale; // Scale of the object (1 = normal)
 	Vector4 _position; // Position of object's origin
+	float _angleX; // Angle of object in degrees
+	float _angleY;
+	float _angleZ;
+	float _scale; // Scale of the object (1 = normal)
+
+	Vector4 _localPosition;
+	float _localAngleX;
+	float _localAngleY;
+	float _localAngleZ;
+	float _localScale;
+
+	glm::mat4 _Xform;
+	glm::mat4 _extraXform;
+
 	bool _alive; // Alive flag; when false, is not updated
 	bool _deleteFlag; // Set when you want this game object to be deleted by the game
 
@@ -39,14 +52,42 @@ public:
 	GameObject(const GameObject&) = delete;
 	GameObject& operator=(const GameObject&) = delete;
 
-	float GetAngle() const { return _angle; }
-	void SetAngle(float v) { _angle = v; }
+	Vector4 GetPosition() const { return _position; }
+	void SetPosition(const Vector4& v) { _position = v; }
+
+	float GetAngleX() const { return _angleX; }
+	void SetAngleX(float v) { _angleX = v; }
+
+	float GetAngleY() const { return _angleY; }
+	void SetAngleY(float v) { _angleY = v; }
+
+	float GetAngleZ() const { return _angleZ; }
+	void SetAngleZ(float v) { _angleZ = v; }
 
 	float GetScale() const { return _scale; }
 	void SetScale(float v) { _scale = v; }
 
-	Vector4 GetPosition() const { return _position; }
-	void SetPosition(Vector4 v) { _position = v; }
+	Vector4 GetLocalPosition() const { return _localPosition; }
+	void SetLocalPosition(const Vector4& v) { _localPosition = v; }
+
+	float GetLocalAngleX() const { return _localAngleX; }
+	void SetLocalAngleX(float v) { _localAngleX = v; }
+
+	float GetLocalAngleY() const { return _localAngleY; }
+	void SetLocalAngleY(float v) { _localAngleY = v; }
+
+	float GetLocalAngleZ() const { return _localAngleZ; }
+	void SetLocalAngleZ(float v) { _localAngleZ = v; }
+
+	float GetLocalScale() const { return _localScale; }
+	void SetLocalScale(float v) { _localScale = v; }
+
+	glm::mat4 GetXform() const { return _Xform; }
+	void SetXform(const glm::mat4& xform) { _Xform = xform; }
+	virtual void CalcXform();
+
+	glm::mat4 GetExtraXform() const { return _extraXform; }
+	void SetExtraXForm(const glm::mat4& xform) { _extraXform = xform; }
 
 	bool IsAlive() const { return _alive; }
 	void SetAlive(bool v) { _alive = v; }
@@ -57,8 +98,11 @@ public:
 	std::string GetType() const { return _type; }
 
 	bool AddComponent(GameObjectComponent* goc);
+
 	bool RemoveComponent(GameObjectComponent* goc);
+	
 	bool RemoveComponent(std::string componentType);
+	
 	GameObjectComponent* GetComponent(std::string type);
 
 	// Setup function -- called to initialise object and its components. Should only be called once

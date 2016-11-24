@@ -28,9 +28,22 @@ public:
 	void ShouldDraw(bool v)							{ _shouldDraw = v; }
 
 	// Get position/scale/angle etc from parent object
-	float GetAngle()						const	{ return _parent->GetAngle(); }
+	Vector4 GetPosition()					const { return _parent->GetPosition(); }
+	float GetAngleX()						const	{ return _parent->GetAngleX(); }
+	float GetAngleY()						const { return _parent->GetAngleY(); }
+	float GetAngleZ()						const { return _parent->GetAngleZ(); }
 	float GetScale()						const	{ return _parent->GetScale(); }
-	Vector4 GetPosition()					const	{ return _parent->GetPosition(); }
+	
+	Vector4 GetLocalPosition()					const { return _parent->GetLocalPosition(); }
+	float GetLocalAngleX()						const { return _parent->GetLocalAngleX(); }
+	float GetLocalAngleY()						const { return _parent->GetLocalAngleY(); }
+	float GetLocalAngleZ()						const { return _parent->GetLocalAngleZ(); }
+	float GetLocalScale()						const { return _parent->GetLocalScale(); }
+
+	glm::mat4 GetExtraXform() const { return _parent->GetExtraXform(); }
+
+	glm::mat4 GetXform() const { return _parent->GetXform(); }
+	void CalcXform() const { _parent->CalcXform(); }
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
 	void Start() override;

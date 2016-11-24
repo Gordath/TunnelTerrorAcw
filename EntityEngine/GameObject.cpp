@@ -1,13 +1,16 @@
 #include "GameObject.h"
 #include "GameObjectComponent.h"
 #include "Message.h"
+#include <GL/GLM/GTC/matrix_transform.inl>
 
 /******************************************************************************************************************/
 // Structors
 /******************************************************************************************************************/
 
 GameObject::GameObject(std::string type)
-	: _angle(0),
+	: _angleX(0),
+	  _angleY(0),
+	  _angleZ(0),
 	  _scale(1),
 	  _position(0, 0),
 	  _alive(true),
@@ -21,6 +24,16 @@ GameObject::GameObject(std::string type)
 GameObject::~GameObject()
 {
 	End();
+}
+
+void GameObject::CalcXform()
+{
+	_Xform = glm::mat4(1.0f);
+	_Xform = glm::translate(_Xform, glm::vec3(_position.x(), _position.y(), _position.z()));
+	_Xform = glm::rotate(_Xform, _angleX, glm::vec3{ 1.0f, 0.0f, 0.0f });
+	_Xform = glm::rotate(_Xform, _angleY, glm::vec3{ 0.0f, 1.0f, 0.0f });
+	_Xform = glm::rotate(_Xform, _angleZ, glm::vec3{ 0.0f, 0.0f, 1.0f });
+	_Xform = glm::scale(_Xform, glm::vec3{ _scale, _scale, _scale });
 }
 
 /******************************************************************************************************************/
@@ -76,7 +89,7 @@ GameObjectComponent* GameObject::GetComponent(std::string type)
 	}
 
 	// Couldn't find it
-	return NULL;
+	return nullptr;
 }
 
 /******************************************************************************************************************/

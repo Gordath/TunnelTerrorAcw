@@ -200,6 +200,11 @@ inline Vector4 operator-(const Vector4& a)
 ////////////////////////////////////
 // Inlines
 
+inline Vector4 operator+(const Vector4& lhs, const Vector4& rhs) 
+{
+	return Vector4{ lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z(), lhs.w() + rhs.w() };
+}
+
 inline void Vector4::set(float x, float y, float z, float w)
 {
 	_elements[_X] = x;

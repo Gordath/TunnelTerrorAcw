@@ -4,11 +4,18 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include <GL/GLM/glm.hpp>
+#include "pipe.h"
 
 class GameScene : public Scene {
 protected:
 	PhysicsSystem _physicsSystem;
 	CollisionSystem _collisionSystem;
+
+	//PIPES -------------------------------------
+	static const int MAX_PIPES = 10000;
+
+	Pipe* pipes[MAX_PIPES];
+	//-------------------------------------------
 
 	glm::mat4 MVM;
 
