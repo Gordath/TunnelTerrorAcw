@@ -34,6 +34,10 @@ void GameObject::CalcXform()
 	_Xform = glm::rotate(_Xform, _angleY, glm::vec3{ 0.0f, 1.0f, 0.0f });
 	_Xform = glm::rotate(_Xform, _angleZ, glm::vec3{ 0.0f, 0.0f, 1.0f });
 	_Xform = glm::scale(_Xform, glm::vec3{ _scale, _scale, _scale });
+
+	if (_parent) {
+		_Xform = _parent->GetXform() * _Xform * _extraXform;
+	}
 }
 
 /******************************************************************************************************************/

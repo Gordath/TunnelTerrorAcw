@@ -49,7 +49,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 	AddMesh("cube", cube);
 
 	for (auto mesh : _meshes) {
-		mesh.second->GenerateIndices();
+		mesh.second->GenerateIndices(VertexWinding::CLOCKWISE);
 		mesh.second->CreateBuffers(_renderer);
 	}
 

@@ -11,8 +11,9 @@ protected:
 	PhysicsSystem _physicsSystem;
 	CollisionSystem _collisionSystem;
 
+	GameObject* _pipeSystem;
 	//PIPES -------------------------------------
-	static const int MAX_PIPES = 10000;
+	static const int MAX_PIPES = 5;
 
 	Pipe* pipes[MAX_PIPES];
 	//-------------------------------------------

@@ -124,7 +124,7 @@ float Mesh::CalculateMaxSize()
 }
 
 
-void Mesh::GenerateIndices()
+void Mesh::GenerateIndices(VertexWinding winding)
 {
 	int quad_count = _vertices.size() / 4;
 	int triangle_count = quad_count * 2;
@@ -133,8 +133,19 @@ void Mesh::GenerateIndices()
 
 	for (int i = 0, j = 0; i < _indices.size(); i += 6 , j += 4) {
 		_indices[i] = j;
-		_indices[i + 1] = _indices[i + 4] = j + 1;
-		_indices[i + 2] = _indices[i + 3] = j + 2;
+		switch (winding) {
+		case VertexWinding::CLOCKWISE:
+			_indices[i + 1] = _indices[i + 4] = j + 1;
+			_indices[i + 2] = _indices[i + 3] = j + 2;
+			break;
+		case VertexWinding::ANTICLOCKWISE:
+			_indices[i + 1] = _indices[i + 4] = j + 2;
+			_indices[i + 2] = _indices[i + 3] = j + 1;
+			break;
+		default:
+			break;
+		} 
+		
 		_indices[i + 5] = j + 3;
 	}
 }

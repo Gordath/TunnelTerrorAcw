@@ -6,6 +6,11 @@
 
 class Renderer;
 
+enum class VertexWinding {
+	CLOCKWISE,
+	ANTICLOCKWISE
+};
+
 class Mesh {
 private:
 	bool _locked; // True once we've made the VBO; can no longer add vertices etc unless reset
@@ -44,5 +49,5 @@ public:
 	// Calculates max size of mesh in any direction
 	float CalculateMaxSize();
 
-	void GenerateIndices();
+	void GenerateIndices(VertexWinding winding);
 };

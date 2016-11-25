@@ -20,6 +20,8 @@ typedef std::vector<GameObjectComponent*>::iterator ComponentListIterator;
 // Now new and improved to use a component-based architecture
 class GameObject : public ObserverSubject {
 protected:
+	GameObject* _parent{ nullptr };
+
 	std::string _type; // Type of the object
 	Vector4 _position; // Position of object's origin
 	float _angleX; // Angle of object in degrees
@@ -51,6 +53,8 @@ public:
 
 	GameObject(const GameObject&) = delete;
 	GameObject& operator=(const GameObject&) = delete;
+
+	void SetParent(GameObject* parent) { _parent = parent; }
 
 	Vector4 GetPosition() const { return _position; }
 	void SetPosition(const Vector4& v) { _position = v; }
@@ -84,7 +88,7 @@ public:
 
 	glm::mat4 GetXform() const { return _Xform; }
 	void SetXform(const glm::mat4& xform) { _Xform = xform; }
-	virtual void CalcXform();
+	void CalcXform();
 
 	glm::mat4 GetExtraXform() const { return _extraXform; }
 	void SetExtraXForm(const glm::mat4& xform) { _extraXform = xform; }

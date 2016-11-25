@@ -5,7 +5,6 @@
 
 class Pipe : public GameObject {
 private:
-	Pipe* _parent{ nullptr };
 	float _curveRadius;
 	float _pipeRadius;
 
@@ -13,6 +12,8 @@ private:
 	int _pipeSegments;
 
 	float _curveDistance = 0.25f;
+
+	float _relativeRotation;
 
 	void CreateFirstRing(float u, Vertex* vertArr) const;
 	void CreateRing(float u, int i, Vertex* vertArr) const;
@@ -25,8 +26,6 @@ public:
 
 	Vector4 GetPointOnTorus(float u, float v) const;
 
-	void SetParent(Pipe* parent) { _parent = parent; }
-
 	void SetCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 
 	void SetPipeRadius(float pipeRadius) { _pipeRadius = pipeRadius; }
@@ -34,6 +33,8 @@ public:
 	void SetCurveSegments(float curveSegments) { _curveSegments = curveSegments; }
 
 	void SetPipeSegments(float pipeSegments) { _pipeSegments = pipeSegments; }
+
+	void SetRelativeRotation(float relativeRotation) { _relativeRotation = relativeRotation; }
 
 	float GetCurveRadius() const { return _curveRadius; }
 
@@ -43,7 +44,7 @@ public:
 
 	int GetPipeSegments() const { return _pipeSegments; }
 
-	void CalcXform() override;
+	float GetRelativeRotation() const { return _relativeRotation; }
 };
 
 #endif //PIPE_H_
