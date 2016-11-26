@@ -114,8 +114,8 @@ float Mesh::CalculateMaxSize()
 	float max = 0;
 	for (int i = 0; i < NumVertices(); i++) {
 		Vertex& v = _vertices[i];
-		Vector4 vec(v.x, v.y, v.z, 1);
-		float dist = vec.lengthSquared();
+		glm::vec4 vec(v.position, 1);
+		float dist = vec.length() * vec.length();
 		if (dist > max) {
 			max = dist;
 		}
@@ -160,21 +160,20 @@ bool Mesh::LoadFromFile(std::string filename)
 		in >> numVertices;
 		for (int i = 0; i < numVertices; i++) {
 			Vertex v;
-			in >> v.x;
-			in >> v.y;
-			in >> v.z;
-			in >> v.r;
-			in >> v.g;
-			in >> v.b;
-			in >> v.a;
+			in >> v.position.x;
+			in >> v.position.y;
+			in >> v.position.z;
+//			in >> v.r;
+//			in >> v.g;
+//			in >> v.b;
+//			in >> v.a;
 			AddVertex(v);
 		}
 		return true;
 	}
-	else {
-		// Could not open file
-		return false;
-	}
+
+	// Could not open file
+	return false;
 }
 
 /******************************************************************************************************************/
@@ -185,13 +184,13 @@ bool Mesh::LoadFromStream(std::ifstream& in)
 	in >> numVertices;
 	for (int i = 0; i < numVertices; i++) {
 		Vertex v;
-		in >> v.x;
-		in >> v.y;
-		in >> v.z;
-		in >> v.r;
-		in >> v.g;
-		in >> v.b;
-		in >> v.a;
+		in >> v.position.x;
+		in >> v.position.y;
+		in >> v.position.z;
+//		in >> v.r;
+//		in >> v.g;
+//		in >> v.b;
+//		in >> v.a;
 		AddVertex(v);
 	}
 	return true;

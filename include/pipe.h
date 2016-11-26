@@ -24,7 +24,7 @@ public:
 
 	Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeSegments, Renderer* renderer);
 
-	Vector4 GetPointOnTorus(float u, float v) const;
+	glm::vec3 GetPointOnTorus(float u, float v) const;
 
 	void SetCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 

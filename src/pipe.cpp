@@ -5,23 +5,23 @@ void Pipe::CreateFirstRing(float u, Vertex *vertArr) const
 {
 	float vStep = (2.0f * PI) / _pipeSegments;
 
-	Vector4 posA = GetPointOnTorus(0.0f, 0.0f);
-	Vector4 posB = GetPointOnTorus(u, 0.0f);
+	glm::vec3 posA = GetPointOnTorus(0.0f, 0.0f);
+	glm::vec3 posB = GetPointOnTorus(u, 0.0f);
 
-	Vertex vertexA{ posA.x(), posA.y(), posA.z(), absf(sin(u)), absf(cos(u)), 1.0f };
-	Vertex vertexB{ posB.x(), posB.y(), posB.z(), absf(sin(u)), absf(cos(u)), 1.0f };
+	Vertex vertexA{ posA, glm::vec4{absf(sin(u)), absf(cos(u)), 1.0f, 1.0f} };
+	Vertex vertexB{ posB, glm::vec4{absf(sin(u)), absf(cos(u)), 1.0f, 1.0f} };
 
 	for (int v = 1, i = 0; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertexA;
 
-		Vector4 tmpPos{ GetPointOnTorus(0.0f, v * vStep) };
-		Vertex tmpVert{ tmpPos.x(), tmpPos.y(), tmpPos.z(), 1.0f, absf(cos(u)), 1.0f };
+		glm::vec3 tmpPos{ GetPointOnTorus(0.0f, v * vStep) };
+		Vertex tmpVert{ tmpPos, glm::vec4{1.0f, absf(cos(u)), 1.0f, 1.0f} };
 		
 		vertArr[i + 1] = vertexA = tmpVert;
 		vertArr[i + 2] = vertexB;
 
 		posA = GetPointOnTorus(u, v * vStep);
-		tmpVert = Vertex{ posA.x(), posA.y(), posA.z(), 1.0f, absf(cos(u)), 1.0f };
+		tmpVert = Vertex{ posA, {1.0f, absf(cos(u)), 1.0f, 1.0f} };
 
 		vertArr[i + 3] = vertexB = tmpVert;
 	}
@@ -32,8 +32,8 @@ void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 	float vStep = (2.0f * PI) / _pipeSegments;
 	int ringOffset = _pipeSegments * 4;
 
-	Vector4 pos = GetPointOnTorus(u, 0.0f);
-	Vertex vertex{ pos.x(), pos.y(), pos.z(), 1.0f, 1.0f - u, 1.0f };
+	glm::vec3 pos = GetPointOnTorus(u, 0.0f);
+	Vertex vertex{ pos, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f } };
 	for (int v = 1; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertArr[i - ringOffset + 2];
 		vertArr[i + 1] = vertArr[i - ringOffset + 3];
@@ -41,7 +41,7 @@ void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 
 		pos = GetPointOnTorus(u, v * vStep);
 
-		vertArr[i + 3] = vertex = Vertex{pos.x(), pos.y(), pos.z(), 1.0f, 1.0f - u, 1.0f};
+		vertArr[i + 3] = vertex = Vertex{ pos, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f} };
 	}
 }
 
@@ -86,8 +86,8 @@ Pipe::Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeS
 	rc->SetMesh(m);
 }
 
-Vector4 Pipe::GetPointOnTorus(float u, float v) const
+glm::vec3 Pipe::GetPointOnTorus(float u, float v) const
 {
 	float r = _curveRadius + _pipeRadius * cos(v);
-	return Vector4{r * sin(u), r * cos(u), _pipeRadius * sin(v)};
+	return glm::vec3{r * sin(u), r * cos(u), _pipeRadius * sin(v)};
 }
