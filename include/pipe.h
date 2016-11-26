@@ -26,6 +26,8 @@ public:
 
 	glm::vec3 GetPointOnTorus(float u, float v) const;
 
+	glm::vec3 GetPointOnCurve(float u) const;
+
 	void SetCurveRadius(float curveRadius) { _curveRadius = curveRadius; }
 
 	void SetPipeRadius(float pipeRadius) { _pipeRadius = pipeRadius; }

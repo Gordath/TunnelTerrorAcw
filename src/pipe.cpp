@@ -92,3 +92,8 @@ glm::vec3 Pipe::GetPointOnTorus(float u, float v) const
 	float r = _curveRadius + _pipeRadius * cos(v);
 	return glm::vec3{r * sin(u), r * cos(u), _pipeRadius * sin(v)};
 }
+
+glm::vec3 Pipe::GetPointOnCurve(float u) const
+{
+	return glm::vec3{ _curveRadius * sin(u), _curveRadius * cos(u), 0.0f };
+}

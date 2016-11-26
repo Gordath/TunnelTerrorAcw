@@ -23,18 +23,19 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 {
-	if (_renderer == nullptr) return;
-	for (GameObject* obj : list)
-	{
-		if (obj->IsAlive())
-		{
-			if (RenderComponent* rc = static_cast<RenderComponent*>(obj->GetComponent("render")))
-			{
+	if (_renderer == nullptr)
+		return;
+
+	for (GameObject* obj : list) {
+
+		if (obj->IsAlive()) {
+
+			if (RenderComponent* rc = static_cast<RenderComponent*>(obj->GetComponent("render"))) {
 				_renderer->Draw(rc, _MVM);
 			}
+
 		}
 	}
-
 }
 
 /******************************************************************************************************************/

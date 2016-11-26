@@ -16,7 +16,7 @@ void GameScene::Initialise()
 	_gameObjects.push_back(_pipeSystem);
 
 	for (int i = 0; i < MAX_PIPES; i++) {
-		Pipe* pipe = pipes[i] = new Pipe(4, 1, 20, 10, _sceneManager->GetGame()->GetRenderer());
+		Pipe* pipe = pipes[i] = new Pipe(4, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
 
 		if (i == 0) {
 			pipe->SetParent(_pipeSystem);
