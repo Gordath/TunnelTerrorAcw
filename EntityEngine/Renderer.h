@@ -1,9 +1,7 @@
 #pragma once
-#include "Colour.h"
 
 // GLM
-#include "GL\GLM\GLM.hpp"
-#include "GL\GLM\GTC\matrix_transform.hpp"
+
 #include "GL\GLM\GTC\type_ptr.hpp"
 
 // Forward declarations
@@ -16,17 +14,17 @@ class Mesh;
 class Renderer {
 	// Data
 public:
-	Colour _clearColour; // Screen clear colour
+	glm::vec4 _clearColour; // Screen clear colour
 
 	Renderer();
 	virtual ~Renderer();
 
-	Colour GetClearColour() const { return _clearColour; }
-	void SetClearColour(Colour c) { _clearColour = c; }
+	glm::vec4 GetClearColour() const { return _clearColour; }
+	void SetClearColour(glm::vec4 c) { _clearColour = c; }
 
 	virtual void ClearScreen() = 0;
 
-	virtual void Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour) = 0;
+	virtual void Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour) = 0;
 	virtual void Draw(RenderComponent* gob, glm::mat4 MVM);
 
 	virtual void Destroy() = 0;

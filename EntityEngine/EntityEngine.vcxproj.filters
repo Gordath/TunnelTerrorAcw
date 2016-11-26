@@ -10,9 +10,6 @@
     <ClCompile Include="CollisionMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
-    <ClCompile Include="Colour.cpp">
-      <Filter>Platform Independent</Filter>
-    </ClCompile>
     <ClCompile Include="DeadObjectMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
@@ -95,9 +92,6 @@
     <ClCompile Include="MultiMesh.cpp">
       <Filter>Platform Independent</Filter>
     </ClCompile>
-    <ClCompile Include="Vector4.cpp">
-      <Filter>Platform Independent</Filter>
-    </ClCompile>
     <ClCompile Include="IBO_DX.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
@@ -105,16 +99,12 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="MathsHelper.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMessage.h">
       <Filter>Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="Colour.h">
-      <Filter>Platform Independent</Filter>
     </ClInclude>
     <ClInclude Include="DeadObjectMessage.h">
       <Filter>Messages</Filter>
@@ -205,9 +195,6 @@
       <Filter>Pattern Classes</Filter>
     </ClInclude>
     <ClInclude Include="MultiMesh.h">
-      <Filter>Platform Independent</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector4.h">
       <Filter>Platform Independent</Filter>
     </ClInclude>
     <ClInclude Include="IBO.h">

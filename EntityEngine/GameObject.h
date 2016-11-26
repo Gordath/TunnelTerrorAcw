@@ -1,8 +1,6 @@
 #pragma once
 #include <map>
 #include <vector>
-#include "Vector4.h"
-#include "MathsHelper.h"
 #include "ObserverSubject.h"
 #include <GL/GLM/detail/type_mat4x4.hpp>
 
@@ -23,17 +21,9 @@ protected:
 	GameObject* _parent{ nullptr };
 
 	std::string _type; // Type of the object
-	Vector4 _position; // Position of object's origin
-	float _angleX; // Angle of object in degrees
-	float _angleY;
-	float _angleZ;
-	float _scale; // Scale of the object (1 = normal)
-
-	Vector4 _localPosition;
-	float _localAngleX;
-	float _localAngleY;
-	float _localAngleZ;
-	float _localScale;
+	glm::vec3 _position; // Position of object's origin
+	glm::vec3 _eulerAngles;
+	glm::vec3 _scale{ 1.0f, 1.0f, 1.0f };
 
 	glm::mat4 _Xform;
 	glm::mat4 _extraXform;
@@ -56,35 +46,14 @@ public:
 
 	void SetParent(GameObject* parent) { _parent = parent; }
 
-	Vector4 GetPosition() const { return _position; }
-	void SetPosition(const Vector4& v) { _position = v; }
+	const glm::vec3& GetPosition() const { return _position; }
+	void SetPosition(const glm::vec3& v) { _position = v; }
 
-	float GetAngleX() const { return _angleX; }
-	void SetAngleX(float v) { _angleX = v; }
+	const glm::vec3& GetEulerAngles() const { return  _eulerAngles; }
+	void SetEulerAngles(const glm::vec3& angles) { _eulerAngles = angles; }
 
-	float GetAngleY() const { return _angleY; }
-	void SetAngleY(float v) { _angleY = v; }
-
-	float GetAngleZ() const { return _angleZ; }
-	void SetAngleZ(float v) { _angleZ = v; }
-
-	float GetScale() const { return _scale; }
-	void SetScale(float v) { _scale = v; }
-
-	Vector4 GetLocalPosition() const { return _localPosition; }
-	void SetLocalPosition(const Vector4& v) { _localPosition = v; }
-
-	float GetLocalAngleX() const { return _localAngleX; }
-	void SetLocalAngleX(float v) { _localAngleX = v; }
-
-	float GetLocalAngleY() const { return _localAngleY; }
-	void SetLocalAngleY(float v) { _localAngleY = v; }
-
-	float GetLocalAngleZ() const { return _localAngleZ; }
-	void SetLocalAngleZ(float v) { _localAngleZ = v; }
-
-	float GetLocalScale() const { return _localScale; }
-	void SetLocalScale(float v) { _localScale = v; }
+	const glm::vec3& GetScale() const { return _scale; }
+	void SetScale(const glm::vec3& v) { _scale = v; }
 
 	glm::mat4 GetXform() const { return _Xform; }
 	void SetXform(const glm::mat4& xform) { _Xform = xform; }

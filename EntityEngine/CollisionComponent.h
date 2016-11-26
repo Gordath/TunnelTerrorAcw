@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObjectComponent.h"
-#include "Vector4.h"
 #include "GameObject.h"
 
 class CollisionComponent
@@ -16,7 +15,7 @@ public:
 	CollisionComponent(GameObject* gob);
 	virtual ~CollisionComponent();
 
-	float GetCollisionRadius() const { return _radius * _parent->GetScale(); }
+	float GetCollisionRadius() const { return _radius * _parent->GetScale().x; }
 	void SetCollisionRadius(float r) { _radius = r; }
 
 	// Collision matrix

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <d3dx11async.h>
 #if BUILD_DIRECTX
 
 #include "Renderer_DX.h"
@@ -22,7 +23,7 @@ Renderer_DX::~Renderer_DX()
 
 void Renderer_DX::ClearScreen()
 {
-	_context->ClearRenderTargetView(_backbuffer, D3DXCOLOR(_clearColour.r(), _clearColour.g(), _clearColour.b(), _clearColour.a()));
+	_context->ClearRenderTargetView(_backbuffer, &_clearColour.x);
 	_context->ClearDepthStencilView(_depthStencil, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
@@ -49,13 +50,13 @@ void Renderer_DX::Destroy()
 
 /******************************************************************************************************************/
 
-void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour)
+void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour)
 {
 	MVM = glm::transpose(MVM);
 
 	UniformBuffer uniforms;
 	memcpy(&uniforms.MVM, &MVM[0][0], sizeof(DirectX::XMFLOAT4X4));
-	colour.copyToArray(reinterpret_cast<float*>(&uniforms.Colour));
+	memcpy(&uniforms.Colour, &colour.data, sizeof(DirectX::XMFLOAT4));
 
 	// Need to update uniform buffer here
 	D3D11_MAPPED_SUBRESOURCE ms;

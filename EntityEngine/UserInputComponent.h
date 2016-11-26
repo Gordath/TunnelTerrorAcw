@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObjectComponent.h"
-#include "Vector4.h"
 
 class UserInputComponent
 		: public GameObjectComponent {

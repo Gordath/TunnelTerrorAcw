@@ -1,27 +1,28 @@
 #include "pipe.h"
 #include "RenderComponent.h"
+#include <GL/GLM/gtc/constants.inl>
 
 void Pipe::CreateFirstRing(float u, Vertex *vertArr) const
 {
-	float vStep = (2.0f * PI) / _pipeSegments;
+	float vStep = (2.0f * glm::pi<float>()) / _pipeSegments;
 
 	glm::vec3 posA = GetPointOnTorus(0.0f, 0.0f);
 	glm::vec3 posB = GetPointOnTorus(u, 0.0f);
 
-	Vertex vertexA{ posA, glm::vec4{absf(sin(u)), absf(cos(u)), 1.0f, 1.0f} };
-	Vertex vertexB{ posB, glm::vec4{absf(sin(u)), absf(cos(u)), 1.0f, 1.0f} };
+	Vertex vertexA{ posA, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
+	Vertex vertexB{ posB, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
 
 	for (int v = 1, i = 0; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertexA;
 
 		glm::vec3 tmpPos{ GetPointOnTorus(0.0f, v * vStep) };
-		Vertex tmpVert{ tmpPos, glm::vec4{1.0f, absf(cos(u)), 1.0f, 1.0f} };
+		Vertex tmpVert{ tmpPos, glm::vec4{1.0f, fabs(cos(u)), 1.0f, 1.0f} };
 		
 		vertArr[i + 1] = vertexA = tmpVert;
 		vertArr[i + 2] = vertexB;
 
 		posA = GetPointOnTorus(u, v * vStep);
-		tmpVert = Vertex{ posA, {1.0f, absf(cos(u)), 1.0f, 1.0f} };
+		tmpVert = Vertex{ posA, {1.0f, fabs(cos(u)), 1.0f, 1.0f} };
 
 		vertArr[i + 3] = vertexB = tmpVert;
 	}
@@ -29,7 +30,7 @@ void Pipe::CreateFirstRing(float u, Vertex *vertArr) const
 
 void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 {
-	float vStep = (2.0f * PI) / _pipeSegments;
+	float vStep = (2.0f * glm::pi<float>()) / _pipeSegments;
 	int ringOffset = _pipeSegments * 4;
 
 	glm::vec3 pos = GetPointOnTorus(u, 0.0f);
@@ -50,8 +51,8 @@ Mesh* Pipe::GenerateMesh()
 	int vertCount = _pipeSegments * _curveSegments * 4;
 	Vertex *vertices = new Vertex[vertCount];
 
-	float uStep = (2.0f * PI) / _curveSegments * _curveDistance;
-	_angleZ = - uStep * _curveSegments;
+	float uStep = (2.0f * glm::pi<float>()) / _curveSegments * _curveDistance;
+	_eulerAngles.z = - uStep * _curveSegments;
 	CreateFirstRing(uStep, vertices);
 
 	int iDelta = _pipeSegments * 4;

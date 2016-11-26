@@ -9,7 +9,7 @@
 
 PhysicsComponent::PhysicsComponent(GameObject* gob)
 	: GameObjectComponent("physics", gob),
-	  _velocity(0.0f, 0.0f, 0.0f, 0.0f)
+	  _velocity(glm::vec3{})
 {
 }
 
@@ -59,19 +59,19 @@ void PhysicsComponent::End()
 
 void PhysicsComponent::LimitToMaximumSpeed(float max)
 {
-	_velocity.limitTo(max);
+	_velocity = glm::clamp(_velocity, 0.0f, max);
 }
 
 /******************************************************************************************************************/
 
-Vector4 PhysicsComponent::GetObjectPosition() const
+const glm::vec3& PhysicsComponent::GetObjectPosition() const
 {
 	return _parent->GetPosition();
 }
 
 /******************************************************************************************************************/
 
-void PhysicsComponent::SetObjectPosition(Vector4 v)
+void PhysicsComponent::SetObjectPosition(const glm::vec3& v) const
 {
 	_parent->SetPosition(v);
 }

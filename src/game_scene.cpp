@@ -6,11 +6,12 @@
 #include "RenderComponent.h"
 #include "Window.h"
 #include <random>
+#include <GL/GLM/GTC/matrix_transform.inl>
 
 void GameScene::Initialise()
 {
 	_pipeSystem = new GameObject("PipeSystem");
-	_pipeSystem->SetPosition(Vector4{ 0.0f, -4.0f, 0.0f, 1.0f });
+	_pipeSystem->SetPosition(glm::vec3{ 0.0f, -4.0f, 0.0f});
 	RenderComponent *rc = new RenderComponent(_pipeSystem);
 	_gameObjects.push_back(_pipeSystem);
 
@@ -19,15 +20,15 @@ void GameScene::Initialise()
 
 		if (i == 0) {
 			pipe->SetParent(_pipeSystem);
-			pipe->SetAngleZ(0);
+			pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, 0 });
 		}
 		else {
 			pipe->SetParent(pipes[i - 1]);
 
-			float relativeRotation = toRad((rand() % pipe->GetCurveSegments()) * (360.0f / pipe->GetPipeSegments()));
+			float relativeRotation = glm::radians((rand() % pipe->GetCurveSegments()) * (360.0f / pipe->GetPipeSegments()));
 			pipe->SetRelativeRotation(relativeRotation);
 
-			pipe->SetPosition(Vector4{});
+			pipe->SetPosition(glm::vec3{});
 
 			glm::mat4 extraXForm = glm::mat4(1);
 			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, 4, 0.0f });
@@ -58,12 +59,12 @@ void GameScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);
 
-	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(toRad(60.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
+	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(60.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
 	MVM = glm::mat4{ 1.0f };
 	MVM *= proj;
 //	MVM = glm::translate(MVM, glm::vec3{ 0.0, 0.0, 20.0f });
 
-	MVM = glm::rotate(MVM, static_cast<float>(toRad(90)), glm::vec3{ 0, 1, 0 });
+	MVM = glm::rotate(MVM, static_cast<float>(glm::radians(90.0f)), glm::vec3{ 0, 1, 0 });
 	MVM = glm::translate(MVM, glm::vec3{ -5.0, 0.0, 0.0f });
 
 	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });

@@ -1,12 +1,12 @@
 #pragma once
 #include "GameObjectComponent.h"
-#include "Vector4.h"
+#include <GL/GLM/detail/type_vec3.hpp>
 
 class PhysicsComponent
 		: public GameObjectComponent {
 	// Data
 protected:
-	Vector4 _velocity; // Velocity of object
+	glm::vec3 _velocity; // Velocity of object
 	float _maxSpeed; // Maximum speed
 
 
@@ -15,8 +15,8 @@ public:
 	PhysicsComponent(GameObject* gob);
 	virtual ~PhysicsComponent();
 
-	Vector4 GetVelocity() const { return _velocity; }
-	void SetVelocity(Vector4 v) { _velocity = v; }
+	const glm::vec3& GetVelocity() const { return _velocity; }
+	void SetVelocity(const glm::vec3& v) { _velocity = v; }
 
 	float GetMaxSpeed() const { return _maxSpeed; }
 	void SetMaxSpeed(float f) { _maxSpeed = f; }
@@ -35,7 +35,7 @@ public:
 
 	void LimitToMaximumSpeed(float max);
 
-	Vector4 GetObjectPosition() const;
+	const glm::vec3& GetObjectPosition() const;
 	
-	void SetObjectPosition(Vector4 v);
+	void SetObjectPosition(const glm::vec3& v) const;
 };

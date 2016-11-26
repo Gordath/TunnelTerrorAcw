@@ -8,11 +8,7 @@
 /******************************************************************************************************************/
 
 GameObject::GameObject(std::string type)
-	: _angleX(0),
-	  _angleY(0),
-	  _angleZ(0),
-	  _scale(1),
-	  _position(0, 0),
+	: _scale(glm::vec3{1}),
 	  _alive(true),
 	  _deleteFlag(false),
 	  _type(type)
@@ -29,11 +25,11 @@ GameObject::~GameObject()
 void GameObject::CalcXform()
 {
 	_Xform = glm::mat4(1.0f);
-	_Xform = glm::translate(_Xform, glm::vec3(_position.x(), _position.y(), _position.z()));
-	_Xform = glm::rotate(_Xform, _angleX, glm::vec3{ 1.0f, 0.0f, 0.0f });
-	_Xform = glm::rotate(_Xform, _angleY, glm::vec3{ 0.0f, 1.0f, 0.0f });
-	_Xform = glm::rotate(_Xform, _angleZ, glm::vec3{ 0.0f, 0.0f, 1.0f });
-	_Xform = glm::scale(_Xform, glm::vec3{ _scale, _scale, _scale });
+	_Xform = glm::translate(_Xform, _position);
+	_Xform = glm::rotate(_Xform, _eulerAngles.x, glm::vec3{ 1.0f, 0.0f, 0.0f });
+	_Xform = glm::rotate(_Xform, _eulerAngles.y, glm::vec3{ 0.0f, 1.0f, 0.0f });
+	_Xform = glm::rotate(_Xform, _eulerAngles.z, glm::vec3{ 0.0f, 0.0f, 1.0f });
+	_Xform = glm::scale(_Xform, _scale);
 
 	if (_parent) {
 		_Xform = _parent->GetXform() * _Xform * _extraXform;

@@ -1,15 +1,14 @@
 #pragma once
-#include <string>
 #include "Message.h"
-#include "Vector4.h"
+#include <GL/GLM/detail/type_vec3.hpp>
 
 class ThrustMessage : public Message {
 protected:
-	Vector4 _thrust;
+	glm::vec3 _thrust;
 
 public:
-	ThrustMessage(Vector4 thrustAmt);
+	ThrustMessage(const glm::vec3& thrustAmt);
 	virtual ~ThrustMessage();
 
-	Vector4 GetThrust() const { return _thrust; }
+	const glm::vec3& GetThrust() const { return _thrust; }
 };

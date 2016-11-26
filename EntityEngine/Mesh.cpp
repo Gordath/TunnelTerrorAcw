@@ -5,7 +5,6 @@
 #if BUILD_OPENGL
 #include "VBO_GL.h"
 #endif
-#include "Vector4.h"
 #include <fstream>
 #include "IBO_DX.h"
 using namespace std;

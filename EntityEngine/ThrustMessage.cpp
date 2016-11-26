@@ -4,7 +4,7 @@
 // Structors
 /******************************************************************************************************************/
 
-ThrustMessage::ThrustMessage(Vector4 thrustAmt)
+ThrustMessage::ThrustMessage(const glm::vec3& thrustAmt)
 	: Message("thrust"),
 	  _thrust(thrustAmt)
 {

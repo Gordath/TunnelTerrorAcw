@@ -2,7 +2,6 @@
 #if BUILD_DIRECTX
 
 #include <d3d11.h>
-#include <d3dx11.h>
 #include <d3dx10.h>
 #include <DirectXMath.h>
 #include "Renderer.h"
@@ -45,7 +44,7 @@ public:
 
 	void Destroy() override;
 
-	void Draw(const Mesh* mesh, glm::mat4 MVM, const Colour& colour) override;
+	void Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour) override;
 
 	void Initialise(int width, int height) override;
 
