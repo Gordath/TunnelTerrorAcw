@@ -12,6 +12,7 @@
 
 void GameScene::Initialise()
 {
+	srand(time(nullptr));
 	_pipeSystem = new GameObject("PipeSystem");
 	RenderComponent *rc = new RenderComponent(_pipeSystem);
 	_gameObjects.push_back(_pipeSystem);
@@ -27,7 +28,9 @@ void GameScene::Initialise()
 		else {
 			pipe->SetParent(_pipes[i - 1]);
 
+			static float prevRot;
 			float relativeRotation = glm::radians((rand() % pipe->GetCurveSegments()) * (360.0f / pipe->GetPipeSegments()));
+			
 			pipe->SetRelativeRotation(relativeRotation);
 
 			pipe->SetPosition(glm::vec3{});
@@ -39,12 +42,13 @@ void GameScene::Initialise()
 
 			pipe->SetExtraXForm(extraXForm);
 		}
+
+		_gameObjects.push_back(pipe);
 	}
 
 	//Align the 1st pipe with the origin.
 	_currentPipe = _pipes[0];
 	_currentPipe->SetPosition(glm::vec3{ 0.0f, -4.0f, 0.0f });
-	_gameObjects.push_back(_currentPipe);
 
 	_distanceToAngle = 360.0f / 2.0f * glm::pi<float>() * _currentPipe->GetCurveRadius();
 
@@ -90,10 +94,18 @@ void GameScene::Update(double deltaTime, long time)
 		_currentPipe->SetParent(_pipeSystem);
 
 		_pipeSystemRotation = delta * _distanceToAngle;
+
+		_worldRotation += glm::degrees(_currentPipe->GetRelativeRotation());
+		if(_worldRotation < 0.0f) {
+			_worldRotation += 360.0f;
+		}
+		else if (_worldRotation >= 360.0f) {
+			_worldRotation -= 360.0f;
+		}
 	}
 
 	_currentPipe->SetEulerAngles(glm::vec3{0.0f, 0.0f, glm::radians(_pipeSystemRotation)});
-	_pipeSystem->SetEulerAngles(glm::vec3{ _currentPipe->GetRelativeRotation(), 0.0f, 0.0f });
+	_pipeSystem->SetEulerAngles(glm::vec3{glm::radians(_worldRotation), 0.0f, 0.0f });
 
 	
 

@@ -13,14 +13,15 @@ protected:
 
 	GameObject* _pipeSystem;
 	//PIPES -------------------------------------
-	static const int MAX_PIPES{ 5 };
+	static const int MAX_PIPES{ 500 };
 
 	Pipe* _pipes[MAX_PIPES];
 	Pipe* _currentPipe{ nullptr };
-	float _speed{ 0.01f };
+	float _speed{ 0.02f };
 	float _distanceTraveled{ 0.0f };
 	float _distanceToAngle{ 0.0f };
 	float _pipeSystemRotation{0.0f};
+	float _worldRotation{ 0.0f };
 	//-------------------------------------------
 
 	glm::mat4 M;
