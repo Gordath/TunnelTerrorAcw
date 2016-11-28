@@ -7,23 +7,23 @@
 #include "Window.h"
 #include <random>
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include <iostream>
 
 void GameScene::Initialise()
 {
 	_pipeSystem = new GameObject("PipeSystem");
-	_pipeSystem->SetPosition(glm::vec3{ 0.0f, -4.0f, 0.0f});
 	RenderComponent *rc = new RenderComponent(_pipeSystem);
 	_gameObjects.push_back(_pipeSystem);
 
 	for (int i = 0; i < MAX_PIPES; i++) {
-		Pipe* pipe = pipes[i] = new Pipe(4, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
+		Pipe* pipe = _pipes[i] = new Pipe(4, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
 
 		if (i == 0) {
 			pipe->SetParent(_pipeSystem);
 			pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, 0 });
 		}
 		else {
-			pipe->SetParent(pipes[i - 1]);
+			pipe->SetParent(_pipes[i - 1]);
 
 			float relativeRotation = glm::radians((rand() % pipe->GetCurveSegments()) * (360.0f / pipe->GetPipeSegments()));
 			pipe->SetRelativeRotation(relativeRotation);
@@ -37,8 +37,14 @@ void GameScene::Initialise()
 
 			pipe->SetExtraXForm(extraXForm);
 		}
-		_gameObjects.push_back(pipe);
 	}
+
+	//Align the 1st pipe with the origin.
+	_currentPipe = _pipes[0];
+	_currentPipe->SetPosition(glm::vec3{ 0.0f, -_currentPipe->GetCurveRadius(), 0.0f });
+	_gameObjects.push_back(_currentPipe);
+
+	_distanceToAngle = 360.0f / 2.0f * glm::pi<float>() * _currentPipe->GetCurveRadius();
 
 	for (auto gameObject : _gameObjects) {
 		gameObject->Start();
@@ -59,17 +65,25 @@ void GameScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);
 
+	float delta{ _speed * static_cast<float>(deltaTime) };
+	_distanceTraveled += delta;
+
+	
+	_pipeSystemRotation += _distanceTraveled * _distanceToAngle;
+	_currentPipe->SetEulerAngles(glm::vec3{ 0.0f, 0.0f, glm::radians(_pipeSystemRotation)});
+
 	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(60.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
 
 	P = glm::mat4{ 1.0f };
 	P *= proj;
-//	MVM = glm::translate(MVM, glm::vec3{ 0.0, 0.0, 20.0f });
+
 
 	V = glm::mat4{ 1.0f };
-	V = glm::rotate(V, static_cast<float>(glm::radians(90.0f)), glm::vec3{ 0, 1, 0 });
-	V = glm::translate(V, glm::vec3{ -5.0, 0.0, 0.0f });
+//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 20.0f });
+	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
+//	V = glm::translate(V, glm::vec3{ 5.0, 0.0, 0.0f });
 
-	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
+//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
 //	MVM = glm::rotate(MVM, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
