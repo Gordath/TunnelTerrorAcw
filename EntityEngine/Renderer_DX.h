@@ -1,4 +1,7 @@
 #pragma once
+#include <GL/GLM/detail/_vectorize.hpp>
+#include <GL/GLM/detail/_vectorize.hpp>
+#include "PhysicsComponent.h"
 #if BUILD_DIRECTX
 
 #include <d3d11.h>
@@ -6,10 +9,15 @@
 #include <DirectXMath.h>
 #include "Renderer.h"
 
-typedef struct UniformBuffer {
-	DirectX::XMFLOAT4X4 MVM;
-	DirectX::XMFLOAT4 Colour;
-} UniformBuffer;
+struct UniformBuffer {
+	DirectX::XMFLOAT4X4 MVP;
+	DirectX::XMFLOAT4X4 MV;
+	DirectX::XMFLOAT4X4 ITMV;
+	DirectX::XMFLOAT4 diffuse;
+	DirectX::XMFLOAT4 specular;
+	DirectX::XMFLOAT4 Vpos;
+	DirectX::XMFLOAT4 Lpos;
+};
 
 // DirectX Device & Context
 class Renderer_DX :
@@ -44,7 +52,7 @@ public:
 
 	void Destroy() override;
 
-	void Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour) override;
+	void Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material) override;
 
 	void Initialise(int width, int height) override;
 

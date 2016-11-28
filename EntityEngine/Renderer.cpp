@@ -16,14 +16,14 @@ Renderer::~Renderer()
 
 /******************************************************************************************************************/
 
-void Renderer::Draw(RenderComponent* rc, glm::mat4 MVM)
+void Renderer::Draw(RenderComponent* rc, glm::mat4 M, glm::mat4 V, glm::mat4 P)
 {
 	if (rc->ShouldDraw()) {
 		rc->CalcXform();
-		MVM *= rc->GetXform();
+		M *= rc->GetXform();
 
 		if (rc->GetMesh()) {
-			Draw(rc->GetMesh(), MVM, rc->GetColour());
+			Draw(rc->GetMesh(), M, V, P, rc->GetMaterial());
 		}
 	}
 }

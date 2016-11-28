@@ -95,6 +95,9 @@
     <ClCompile Include="IBO_DX.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="LightComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -202,6 +205,18 @@
     </ClInclude>
     <ClInclude Include="IBO_DX.h">
       <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Platform Independent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,23 +6,34 @@ void Pipe::CreateFirstRing(float u, Vertex *vertArr) const
 {
 	float vStep = (2.0f * glm::pi<float>()) / _pipeSegments;
 
-	glm::vec3 posA = GetPointOnTorus(0.0f, 0.0f);
-	glm::vec3 posB = GetPointOnTorus(u, 0.0f);
+	glm::vec3 posA{ GetPointOnTorus(0.0f, 0.0f, _curveRadius, _pipeRadius) };
 
-	Vertex vertexA{ posA, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
-	Vertex vertexB{ posB, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
+	glm::vec3 ringCenterA{ GetPointOnCurve(0.0f) };
+	glm::vec3 normalA{ glm::normalize(ringCenterA - posA) };
+	glm::vec3 tangentA{ glm::normalize(GetPointOnTorus(0.001f, 0.0f, _curveRadius, _pipeRadius) - posA) };
+
+	glm::vec3 posB{ GetPointOnTorus(u, 0.0f, _curveRadius, _pipeRadius) };
+	glm::vec3 ringCenterB{ GetPointOnCurve(u) };
+	glm::vec3 normalB{ glm::normalize(ringCenterB - posB) };
+	glm::vec3 tangentB{ glm::normalize(GetPointOnTorus(u + 0.001f, 0.0f, _curveRadius, _pipeRadius) - posB) };
+
+	Vertex vertexA{ posA, normalA, tangentA, glm::vec2{}, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
+	Vertex vertexB{ posB, normalB, tangentB, glm::vec2{}, glm::vec4{fabs(sin(u)), fabs(cos(u)), 1.0f, 1.0f} };
 
 	for (int v = 1, i = 0; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertexA;
 
-		glm::vec3 tmpPos{ GetPointOnTorus(0.0f, v * vStep) };
-		Vertex tmpVert{ tmpPos, glm::vec4{1.0f, fabs(cos(u)), 1.0f, 1.0f} };
+		glm::vec3 tmpPos{ GetPointOnTorus(0.0f, v * vStep, _curveRadius, _pipeRadius) };
+		glm::vec3 normal{ glm::normalize(ringCenterA - tmpPos) };
+		glm::vec3 tangent{ glm::normalize(GetPointOnTorus(0.001, v * vStep, _curveRadius, _pipeRadius) - tmpPos) };
+		Vertex tmpVert{ tmpPos, normal, tangent, glm::vec2{}, glm::vec4{1.0f, fabs(cos(u)), 1.0f, 1.0f} };
 		
 		vertArr[i + 1] = vertexA = tmpVert;
 		vertArr[i + 2] = vertexB;
 
-		posA = GetPointOnTorus(u, v * vStep);
-		tmpVert = Vertex{ posA, {1.0f, fabs(cos(u)), 1.0f, 1.0f} };
+		posA = GetPointOnTorus(u, v * vStep, _curveRadius, _pipeRadius);
+		normal = glm::normalize(ringCenterB - posA);
+		tmpVert = Vertex{ posA, normal, glm::vec3{}, glm::vec2{}, glm::vec4{1.0f, fabs(cos(u)), 1.0f, 1.0f} };
 
 		vertArr[i + 3] = vertexB = tmpVert;
 	}
@@ -33,16 +44,19 @@ void Pipe::CreateRing(float u, int i, Vertex* vertArr) const
 	float vStep = (2.0f * glm::pi<float>()) / _pipeSegments;
 	int ringOffset = _pipeSegments * 4;
 
-	glm::vec3 pos = GetPointOnTorus(u, 0.0f);
-	Vertex vertex{ pos, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f } };
+	glm::vec3 pos = GetPointOnTorus(u, 0.0f, _curveRadius, _pipeRadius);
+	glm::vec3 ringCenter{ GetPointOnCurve(u) };
+	glm::vec3 tangent{ GetPointOnTorus(u + 0.001f, 0.0f, _curveRadius, _pipeRadius) - pos };
+	Vertex vertex{ pos, glm::normalize(ringCenter - pos), tangent, glm::vec2{}, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f } };
 	for (int v = 1; v <= _pipeSegments; v++, i += 4) {
 		vertArr[i] = vertArr[i - ringOffset + 2];
 		vertArr[i + 1] = vertArr[i - ringOffset + 3];
 		vertArr[i + 2] = vertex;
 
-		pos = GetPointOnTorus(u, v * vStep);
+		pos = GetPointOnTorus(u, v * vStep, _curveRadius, _pipeRadius);
+		tangent = glm::normalize(GetPointOnTorus(u + 0.001f, v * vStep, _curveRadius, _pipeRadius) - pos);
 
-		vertArr[i + 3] = vertex = Vertex{ pos, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f} };
+		vertArr[i + 3] = vertex = Vertex{ pos, glm::normalize(ringCenter - pos), tangent, glm::vec2{}, glm::vec4{1.0f, 1.0f - u, 1.0f, 1.0f} };
 	}
 }
 
@@ -87,10 +101,10 @@ Pipe::Pipe(float curveRadius, float pipeRadius, float curveSegments, float pipeS
 	rc->SetMesh(m);
 }
 
-glm::vec3 Pipe::GetPointOnTorus(float u, float v) const
+glm::vec3 Pipe::GetPointOnTorus(float u, float v, float curveRadius, float pipeRadius)
 {
-	float r = _curveRadius + _pipeRadius * cos(v);
-	return glm::vec3{r * sin(u), r * cos(u), _pipeRadius * sin(v)};
+	float r = curveRadius + pipeRadius * cos(v);
+	return glm::vec3{r * sin(u), r * cos(u), pipeRadius * sin(v)};
 }
 
 glm::vec3 Pipe::GetPointOnCurve(float u) const

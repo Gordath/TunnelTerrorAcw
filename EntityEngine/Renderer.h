@@ -4,6 +4,7 @@
 
 #include "GL\GLM\GTC\type_ptr.hpp"
 
+struct Material;
 // Forward declarations
 class Game;
 class RenderComponent;
@@ -24,8 +25,8 @@ public:
 
 	virtual void ClearScreen() = 0;
 
-	virtual void Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour) = 0;
-	virtual void Draw(RenderComponent* gob, glm::mat4 MVM);
+	virtual void Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material) = 0;
+	virtual void Draw(RenderComponent* gob, glm::mat4 M, glm::mat4 V, glm::mat4 P);
 
 	virtual void Destroy() = 0;
 

@@ -1,5 +1,9 @@
 #include "Window.h"
 #include <d3dx11async.h>
+#include <GL/GLM/detail/_vectorize.hpp>
+#include <GL/GLM/detail/_vectorize.hpp>
+#include "PhysicsComponent.h"
+#include "Material.h"
 #if BUILD_DIRECTX
 
 #include "Renderer_DX.h"
@@ -50,13 +54,20 @@ void Renderer_DX::Destroy()
 
 /******************************************************************************************************************/
 
-void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 MVM, const glm::vec4& colour)
+void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material)
 {
-	MVM = glm::transpose(MVM);
+	glm::mat4 MV = glm::transpose(V * M);
+	glm::mat4 MVP = glm::transpose(P * V * M);
+	glm::mat4 ITMV = glm::transpose(glm::inverse(MV));
 
 	UniformBuffer uniforms;
-	memcpy(&uniforms.MVM, &MVM[0][0], sizeof(DirectX::XMFLOAT4X4));
-	memcpy(&uniforms.Colour, &colour.data, sizeof(DirectX::XMFLOAT4));
+	memcpy(&uniforms.MVP, &MVP[0][0], sizeof(DirectX::XMFLOAT4X4));
+	memcpy(&uniforms.MV, &MV[0][0], sizeof(DirectX::XMFLOAT4X4));
+	memcpy(&uniforms.ITMV, &ITMV[0][0], sizeof(DirectX::XMFLOAT4X4));
+	memcpy(&uniforms.diffuse, &material.diffuse.data, sizeof(DirectX::XMFLOAT4));
+	memcpy(&uniforms.specular, &material.specular.data, sizeof(DirectX::XMFLOAT4));
+	uniforms.Vpos = DirectX::XMFLOAT4{0.0f, 0.0f, 0.0f, 0.0f};
+	uniforms.Lpos = DirectX::XMFLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// Need to update uniform buffer here
 	D3D11_MAPPED_SUBRESOURCE ms;

@@ -18,7 +18,9 @@ protected:
 	Pipe* pipes[MAX_PIPES];
 	//-------------------------------------------
 
-	glm::mat4 MVM;
+	glm::mat4 M;
+	glm::mat4 V;
+	glm::mat4 P;
 
 public:
 	void Initialise() override;

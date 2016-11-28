@@ -2,13 +2,14 @@
 #include "GameObjectComponent.h"
 #include "Mesh.h"
 #include "GameObject.h"
+#include "Material.h"
 
 class RenderComponent
 		: public GameObjectComponent {
 	// Data
 protected:
 	Mesh* _mesh; // Vertex info
-	glm::vec4 _colour; // Colour of object
+	Material _material;
 	bool _shouldDraw; // Whether or not to draw
 
 	// RenderComponent
@@ -19,8 +20,8 @@ public:
 	Mesh* GetMesh() const { return _mesh; }
 	void SetMesh(Mesh* m) { _mesh = m; }
 
-	const glm::vec4& GetColour() const { return _colour; }
-	void SetColour(const glm::vec4& c) { _colour = c; }
+	const Material& GetMaterial() const { return _material; }
+	void SetMaterial(const Material& material) { _material = material; }
 
 	bool ShouldDraw() const { return _shouldDraw; }
 	void ShouldDraw(bool v) { _shouldDraw = v; }

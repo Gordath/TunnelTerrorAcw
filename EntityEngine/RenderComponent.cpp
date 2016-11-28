@@ -8,7 +8,7 @@
 
 RenderComponent::RenderComponent(GameObject* gob)
 	: GameObjectComponent("render", gob),
-	  _colour(1.0f, 1.0f, 1.0f, 1.0f),
+	  _material(Material{glm::vec4{1.0f, 1.0f, 1.0f, 1.0f}, glm::vec4{1.0f, 1.0f, 1.0f, 60.0f}}),
 	  _mesh(nullptr)
 {
 }
