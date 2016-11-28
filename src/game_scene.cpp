@@ -8,6 +8,7 @@
 #include <random>
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include <iostream>
+#include <algorithm>
 
 void GameScene::Initialise()
 {
@@ -15,6 +16,7 @@ void GameScene::Initialise()
 	RenderComponent *rc = new RenderComponent(_pipeSystem);
 	_gameObjects.push_back(_pipeSystem);
 
+	//_pipeSystem->SetPosition(glm::vec3{ 0.0f, -4.0f, 0.0f });
 	for (int i = 0; i < MAX_PIPES; i++) {
 		Pipe* pipe = _pipes[i] = new Pipe(4, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
 
@@ -41,7 +43,7 @@ void GameScene::Initialise()
 
 	//Align the 1st pipe with the origin.
 	_currentPipe = _pipes[0];
-	_currentPipe->SetPosition(glm::vec3{ 0.0f, -_currentPipe->GetCurveRadius(), 0.0f });
+	_currentPipe->SetPosition(glm::vec3{ 0.0f, -4.0f, 0.0f });
 	_gameObjects.push_back(_currentPipe);
 
 	_distanceToAngle = 360.0f / 2.0f * glm::pi<float>() * _currentPipe->GetCurveRadius();
@@ -68,9 +70,32 @@ void GameScene::Update(double deltaTime, long time)
 	float delta{ _speed * static_cast<float>(deltaTime) };
 	_distanceTraveled += delta;
 
+	_pipeSystemRotation += delta * _distanceToAngle;
+	std::cout << _pipeSystemRotation << std::endl;
+
+	if (_pipeSystemRotation >= 90.0f) {
+		delta = (_pipeSystemRotation - 90.0f) / _distanceToAngle;
+
+		//shift the pipes and update the current pipe
+		Pipe* temp = _pipes[0];
+		for (int i = 1; i < MAX_PIPES; i++) {
+			_pipes[i - 1] = _pipes[i];
+		}
+		_pipes[MAX_PIPES - 1] = temp;
+		std::replace(_gameObjects.begin(), _gameObjects.end(), _currentPipe, _pipes[0]);
+		_currentPipe = _pipes[0];
+		_currentPipe->SetPosition(glm::vec3{0.0f, -4.0f, 0.0f});
+		_currentPipe->SetEulerAngles(glm::vec3{});
+		_currentPipe->SetExtraXForm(glm::mat4{ 1 });
+		_currentPipe->SetParent(_pipeSystem);
+
+		_pipeSystemRotation = delta * _distanceToAngle;
+	}
+
+	_currentPipe->SetEulerAngles(glm::vec3{0.0f, 0.0f, glm::radians(_pipeSystemRotation)});
+	_pipeSystem->SetEulerAngles(glm::vec3{ _currentPipe->GetRelativeRotation(), 0.0f, 0.0f });
+
 	
-	_pipeSystemRotation += _distanceTraveled * _distanceToAngle;
-	_currentPipe->SetEulerAngles(glm::vec3{ 0.0f, 0.0f, glm::radians(_pipeSystemRotation)});
 
 	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(60.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
 

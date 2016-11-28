@@ -20,7 +20,7 @@ protected:
 	float _speed{ 0.01f };
 	float _distanceTraveled{ 0.0f };
 	float _distanceToAngle{ 0.0f };
-	float _pipeSystemRotation{ 0.0f };
+	float _pipeSystemRotation{0.0f};
 	//-------------------------------------------
 
 	glm::mat4 M;

@@ -11,7 +11,8 @@ private:
 	int _curveSegments;
 	int _pipeSegments;
 
-	float _curveDistance = 0.25f;
+	float _curveDistance{ 0.25f };
+	float _curveAngle;
 
 	float _relativeRotation;
 
