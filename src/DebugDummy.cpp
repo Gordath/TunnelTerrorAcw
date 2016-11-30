@@ -1,4 +1,4 @@
-#include "debug_dummy.h"
+#include "DebugDummy.h"
 #include "RenderComponent.h"
 
 DebugDummy::DebugDummy(Mesh* mesh) : GameObject("debugDummy")

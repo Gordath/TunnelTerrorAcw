@@ -4,14 +4,18 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include <GL/GLM/glm.hpp>
-#include "pipe_network.h"
+#include "PipeNetwork.h"
+#include <memory>
+#include "player.h"
 
 class GameScene : public Scene {
 protected:
 	PhysicsSystem _physicsSystem;
 	CollisionSystem _collisionSystem;
 
-	PipeNetwork* _pipeNetwork;
+	std::unique_ptr<PipeNetwork> _pipeNetwork;
+
+	Player* _player;
 
 	glm::mat4 M;
 	glm::mat4 V;

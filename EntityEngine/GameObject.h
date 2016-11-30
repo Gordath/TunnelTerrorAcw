@@ -34,8 +34,6 @@ protected:
 	// Components
 	ComponentMap _components;
 
-
-	// Constructors
 public:
 	GameObject() = default;
 	GameObject(std::string type);

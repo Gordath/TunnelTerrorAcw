@@ -105,7 +105,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - DirectX|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>BUILD_DIRECTX;_MBCS;GLM_FORCE_SWIZZLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_DIRECTX;_MBCS;GLM_FORCE_SWIZZLE;_CRTDBG_MAP_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -115,19 +115,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\debug_dummy.cpp" />
-    <ClCompile Include="src\game_scene.cpp" />
+    <ClCompile Include="src\DebugDummy.cpp" />
+    <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\pipe_network.cpp" />
-    <ClCompile Include="src\tunnel_terror_game.cpp" />
+    <ClCompile Include="src\PipeNetwork.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\TunnelTerrorGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\debug_dummy.h" />
-    <ClInclude Include="include\game_scene.h" />
-    <ClInclude Include="include\pipe_network.h" />
-    <ClInclude Include="include\tunnel_terror_game.h" />
+    <ClInclude Include="include\DebugDummy.h" />
+    <ClInclude Include="include\GameScene.h" />
+    <ClInclude Include="include\PipeNetwork.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\TunnelTerrorGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

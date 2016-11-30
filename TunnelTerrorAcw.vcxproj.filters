@@ -18,40 +18,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\tunnel_terror_game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_scene.cpp">
+    <ClCompile Include="src\PipeNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\debug_dummy.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pipe_network.cpp">
+    <ClCompile Include="src\TunnelTerrorGame.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugDummy.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\tunnel_terror_game.h">
+    <ClInclude Include="include\PipeNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\game_scene.h">
+    <ClInclude Include="include\TunnelTerrorGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\debug_dummy.h">
+    <ClInclude Include="include\GameScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DebugDummy.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="include\camera.h">
+    <ClInclude Include="include\Player.h">
       <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\pipe_network.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -66,7 +66,7 @@ public:
 	~PipeNetwork();
 
 	bool Initialize(Renderer* renderer);
-	void Update(double deltaTime);
+	void Update(double deltaTime, long time);
 };
 
 #endif //PIPE_NETWORK_H_

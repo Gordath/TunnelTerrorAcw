@@ -1,4 +1,4 @@
-#include "pipe_network.h"
+#include "PipeNetwork.h"
 #include <GL/GLM/glm.hpp>
 #include <GL/GLM/gtc/constants.inl>
 #include <iostream>
@@ -83,8 +83,7 @@ void PipeNetwork::GenerateMesh(Renderer* renderer)
 	int vertCount = _pipeDesc.pipeSegments * _pipeDesc.curveSegments * 4;
 	Vertex* vertices = new Vertex[vertCount];
 
-	float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
-	//	_eulerAngles.z = -uStep * _pipeDesc.curveSegments;
+	float uStep = 2.0f * glm::pi<float>() / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 	CreateFirstRing(uStep, vertices);
 
 	int iDelta = _pipeDesc.pipeSegments * 4;
@@ -108,11 +107,11 @@ void PipeNetwork::GeneratePipe()
 	GameObject* parent{ std::get<GameObject*>(_pipesAndRotations[_pipesAndRotations.size() - 1]) };
 	pipe->SetParent(parent);
 
-	float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
+	float uStep = 2.0f * glm::pi<float>() / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 	pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, -uStep * _pipeDesc.curveSegments });
 
 	//Calculate a random relative rotation.
-	std::get<float>(temp) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
+	std::get<float>(temp) = glm::radians(rand() % _pipeDesc.curveSegments * (360.0f / _pipeDesc.pipeSegments));
 
 	pipe->SetPosition(glm::vec3{});
 
@@ -137,11 +136,10 @@ PipeNetwork::PipeNetwork(const PipeDesc& pipeDesc,
                          const int maxPipes,
                          float speed,
                          Scene* scene) : _pipeDesc(pipeDesc),
-                                               _maxPipes(maxPipes),
-                                               _speed(speed),
-                                               _scene(scene)
+                                         _maxPipes(maxPipes),
+                                         _speed(speed),
+                                         _scene(scene)
 {
-	
 }
 
 PipeNetwork::~PipeNetwork()
@@ -172,7 +170,7 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	for (int i = 0; i < _maxPipes; i++) {
 		_pipesAndRotations[i] = std::make_tuple(new GameObject("Pipe"), 0.0f);// new Pipe(7, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
 		GameObject* pipe{ std::get<GameObject*>(_pipesAndRotations[i]) };
-		
+
 		//Create a new RenderComponent for the GameObject and assign the mesh to it.
 		RenderComponent* rc{ new RenderComponent(pipe) };
 		rc->SetMesh(_pipeMesh);
@@ -214,8 +212,12 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	return true;
 }
 
-void PipeNetwork::Update(double deltaTime)
+void PipeNetwork::Update(double deltaTime, long time)
 {
+	if (time % 20000 == 0) {
+		_speed += 0.0003f;
+	}
+
 	float delta{ _speed * static_cast<float>(deltaTime) };
 	_distanceTraveled += delta;
 
@@ -224,12 +226,13 @@ void PipeNetwork::Update(double deltaTime)
 	if (_pipeRotation >= 90.0f) {
 		delta = (_pipeRotation - 90.0f) / _distanceToAngle;
 
-		//shift the pipes and update the current pipe
+		//Mark the pipe for deletion. Pop it of the network.
 		std::tuple<GameObject*, float> temp = _pipesAndRotations[0];
-		std::remove(_scene->GetGameObjects().begin(), _scene->GetGameObjects().end(), std::get<GameObject*>(temp));
-		//TODO: check if this is leaky!!!!!
-		//delete std::get<GameObject*>(temp);
+		GameObject* gameObject{ std::get<GameObject*>(temp) };
+		gameObject->SetDeleteFlag(true);
 		_pipesAndRotations.pop_front();
+
+		//Generate a new one now.
 		GeneratePipe();
 
 		_currentPipe = std::get<GameObject*>(_pipesAndRotations[0]);
