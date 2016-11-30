@@ -5,24 +5,14 @@
 #include "CollisionSystem.h"
 #include <GL/GLM/glm.hpp>
 #include "pipe.h"
+#include "pipe_network.h"
 
 class GameScene : public Scene {
 protected:
 	PhysicsSystem _physicsSystem;
 	CollisionSystem _collisionSystem;
 
-	GameObject* _pipeSystem;
-	//PIPES -------------------------------------
-	static const int MAX_PIPES{ 500 };
-
-	Pipe* _pipes[MAX_PIPES];
-	Pipe* _currentPipe{ nullptr };
-	float _speed{ 0.01f };
-	float _distanceTraveled{ 0.0f };
-	float _distanceToAngle{ 0.0f };
-	float _pipeSystemRotation{0.0f};
-	float _worldRotation{ 0.0f };
-	//-------------------------------------------
+	PipeNetwork* _pipeNetwork;
 
 	glm::mat4 M;
 	glm::mat4 V;

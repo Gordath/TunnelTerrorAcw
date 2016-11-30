@@ -36,6 +36,9 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\pipe_network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tunnel_terror_game.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="include\camera.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pipe_network.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
