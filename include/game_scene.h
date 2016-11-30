@@ -4,7 +4,6 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include <GL/GLM/glm.hpp>
-#include "pipe.h"
 #include "pipe_network.h"
 
 class GameScene : public Scene {

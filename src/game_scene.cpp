@@ -9,7 +9,7 @@
 void GameScene::Initialise()
 {
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
-	_pipeNetwork = new PipeNetwork{ pipeDesc, 5, 0.01f, this };
+	_pipeNetwork = new PipeNetwork{ pipeDesc, 3, 0.01f, this };
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
 	for (auto gameObject : _gameObjects) {
@@ -39,8 +39,8 @@ void GameScene::Update(double deltaTime, long time)
 	P *= proj;
 
 	V = glm::mat4{ 1.0f };
-	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 20.0f });
-//	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
+//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 20.0f });
+	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
 //	V = glm::translate(V, glm::vec3{ 5.0, 0.0, 0.0f });
 
 //	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
