@@ -12,7 +12,7 @@ void GameScene::Initialise()
 
 	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
 	glm::mat4 xform;
-	xform = glm::rotate(xform, static_cast<float>(glm::radians(180.0f)), glm::vec3{ 1.0f, 0.0f, 0.0f });
+	xform = glm::rotate(xform, static_cast<float>(glm::radians(45.0f)), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	xform = glm::translate(xform, glm::vec3{ 0.85f, -0.75f, 0.0f });
 	xform = glm::scale(xform, glm::vec3{ 0.2f, 0.2f, 0.2f });
 	_player->SetExtraXForm(xform);

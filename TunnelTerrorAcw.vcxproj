@@ -120,6 +120,8 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PipeNetwork.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerKeyboardControllerComponent.cpp" />
+    <ClCompile Include="src\PlayerMouseControllerComponent.cpp" />
     <ClCompile Include="src\TunnelTerrorGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +129,14 @@
     <ClInclude Include="include\GameScene.h" />
     <ClInclude Include="include\PipeNetwork.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerKeyboardControllerComponent.h" />
+    <ClInclude Include="include\PlayerMouseControllerComponent.h" />
     <ClInclude Include="include\TunnelTerrorGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug - DirectX|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

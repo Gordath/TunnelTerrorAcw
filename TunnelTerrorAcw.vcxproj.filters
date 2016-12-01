@@ -16,6 +16,9 @@
     <Filter Include="GameObjects">
       <UniqueIdentifier>{5c203542-825c-45ef-92e0-38c5502f8e71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{b172389f-e08c-40ba-a7cd-fd806d7b435f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -36,6 +39,12 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayerKeyboardControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerMouseControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PipeNetwork.h">
@@ -53,5 +62,16 @@
     <ClInclude Include="include\Player.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="include\PlayerKeyboardControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PlayerMouseControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders.hlsl">
+      <Filter>Resource Files</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
