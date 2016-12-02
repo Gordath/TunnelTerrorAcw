@@ -17,7 +17,9 @@ private:
 	void CalculateXformMatrix(glm::mat4& matrix) const noexcept;
 
 public:
-	PlayerMouseControllerComponent(GameObject* gameObject);
+	PlayerMouseControllerComponent(GameObject* gameObject)
+	:UserInputComponent(gameObject)
+	{}
 
 	void Start() noexcept override;
 
