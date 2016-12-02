@@ -3,13 +3,18 @@
 
 class GameObject;
 
-class DeadObjectMessage : public Message {
+class DeadObjectMessage : public Message
+{
 protected:
 	GameObject* _deadObject;
 
 public:
-	DeadObjectMessage(GameObject* deadObject);
-	virtual ~DeadObjectMessage();
+	DeadObjectMessage(GameObject* deadObject)
+		: Message("dead"), _deadObject(deadObject)
+	{
+	}
 
-	GameObject* GetDeadObject() const { return _deadObject; }
+	virtual ~DeadObjectMessage() = default;
+
+	GameObject* GetDeadObject() const noexcept { return _deadObject; }
 };

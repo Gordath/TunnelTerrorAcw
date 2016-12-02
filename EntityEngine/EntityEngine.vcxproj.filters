@@ -7,16 +7,7 @@
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionMessage.cpp">
-      <Filter>Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="DeadObjectMessage.cpp">
-      <Filter>Messages</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjectComponent.cpp" />
-    <ClCompile Include="KeyPressMessage.cpp">
-      <Filter>Messages</Filter>
-    </ClCompile>
     <ClCompile Include="LifeTimerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -58,9 +49,6 @@
     </ClCompile>
     <ClCompile Include="Window_GL.cpp">
       <Filter>OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="ThrustMessage.cpp">
-      <Filter>Messages</Filter>
     </ClCompile>
     <ClCompile Include="UserInputComponent.cpp">
       <Filter>Components</Filter>
@@ -217,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseMotionMessage.h">
+      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -221,10 +221,6 @@ void PipeNetwork::Update(double deltaTime, long time)
 		incrementTime = time;
 	}
 
-	//if (time % 20000 == 0) {
-		//_speed += 0.0003f;
-	//}
-
 	float delta{ _speed * static_cast<float>(deltaTime) };
 	_distanceTraveled += delta;
 
