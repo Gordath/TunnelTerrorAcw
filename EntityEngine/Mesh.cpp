@@ -186,10 +186,10 @@ bool Mesh::LoadFromStream(std::ifstream& in)
 		in >> v.position.x;
 		in >> v.position.y;
 		in >> v.position.z;
-//		in >> v.r;
-//		in >> v.g;
-//		in >> v.b;
-//		in >> v.a;
+		in >> v.colour.r;
+		in >> v.colour.g;
+		in >> v.colour.b;
+		in >> v.colour.a;
 		AddVertex(v);
 	}
 	return true;

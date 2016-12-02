@@ -1,6 +1,7 @@
 #include "TunnelTerrorGame.h"
 #include "Mesh.h"
 #include "GameScene.h"
+#include <sstream>
 
 void TunnelTerrorGame::Initialise(Window* window)
 {
@@ -262,6 +263,27 @@ void TunnelTerrorGame::Initialise(Window* window)
 	for (auto mesh : _meshes) {
 		mesh.second->GenerateIndices(VertexWinding::CLOCKWISE);
 		mesh.second->CreateBuffers(_renderer);
+	}
+
+	// Setup digit/letter meshes
+	_digits.LoadFromFile("DigitsMesh.txt");
+	_letters.LoadFromFile("LettersMesh.txt");
+
+	for (int i = 0; i < _digits.NumMeshes(); i++) {
+		std::stringstream num;
+		num << i;
+		Mesh* m{ _digits.GetMesh(num.str()) };
+		m->CreateBuffers(_renderer);
+		AddMesh(num.str(), m);
+	}
+
+	char letter = 'A';
+	for (int i = 0; i < _letters.NumMeshes(); i++) {
+		std::stringstream num;
+		num << letter++;
+		Mesh* m{ _letters.GetMesh(num.str()) };
+		m->CreateBuffers(_renderer);
+		AddMesh(num.str(), m);
 	}
 
 	_sceneManager.PushScene(new GameScene);

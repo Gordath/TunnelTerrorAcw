@@ -11,11 +11,6 @@ void GameScene::Initialise()
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
 	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
-	glm::mat4 xform;
-	xform = glm::rotate(xform, static_cast<float>(glm::radians(45.0f)), glm::vec3{ 1.0f, 0.0f, 0.0f });
-	xform = glm::translate(xform, glm::vec3{ 0.85f, -0.75f, 0.0f });
-	xform = glm::scale(xform, glm::vec3{ 0.2f, 0.2f, 0.2f });
-	_player->SetExtraXForm(xform);
 
 	_gameObjects.push_back(_player);
 
@@ -46,9 +41,9 @@ void GameScene::Update(double deltaTime, long time)
 	V = glm::mat4{ 1.0f };
 //	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
 	
-	V = glm::rotate(V, static_cast<float>(glm::radians(-10.0f)), glm::vec3{ 1, 0, 0 });
+	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
 	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
-	V = glm::translate(V, glm::vec3{ 0.0f, -0.25, 0.0f });
+	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
 
 	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
 	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });

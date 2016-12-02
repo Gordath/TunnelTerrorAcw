@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "GameObject.h"
 #include <deque>
+#include "PipeItem.h"
 
 struct PipeDesc {
 	float curveRadius;
@@ -32,9 +33,11 @@ struct PipeDesc {
 	}
 };
 
+using PipeTuple = std::tuple< GameObject*, float, std::vector<PipeItem*> >;
+
 class PipeNetwork {
 private:
-	std::deque< std::tuple<GameObject*, float> > _pipesAndRotations;
+	std::deque<PipeTuple> _pipesTuples;
 	PipeDesc _pipeDesc;
 	Mesh* _pipeMesh{ nullptr };
 

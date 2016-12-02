@@ -101,10 +101,10 @@ void PipeNetwork::GenerateMesh(Renderer* renderer)
 
 void PipeNetwork::GeneratePipe()
 {
-	std::tuple<GameObject*, float> temp = std::make_tuple(new GameObject("Pipe"), 0.0f);
+	PipeTuple temp = std::make_tuple(new GameObject("Pipe"), 0.0f, std::vector<PipeItem*>{});
 	GameObject* pipe{ std::get<GameObject*>(temp) };
 
-	GameObject* parent{ std::get<GameObject*>(_pipesAndRotations[_pipesAndRotations.size() - 1]) };
+	GameObject* parent{ std::get<GameObject*>(_pipesTuples[_pipesTuples.size() - 1]) };
 	pipe->SetParent(parent);
 
 	float uStep = 2.0f * glm::pi<float>() / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
@@ -112,8 +112,6 @@ void PipeNetwork::GeneratePipe()
 
 	//Calculate a random relative rotation.
 	std::get<float>(temp) = glm::radians(rand() % _pipeDesc.curveSegments * (360.0f / _pipeDesc.pipeSegments));
-
-	pipe->SetPosition(glm::vec3{});
 
 	glm::mat4 extraXForm = glm::mat4(1);
 	extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, _pipeDesc.curveRadius, 0.0f });
@@ -127,7 +125,7 @@ void PipeNetwork::GeneratePipe()
 	rc->SetMesh(_pipeMesh);
 
 	_scene->AddGameObject(pipe);
-	_pipesAndRotations.push_back(temp);
+	_pipesTuples.push_back(temp);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	srand(time(nullptr));
 
 	//Resize the pipe tuple vector.
-	_pipesAndRotations.resize(_maxPipes);
+	_pipesTuples.resize(_maxPipes);
 
 	//Generate the one and only pipe mesh.
 	GenerateMesh(renderer);
@@ -168,8 +166,8 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 
 	//Create the pipe tupples based on the PipeDesc structure.
 	for (int i = 0; i < _maxPipes; i++) {
-		_pipesAndRotations[i] = std::make_tuple(new GameObject("Pipe"), 0.0f);// new Pipe(7, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
-		GameObject* pipe{ std::get<GameObject*>(_pipesAndRotations[i]) };
+		_pipesTuples[i] = std::make_tuple(new GameObject("Pipe"), 0.0f, std::vector<PipeItem*>{});
+		GameObject* pipe{ std::get<GameObject*>(_pipesTuples[i]) };
 
 		//Create a new RenderComponent for the GameObject and assign the mesh to it.
 		RenderComponent* rc{ new RenderComponent(pipe) };
@@ -182,20 +180,20 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 		}
 		else {
 			//Create the pipe hierarchy.
-			GameObject* parent{ std::get<GameObject*>(_pipesAndRotations[i - 1]) };
+			GameObject* parent{ std::get<GameObject*>(_pipesTuples[i - 1]) };
 			pipe->SetParent(parent);
 
 			float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 			pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, -uStep * _pipeDesc.curveSegments });
 
 			//Calculate a random relative rotation.
-			std::get<float>(_pipesAndRotations[i]) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
+			std::get<float>(_pipesTuples[i]) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
 
 			pipe->SetPosition(glm::vec3{});
 
 			glm::mat4 extraXForm = glm::mat4(1);
 			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, _pipeDesc.curveRadius, 0.0f });
-			extraXForm = glm::rotate(extraXForm, std::get<float>(_pipesAndRotations[i]), glm::vec3{ 1.0f, 0.0f, 0.0f });
+			extraXForm = glm::rotate(extraXForm, std::get<float>(_pipesTuples[i]), glm::vec3{ 1.0f, 0.0f, 0.0f });
 			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 
 			pipe->SetExtraXForm(extraXForm);
@@ -206,7 +204,7 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	}
 
 	//Align the first pipe with the origin.
-	_currentPipe = std::get<GameObject*>(_pipesAndRotations[0]);
+	_currentPipe = std::get<GameObject*>(_pipesTuples[0]);
 	_currentPipe->SetPosition(glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 
 	return true;
@@ -227,15 +225,15 @@ void PipeNetwork::Update(double deltaTime, long time)
 		delta = (_pipeRotation - 90.0f) / _distanceToAngle;
 
 		//Mark the pipe for deletion. Pop it of the network.
-		std::tuple<GameObject*, float> temp = _pipesAndRotations[0];
+		PipeTuple temp = _pipesTuples[0];
 		GameObject* gameObject{ std::get<GameObject*>(temp) };
 		gameObject->SetDeleteFlag(true);
-		_pipesAndRotations.pop_front();
+		_pipesTuples.pop_front();
 
 		//Generate a new one now.
 		GeneratePipe();
 
-		_currentPipe = std::get<GameObject*>(_pipesAndRotations[0]);
+		_currentPipe = std::get<GameObject*>(_pipesTuples[0]);
 		_currentPipe->SetPosition(glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 		_currentPipe->SetEulerAngles(glm::vec3{});
 		_currentPipe->SetExtraXForm(glm::mat4{ 1 });
@@ -243,7 +241,7 @@ void PipeNetwork::Update(double deltaTime, long time)
 
 		_pipeRotation = delta * _distanceToAngle;
 
-		_networkRotation += glm::degrees(std::get<float>(_pipesAndRotations[0]));
+		_networkRotation += glm::degrees(std::get<float>(_pipesTuples[0]));
 		if (_networkRotation < 0.0f) {
 			_networkRotation += 360.0f;
 		}
