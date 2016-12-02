@@ -209,6 +209,9 @@
     <ClInclude Include="MouseMotionMessage.h">
       <Filter>Messages</Filter>
     </ClInclude>
+    <ClInclude Include="MouseClickMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -30,8 +30,6 @@ public:
 	// Respond to input
 	virtual void OnKeyboard(int key, bool down) = 0;
 
-	virtual void OnMouseMove(int x, int y) = 0;
-
 	// Respond to messages
 	virtual void OnMessage(Message* msg);
 

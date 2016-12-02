@@ -26,8 +26,6 @@ public:
 
 	void OnKeyboard(int key, bool down) override;
 
-	void OnMouseMove(int x, int y) override;
-
 	void Update(double deltaTime, long time) override;
 
 	void Render(RenderSystem* renderer) override;

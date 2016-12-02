@@ -70,6 +70,22 @@ LRESULT CALLBACK Window_DX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		TheWindow->_cursorY = GET_Y_LPARAM(lParam);
 		TheWindow->GetGame()->OnMouseMove(TheWindow->_cursorX, TheWindow->_cursorY);
 		break;
+	case WM_LBUTTONDOWN:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::L_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, true);
+		break;
+	case WM_LBUTTONUP:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::L_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, false);
+		break;
+	case WM_LBUTTONDBLCLK:
+		break;
+	case WM_RBUTTONDOWN:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::R_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, true);
+		break;
+	case WM_RBUTTONUP:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::R_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, false);
+		break;
+	case WM_RBUTTONDBLCLK:
+		break;
 	default:
 		break;
 	}

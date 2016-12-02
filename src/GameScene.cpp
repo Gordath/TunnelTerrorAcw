@@ -23,10 +23,6 @@ void GameScene::OnKeyboard(int key, bool down)
 {
 }
 
-void GameScene::OnMouseMove(int x, int y)
-{
-}
-
 void GameScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);

@@ -188,6 +188,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="MouseClickMessage.h" />
     <ClInclude Include="MouseMotionMessage.h" />
     <ClInclude Include="MultiMesh.h" />
     <ClInclude Include="Observer.h" />
