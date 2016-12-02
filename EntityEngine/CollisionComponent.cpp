@@ -26,28 +26,28 @@ CollisionComponent::~CollisionComponent()
 /******************************************************************************************************************/
 
 // Setup function -- called when parent object is initialised (using its own Start method)
-void CollisionComponent::Start()
+void CollisionComponent::Start() noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Main update function (called every frame)
-void CollisionComponent::Update(double deltaTime)
+void CollisionComponent::Update(double deltaTime) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Message handler (called when message occurs)
-void CollisionComponent::OnMessage(Message* msg)
+void CollisionComponent::OnMessage(Message* msg) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Shutdown function -- called when parent object is destroyed
-void CollisionComponent::End()
+void CollisionComponent::End() noexcept
 {
 }
 

@@ -212,9 +212,18 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 
 void PipeNetwork::Update(double deltaTime, long time)
 {
-	if (time % 20000 == 0) {
+	static long threshold{ 20000 };
+	static long incrementTime = 0;
+
+	if (time - incrementTime >= threshold) {
+		std::cout << "Speeding up! Time:" << time << " IncrementTime:" << incrementTime << " Diff:" << time - incrementTime << std::endl;
 		_speed += 0.0003f;
+		incrementTime = time;
 	}
+
+	//if (time % 20000 == 0) {
+		//_speed += 0.0003f;
+	//}
 
 	float delta{ _speed * static_cast<float>(deltaTime) };
 	_distanceTraveled += delta;

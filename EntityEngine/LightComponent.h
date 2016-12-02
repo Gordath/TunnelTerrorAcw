@@ -15,13 +15,13 @@ public:
 	{
 	}
 
-	void OnMessage(Message*) override;
+	void OnMessage(Message*) noexcept override;
 	
-	void Start() override;
+	void Start() noexcept override;
 	
-	void Update(double deltaTime) override;
+	void Update(double deltaTime) noexcept override;
 	
-	void End() override;
+	void End() noexcept override;
 };
 
 #endif //LIGHT_COMPONENT_H_

@@ -32,16 +32,16 @@ public:
 public:
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start();
+	void Start() noexcept override;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime);
+	void Update(double deltaTime) noexcept override;
 
 	// Message handler (called when message occurs)
-	virtual void OnMessage(Message* msg);
+	void OnMessage(Message* msg) noexcept override;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End();
+	void End() noexcept override;
 
 
 };

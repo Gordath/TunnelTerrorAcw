@@ -20,29 +20,21 @@ public:
 	GameObjectComponent(std::string type, GameObject* parent);
 	virtual ~GameObjectComponent();
 
-	// Copy/assignment
-private:
 	GameObjectComponent(const GameObjectComponent&) = delete;
 	GameObjectComponent& operator=(const GameObjectComponent&) = delete;
 
-	// Gets/Sets
-public:
 	GameObject* GetGameObject() const { return _parent; }
 	std::string GetComponentType() const { return _componentType; }
 
-
-	// Functions
-public:
-
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start() = 0;
+	virtual void Start() noexcept = 0;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime) = 0;
+	virtual void Update(double deltaTime) noexcept = 0;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End() = 0;
+	virtual void End() noexcept = 0;
 
 	// Broadcast a message to all objects
-	void BroadcastMessage(Message* msg);
+	static void BroadcastMessage(Message* msg) noexcept;
 };

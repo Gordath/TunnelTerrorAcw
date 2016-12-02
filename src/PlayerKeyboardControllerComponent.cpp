@@ -16,12 +16,12 @@ PlayerKeyboardControllerComponent::PlayerKeyboardControllerComponent(GameObject*
 {
 }
 
-void PlayerKeyboardControllerComponent::Start()
+void PlayerKeyboardControllerComponent::Start() noexcept
 {
 	_parent->RegisterListener("keypress", this);
 }
 
-void PlayerKeyboardControllerComponent::Update(double deltaTime)
+void PlayerKeyboardControllerComponent::Update(double deltaTime) noexcept
 {
 	glm::mat4 xform;
 
@@ -38,7 +38,7 @@ void PlayerKeyboardControllerComponent::Update(double deltaTime)
 	_parent->SetExtraXForm(xform);
 }
 
-void PlayerKeyboardControllerComponent::OnMessage(Message* msg)
+void PlayerKeyboardControllerComponent::OnMessage(Message* msg) noexcept
 {
 	if (msg->GetMessageType() == "keypress") {
 		KeyPressMessage* kpm{ dynamic_cast<KeyPressMessage*>(msg) };
@@ -62,6 +62,6 @@ void PlayerKeyboardControllerComponent::OnMessage(Message* msg)
 	}
 }
 
-void PlayerKeyboardControllerComponent::End()
+void PlayerKeyboardControllerComponent::End() noexcept
 {
 }
