@@ -8,12 +8,8 @@
 class GameObjectComponent;
 class Message;
 
-
 // Typedefs
-typedef std::map<std::string, GameObjectComponent*> ComponentMap;
-typedef std::map<std::string, GameObjectComponent*>::iterator ComponentMapIterator;
-typedef std::vector<GameObjectComponent*>::iterator ComponentListIterator;
-
+using ComponentMap = std::map<std::string, GameObjectComponent*>;
 
 // Now new and improved to use a component-based architecture
 class GameObject : public ObserverSubject {
@@ -66,7 +62,7 @@ public:
 	bool ShouldBeDeleted() const { return _deleteFlag; }
 	void SetDeleteFlag(bool v) { _deleteFlag = v; }
 
-	std::string GetType() const { return _type; }
+	const std::string& GetType() const { return _type; }
 
 	bool AddComponent(GameObjectComponent* goc);
 

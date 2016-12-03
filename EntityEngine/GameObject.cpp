@@ -30,10 +30,13 @@ void GameObject::CalcXform()
 	_Xform = glm::rotate(_Xform, _eulerAngles.y, glm::vec3{ 0.0f, 1.0f, 0.0f });
 	_Xform = glm::rotate(_Xform, _eulerAngles.z, glm::vec3{ 0.0f, 0.0f, 1.0f });
 	_Xform = glm::scale(_Xform, _scale);
-	_Xform *= _extraXform;
+	
 
 	if (_parent) {
-		_Xform = _parent->GetXform() * _Xform;
+		_Xform = _parent->GetXform() * _Xform * _extraXform;
+	}
+	else {
+		_Xform *= _extraXform;
 	}
 }
 
@@ -63,7 +66,7 @@ bool GameObject::RemoveComponent(GameObjectComponent* goc)
 
 bool GameObject::RemoveComponent(std::string type)
 {
-	ComponentMapIterator i = _components.find(type);
+	auto i = _components.find(type);
 	if (i != _components.end()) {
 		// Remove it
 		_components.erase(i);
@@ -83,7 +86,7 @@ bool GameObject::RemoveComponent(std::string type)
 
 GameObjectComponent* GameObject::GetComponent(std::string type)
 {
-	ComponentMapIterator i = _components.find(type);
+	auto i = _components.find(type);
 	if (i != _components.end()) {
 		// Return it
 		return i->second;
@@ -101,7 +104,7 @@ GameObjectComponent* GameObject::GetComponent(std::string type)
 void GameObject::Start()
 {
 	// Initialise all objects
-	for (ComponentMapIterator i = _components.begin();
+	for (auto i = _components.begin();
 	     i != _components.end();
 	     ++i) {
 		i->second->Start();
@@ -114,7 +117,7 @@ void GameObject::Start()
 void GameObject::Update(double deltaTime)
 {
 	// Update all objects
-	for (ComponentMapIterator i = _components.begin();
+	for (auto i = _components.begin();
 	     i != _components.end();
 	     ++i) {
 		i->second->Update(deltaTime);
@@ -127,7 +130,7 @@ void GameObject::Update(double deltaTime)
 void GameObject::End()
 {
 	// End all objects
-	for (ComponentMapIterator i = _components.begin();
+	for (auto i = _components.begin();
 	     i != _components.end();
 	     ++i) {
 		GameObjectComponent* component = i->second;

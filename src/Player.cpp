@@ -13,7 +13,8 @@ Player::Player(Mesh* mesh) : GameObject("Player")
 	rc->ShouldDraw(true);
 	rc->SetMaterial(Material{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 80.0f } });
 
-	PlayerMouseControllerComponent* kc{ new PlayerMouseControllerComponent(this) };
+	PlayerKeyboardControllerComponent
+	* kc{ new PlayerKeyboardControllerComponent(this) };
 	kc->SetRotationSpeed(glm::pi<float>());
 	kc->SetPlayerLocalPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
 	kc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });

@@ -135,7 +135,9 @@
     <ClInclude Include="include\DigitDisplay.h" />
     <ClInclude Include="include\GameScene.h" />
     <ClInclude Include="include\LetterDisplay.h" />
+    <ClInclude Include="include\MathUtils.h" />
     <ClInclude Include="include\MultiRenderComponent.h" />
+    <ClInclude Include="include\PipeDescription.h" />
     <ClInclude Include="include\PipeItem.h" />
     <ClInclude Include="include\PipeItemGenerator.h" />
     <ClInclude Include="include\PipeNetwork.h" />

@@ -2,13 +2,20 @@
 #define RANDOM_PIPE_ITEM_GENERATOR_H_
 
 #include "PipeItemGenerator.h"
+#include "Scene.h"
 
 class RandomPipeItemGenerator : public PipeItemGenerator {
 private:
-	PipeItem* _item{ nullptr };
+	std::vector<PipeItem*> _items;
+	Scene* _scene{ nullptr };
 
 public:
-	void Generate(PipeTuple pipeTuple, PipeDesc pipeDesc) override;
+	RandomPipeItemGenerator(const std::vector<PipeItem*>& items, Scene* scene)
+		: _items(items), _scene(scene)
+	{		
+	}
+
+	void Generate(PipeTuple& pipeTuple, const PipeDesc& pipeDesc) override;
 };
 
 #endif //RANDOM_PIPE_ITEM_GENERATOR_H_

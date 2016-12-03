@@ -1,8 +1,6 @@
 #include "PlayerMouseControllerComponent.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include "GameObject.h"
-#include "MouseMotionMessage.h"
-#include <iostream>
 #include <GL/GLM/gtc/constants.inl>
 #include "MouseClickMessage.h"
 

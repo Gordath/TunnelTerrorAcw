@@ -3,11 +3,17 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include "Window.h"
 
 void GameScene::Initialise()
 {
+	PipeItem* obstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
+//	obstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.2f, 0.3f });
+
+
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
+	_pipeNetwork->AddPipeItemTemplate(obstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
 	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
@@ -35,14 +41,14 @@ void GameScene::Update(double deltaTime, long time)
 	P *= proj;
 
 	V = glm::mat4{ 1.0f };
-//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
+	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
 	
-	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
-	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
-	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
+//	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
+//	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
+//	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
 
-	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
-	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
+	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
+//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
 void GameScene::Render(RenderSystem* renderer)
