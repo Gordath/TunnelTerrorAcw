@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TunnelTerrorGame game;
 
-	Window_DX window{&game, 1024, 768};
+	Window_DX window{&game, 2560, 1440};
 	window.Initialise();
 
 	return 0;

@@ -6,7 +6,7 @@ PipeItem::PipeItem(Mesh* m) : GameObject("pipeItem")
 {
 	RenderComponent* rc{ new RenderComponent(this) };
 	rc->SetMesh(m);
-	rc->SetMaterial(Material{ glm::vec4{ 1.0f, 1.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } });
+	rc->SetMaterial(Material{ glm::vec4{ 1.0f, 1.0f, 0.0f, 0.1f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } });
 
 //	_rotater = new GameObject{"rotater"};
 //	RenderComponent *f = new RenderComponent{ _rotater };

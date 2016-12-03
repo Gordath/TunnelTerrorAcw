@@ -1,9 +1,9 @@
 #include "RandomPipeItemGenerator.h"
 #include "RenderComponent.h"
-#include <GL/GLM/detail/func_trigonometric.inl>
 #include <iostream>
 #include "MathUtils.h"
 #include <GL/GLM/gtc/constants.inl>
+#include <GL/GLM/GTC/matrix_transform.inl>
 
 
 void RandomPipeItemGenerator::Generate(PipeTuple& pipeTuple, const PipeDesc& pipeDesc)
@@ -11,21 +11,24 @@ void RandomPipeItemGenerator::Generate(PipeTuple& pipeTuple, const PipeDesc& pip
 	float uStep{ pipeDesc.curveAngle / pipeDesc.curveSegments };
 	float angle = 0;
 
-	for (int i = 0; i < pipeDesc.curveSegments / 2 ; ++i) {
-		float randU{ static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * glm::pi<float>() / 2.0f };
+	for (int i = 0; i < pipeDesc.curveSegments; ++i) {
 		float randV{ static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * glm::pi<float>() * 2.0f };
 
-		glm::vec3 pos{ GetPointOnTorus(glm::radians(angle) , randV, pipeDesc.curveRadius, pipeDesc.pipeRadius) };
+		glm::vec3 pos{ GetPointOnCurve(pipeDesc, glm::radians(angle)) };
 		angle += uStep;
 
-		PipeItem* randSelection{ _items[0] };
+		PipeItem* randSelection{ _items[rand() % _items.size()] };
 		RenderComponent* selectionRc{ static_cast<RenderComponent*>(randSelection->GetComponent("render")) };
 
 		PipeItem* pipeItem{ new PipeItem(selectionRc->GetMesh()) };
 
-		pipeItem->SetPosition(pos);
-		pipeItem->SetEulerAngles(glm::vec3{ 0.0f, 0.0f, -std::get<float>(pipeTuple) });
-		pipeItem->SetScale(glm::vec3{ 0.3f, 2.3f, 0.3f });
+		glm::mat4 xform;
+		xform = glm::translate(xform, pos);
+		xform = glm::rotate(xform, -glm::radians(angle), glm::vec3{ 0.0f, 0.0f, 1.0f });
+		xform = glm::rotate(xform, randV, glm::vec3{ 1.0f, 0.0f, 0.0f });
+		xform = glm::translate(xform, glm::vec3{ 0.0f, pipeDesc.pipeRadius - randSelection->GetScale().y / 2.0f, 0.0f });
+		xform = glm::scale(xform, randSelection->GetScale());
+		pipeItem->SetExtraXForm(xform);
 
 		GameObject* parent{ std::get<GameObject*>(pipeTuple) };
 		pipeItem->SetParent(parent);

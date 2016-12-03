@@ -212,7 +212,6 @@ void PipeNetwork::Update(double deltaTime, long time)
 	static long incrementTime = 0;
 
 	if (time - incrementTime >= threshold) {
-		std::cout << "Speeding up! Time:" << time << " IncrementTime:" << incrementTime << " Diff:" << time - incrementTime << std::endl;
 		_speed += 0.0006f;
 		incrementTime = time;
 	}
