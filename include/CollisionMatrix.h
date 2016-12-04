@@ -1,0 +1,9 @@
+#ifndef COLLISION_MATRIX_H_
+#define COLLISION_MATRIX_H_
+
+enum CollisionID {
+	PLAYER_ID = 1,
+	OBSTACLE_ID = 2
+};
+
+#endif //COLLISION_MATRIX_H_

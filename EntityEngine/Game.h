@@ -9,6 +9,7 @@
 #include "CollisionSystem.h"
 
 #include "SceneManager.h"
+#include "MouseClickMessage.h"
 
 // Forward declarations
 class GameObject;
@@ -74,6 +75,8 @@ public:
 	virtual void OnKeyboard(int key, bool down);
 
 	virtual void OnMouseMove(int x, int y);
+
+	virtual void OnMouseClick(MouseButtonType button, int x, int y, bool pressed);
 
 	// Draw everything
 	virtual void Render() = 0;

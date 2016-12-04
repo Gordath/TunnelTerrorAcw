@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "CollisionComponent.h"
 #include "CollisionMessage.h"
+#include <iostream>
+#include "../include/CollisionMatrix.h"
 
 /******************************************************************************************************************/
 // Structors
@@ -29,7 +31,7 @@ void CollisionSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 		if (!collidee->IsAlive()) continue; // Skip dead things
 
 		// Does this object even have a Collision component?
-		if (CollisionComponent* cc1 = (CollisionComponent*)(collidee->GetComponent("collision"))) {
+		if (CollisionComponent* cc1 = static_cast<CollisionComponent*>(collidee->GetComponent("collision"))) {
 			if (cc1->GetCollisionID() == 0) continue; // Skip things with no collision ID
 
 			// Collide against all objects we're meant to collide with
@@ -39,7 +41,7 @@ void CollisionSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 				if (collidee == collider) continue; // Skip colliding against yourself
 				if (!collider->IsAlive()) continue; // Skip dead things
 
-				if (CollisionComponent* cc2 = (CollisionComponent*)(collider->GetComponent("collision"))) {
+				if (CollisionComponent* cc2 = static_cast<CollisionComponent*>(collider->GetComponent("collision"))) {
 					if (cc2->GetCollisionID() == 0) continue; // Skip things with no collision ID
 
 
@@ -67,10 +69,19 @@ void CollisionSystem::Process(std::vector<GameObject*>& list, double deltaTime)
 
 bool CollisionSystem::CollideWith(const CollisionComponent* collidee, const CollisionComponent* collider)
 {
-	glm::vec3 diff = collider->GetGameObject()->GetPosition();
-	diff -= collidee->GetGameObject()->GetPosition();
+	glm::vec4 sph_center{ 0.0f, 0.0f, 0.0f, 1.0f };
+	glm::vec4 sph_center2{ 0.0f, 0.0f, 0.0f, 1.0f };
 
-	return (diff.length() < collidee->GetCollisionRadius() + collider->GetCollisionRadius());
+	sph_center = collider->GetGameObject()->GetXform() * sph_center;
+	sph_center2 = collidee->GetGameObject()->GetXform() * sph_center2;
+
+	glm::vec3 diff = sph_center - sph_center2;
+	float len = glm::length(diff);
+	float radsum = collidee->GetCollisionRadius() * 0.9f + collider->GetCollisionRadius() * 0.9f;
+
+	bool res = len < radsum;
+
+	return res;
 }
 
 /******************************************************************************************************************/

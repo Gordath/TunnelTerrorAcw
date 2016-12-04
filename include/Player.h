@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "GameObject.h"
+#include "Message.h"
 
 class Mesh;
 

@@ -141,14 +141,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CollisionComponent.cpp" />
-    <ClCompile Include="CollisionMessage.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
     <ClCompile Include="IBO_DX.cpp" />
-    <ClCompile Include="KeyPressMessage.cpp" />
-    <ClCompile Include="DeadObjectMessage.cpp" />
     <ClCompile Include="LifeTimerComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -168,7 +165,6 @@
     <ClCompile Include="ShaderObject_GL.cpp" />
     <ClCompile Include="ShaderProgram_GL.cpp" />
     <ClCompile Include="System.cpp" />
-    <ClCompile Include="ThrustMessage.cpp" />
     <ClCompile Include="UserInputComponent.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="VBO_GL.cpp" />
@@ -177,6 +173,7 @@
     <ClCompile Include="Window_GL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BSphere.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionMessage.h" />
     <ClInclude Include="CollisionSystem.h" />
@@ -192,6 +189,8 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="MouseClickMessage.h" />
+    <ClInclude Include="MouseMotionMessage.h" />
     <ClInclude Include="MultiMesh.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverSubject.h" />

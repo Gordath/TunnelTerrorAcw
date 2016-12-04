@@ -7,6 +7,7 @@
 #include "PipeNetwork.h"
 #include <memory>
 #include "player.h"
+#include "ScoreDisplay.h"
 
 class GameScene : public Scene {
 protected:
@@ -17,6 +18,8 @@ protected:
 
 	Player* _player;
 
+	ScoreDisplay* _score;
+
 	glm::mat4 M;
 	glm::mat4 V;
 	glm::mat4 P;
@@ -25,8 +28,6 @@ public:
 	void Initialise() override;
 
 	void OnKeyboard(int key, bool down) override;
-
-	void OnMouseMove(int x, int y) override;
 
 	void Update(double deltaTime, long time) override;
 

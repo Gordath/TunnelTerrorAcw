@@ -8,15 +8,15 @@ public:
 	virtual ~UserInputComponent();
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	void Start() override;
+	void Start() noexcept override;
 
 	// Main update function (called every frame)
-	void Update(double deltaTime) override;
+	void Update(double deltaTime) noexcept override;
 
 	// Message handler (called when message occurs)
-	void OnMessage(Message* msg) override;
+	void OnMessage(Message* msg) noexcept override;
 
 	// Shutdown function -- called when parent object is destroyed
-	void End() override;
+	void End() noexcept override;
 
 };

@@ -127,15 +127,20 @@
     <ClCompile Include="src\PlayerKeyboardControllerComponent.cpp" />
     <ClCompile Include="src\PlayerMouseControllerComponent.cpp" />
     <ClCompile Include="src\RandomPipeItemGenerator.cpp" />
+    <ClCompile Include="src\ScoreDisplay.cpp" />
     <ClCompile Include="src\TextDisplay.cpp" />
     <ClCompile Include="src\TunnelTerrorGame.cpp" />
+    <ClCompile Include="src\WordDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CollisionMatrix.h" />
     <ClInclude Include="include\DebugDummy.h" />
     <ClInclude Include="include\DigitDisplay.h" />
     <ClInclude Include="include\GameScene.h" />
     <ClInclude Include="include\LetterDisplay.h" />
+    <ClInclude Include="include\MathUtils.h" />
     <ClInclude Include="include\MultiRenderComponent.h" />
+    <ClInclude Include="include\PipeDescription.h" />
     <ClInclude Include="include\PipeItem.h" />
     <ClInclude Include="include\PipeItemGenerator.h" />
     <ClInclude Include="include\PipeNetwork.h" />
@@ -143,8 +148,10 @@
     <ClInclude Include="include\PlayerKeyboardControllerComponent.h" />
     <ClInclude Include="include\PlayerMouseControllerComponent.h" />
     <ClInclude Include="include\RandomPipeItemGenerator.h" />
+    <ClInclude Include="include\ScoreDisplay.h" />
     <ClInclude Include="include\TextDisplay.h" />
     <ClInclude Include="include\TunnelTerrorGame.h" />
+    <ClInclude Include="include\WordDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders.hlsl">

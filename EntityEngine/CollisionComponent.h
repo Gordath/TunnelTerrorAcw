@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjectComponent.h"
 #include "GameObject.h"
+#include <algorithm>
 
 class CollisionComponent
 		: public GameObjectComponent {
@@ -15,7 +16,12 @@ public:
 	CollisionComponent(GameObject* gob);
 	virtual ~CollisionComponent();
 
-	float GetCollisionRadius() const { return _radius * _parent->GetScale().x; }
+	float GetCollisionRadius() const
+	{
+		float m = std::max(std::max(_parent->GetScale().x, _parent->GetScale().y), _parent->GetScale().z);
+		return _radius * m;
+	}
+
 	void SetCollisionRadius(float r) { _radius = r; }
 
 	// Collision matrix
@@ -32,16 +38,16 @@ public:
 public:
 
 	// Setup function -- called when parent object is initialised (using its own Start method)
-	virtual void Start();
+	void Start() noexcept override;
 
 	// Main update function (called every frame)
-	virtual void Update(double deltaTime);
+	void Update(double deltaTime) noexcept override;
 
 	// Message handler (called when message occurs)
-	virtual void OnMessage(Message* msg);
+	void OnMessage(Message* msg) noexcept override;
 
 	// Shutdown function -- called when parent object is destroyed
-	virtual void End();
+	void End() noexcept override;
 
 
 };

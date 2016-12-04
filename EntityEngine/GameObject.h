@@ -3,17 +3,13 @@
 #include <vector>
 #include "ObserverSubject.h"
 #include <GL/GLM/detail/type_mat4x4.hpp>
+#include "Message.h"
 
 // Forward references
 class GameObjectComponent;
-class Message;
-
 
 // Typedefs
-typedef std::map<std::string, GameObjectComponent*> ComponentMap;
-typedef std::map<std::string, GameObjectComponent*>::iterator ComponentMapIterator;
-typedef std::vector<GameObjectComponent*>::iterator ComponentListIterator;
-
+using ComponentMap = std::map<std::string, GameObjectComponent*>;
 
 // Now new and improved to use a component-based architecture
 class GameObject : public ObserverSubject {
@@ -30,6 +26,7 @@ protected:
 
 	bool _alive; // Alive flag; when false, is not updated
 	bool _deleteFlag; // Set when you want this game object to be deleted by the game
+	bool _applyDefaultXform{ true };
 
 	// Components
 	ComponentMap _components;
@@ -45,9 +42,9 @@ public:
 	void SetParent(GameObject* parent) { _parent = parent; }
 
 	const glm::vec3& GetPosition() const { return _position; }
-	void SetPosition(const glm::vec3& v) { _position = v; }
+	virtual void SetPosition(const glm::vec3& v) { _position = v; }
 
-	const glm::vec3& GetEulerAngles() const { return  _eulerAngles; }
+	const glm::vec3& GetEulerAngles() const { return _eulerAngles; }
 	void SetEulerAngles(const glm::vec3& angles) { _eulerAngles = angles; }
 
 	const glm::vec3& GetScale() const { return _scale; }
@@ -66,15 +63,17 @@ public:
 	bool ShouldBeDeleted() const { return _deleteFlag; }
 	void SetDeleteFlag(bool v) { _deleteFlag = v; }
 
-	std::string GetType() const { return _type; }
+	const std::string& GetType() const { return _type; }
 
 	bool AddComponent(GameObjectComponent* goc);
 
 	bool RemoveComponent(GameObjectComponent* goc);
-	
+
 	bool RemoveComponent(std::string componentType);
-	
+
 	GameObjectComponent* GetComponent(std::string type);
+
+	void ApplyDefaultXform(bool state) noexcept { _applyDefaultXform = state; }
 
 	// Setup function -- called to initialise object and its components. Should only be called once
 	virtual void Start();

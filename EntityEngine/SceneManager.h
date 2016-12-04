@@ -34,8 +34,6 @@ public:
 	/// Respond to input
 	void OnKeyboard(int key, bool down);
 
-	void OnMouseMove(int x, int y);
-
 	/// Respond to messages
 	void OnMessage(Message* msg);
 

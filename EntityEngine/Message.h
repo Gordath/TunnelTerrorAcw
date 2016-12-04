@@ -9,5 +9,5 @@ public:
 	Message(std::string type);
 	virtual ~Message();
 
-	std::string GetMessageType() const { return _type; }
+	std::string GetMessageType() const noexcept { return _type; }
 };

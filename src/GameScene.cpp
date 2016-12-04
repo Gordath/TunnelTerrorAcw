@@ -3,16 +3,42 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include "Window.h"
 
 void GameScene::Initialise()
 {
+	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
+	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.2f, 0.3f });
+
+	PipeItem* largeObstacleTemplate{ new PipeItem{_sceneManager->GetGame()->GetMesh("cube")} };
+	largeObstacleTemplate->SetScale(glm::vec3{ 0.3f, 2.0f, 0.3f });
+
+
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
+//	_pipeNetwork->AddPipeItemTemplate(largeObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
 	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
 
+	_score = new ScoreDisplay;
+//	_score->SetPosition(glm::vec3{ 1.0f, 0.0f, 0.0f });
+//	_score->SetEulerAngles(glm::vec3{ -90.0f, 0.0f, 0.0f });
+
 	_gameObjects.push_back(_player);
+	_gameObjects.push_back(_score);
 
 	for (auto gameObject : _gameObjects) {
 		gameObject->Start();
@@ -23,13 +49,12 @@ void GameScene::OnKeyboard(int key, bool down)
 {
 }
 
-void GameScene::OnMouseMove(int x, int y)
-{
-}
-
 void GameScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);
+
+	//Check for collisions.
+	_collisionSystem.Process(_gameObjects, deltaTime);
 
 	_pipeNetwork->Update(deltaTime, time);
 
@@ -39,14 +64,14 @@ void GameScene::Update(double deltaTime, long time)
 	P *= proj;
 
 	V = glm::mat4{ 1.0f };
-//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
+	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
 	
-	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
-	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
-	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
+//	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
+//	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
+//	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
 
-	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
-	//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
+//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
+//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
 void GameScene::Render(RenderSystem* renderer)

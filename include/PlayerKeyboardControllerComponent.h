@@ -19,13 +19,13 @@ private:
 public:
 	PlayerKeyboardControllerComponent(GameObject* gameObject);
 
-	void Start() override;
+	void Start() noexcept override;
 
-	void Update(double deltaTime) override;
+	void Update(double deltaTime) noexcept override;
 
-	void OnMessage(Message* msg) override;
+	void OnMessage(Message* msg) noexcept override;
 
-	void End() override;
+	void End() noexcept override;
 
 	void SetRotationSpeed(float rotationSpeed) noexcept { _rotationSpeed = rotationSpeed; }
 

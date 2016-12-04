@@ -57,7 +57,7 @@ float4 PShader(VOut input) : SV_TARGET
 	float diffLight = max(dot(n, l), 0.0);
     
 	float4 diffColor = diffuse * diffLight;//float4(n + 1, 1.0) * diffLight;
-	float4 specColor = float4(specular.xyz * specLight, 1.0);
+	float4 specColor = float4(specular.xyz * specLight, 0.0);
 
 	return diffColor + specColor;
 }

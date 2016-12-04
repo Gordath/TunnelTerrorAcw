@@ -3,41 +3,14 @@
 
 #include "Scene.h"
 #include "Mesh.h"
-#include "GameObject.h"
 #include <deque>
-#include "PipeItem.h"
-
-struct PipeDesc {
-	float curveRadius;
-	float pipeRadius;
-
-	int curveSegments;
-	int pipeSegments;
-
-	float curveDistance{ 0.25f };
-	float curveAngle;
-
-	PipeDesc() = default;
-
-	PipeDesc(float curveRadius,
-	         float pipeRadius,
-	         int curveSegments,
-	         int pipeSegments,
-	         float curveDistance) : curveRadius(curveRadius),
-	                                pipeRadius(pipeRadius),
-	                                curveSegments(curveSegments),
-	                                pipeSegments(pipeSegments),
-	                                curveDistance(curveDistance),
-	                                curveAngle(360.0f * curveDistance)
-	{
-	}
-};
+#include "PipeItemGenerator.h"
 
 using PipeTuple = std::tuple< GameObject*, float, std::vector<PipeItem*> >;
 
 class PipeNetwork {
 private:
-	std::deque<PipeTuple> _pipesTuples;
+	std::deque<PipeTuple> _pipeTuples;
 	PipeDesc _pipeDesc;
 	Mesh* _pipeMesh{ nullptr };
 
@@ -53,13 +26,15 @@ private:
 	GameObject* _pipeNetworkController{ nullptr };
 	Scene* _scene{ nullptr };
 
+	std::vector<PipeItem*> _pipeItemTemplates;
+	PipeItemGenerator* _pipeItemGenerator{ nullptr };
+
 	void CreateFirstRing(float u, Vertex* vertArr) const;
 	void CreateRing(float u, int i, Vertex* vertArr) const;
-	static glm::vec3 GetPointOnTorus(float u, float v, float curveRadius, float pipeRadius);
-	glm::vec3 GetPointOnCurve(float u) const;
 
 	void GenerateMesh(Renderer* renderer);
 	void GeneratePipe();
+
 public:
 	PipeNetwork(const PipeDesc& pipeDesc,
 	            const int maxPipes,
@@ -70,6 +45,8 @@ public:
 
 	bool Initialize(Renderer* renderer);
 	void Update(double deltaTime, long time);
+
+	void AddPipeItemTemplate(PipeItem* item) noexcept { _pipeItemTemplates.push_back(item); }
 };
 
 #endif //PIPE_NETWORK_H_

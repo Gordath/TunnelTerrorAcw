@@ -10,7 +10,7 @@ public:
 	CollisionSystem();
 	virtual ~CollisionSystem();
 
-	bool CollideWith(const CollisionComponent* collidee, const CollisionComponent* collider);
+	static bool CollideWith(const CollisionComponent* collidee, const CollisionComponent* collider);
 
 	void Process(std::vector<GameObject*>& list, double deltaTime) override;
 };

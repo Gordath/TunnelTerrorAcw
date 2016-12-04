@@ -7,7 +7,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 {
 	Game::Initialise(window);
 
-	_renderer->SetClearColour(glm::vec4{ 0.3f, 0.3f, 0.3f, 1.0f });
+	_renderer->SetClearColour(glm::vec4{ 0.3f, 0.3f, 0.3f, 0.0f });
 
 	Mesh* cube = new Mesh();
 

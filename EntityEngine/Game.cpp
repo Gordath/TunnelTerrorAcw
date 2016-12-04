@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "GameObject.h"
 #include "KeyPressMessage.h"
+#include "MouseMotionMessage.h"
+#include "MouseClickMessage.h"
 
 
 Game* Game::TheGame = nullptr;
@@ -56,7 +58,14 @@ void Game::OnKeyboard(int key, bool down)
 
 void Game::OnMouseMove(int x, int y)
 {
-	_sceneManager.OnMouseMove(x, y);
+	MouseMotionMessage msg{ glm::ivec2{x, y} };
+	BroadcastMessage(&msg);
+}
+
+void Game::OnMouseClick(MouseButtonType button, int x, int y, bool pressed)
+{
+	MouseClickMessage msg{ button, glm::vec2{x, y}, pressed };
+	BroadcastMessage(&msg);
 }
 
 

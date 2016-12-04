@@ -51,14 +51,6 @@ void SceneManager::OnKeyboard(int key, bool down)
 
 /******************************************************************************************************************/
 
-void SceneManager::OnMouseMove(int x, int y)
-{
-	Scene* currentScene = GetCurrentScene();
-	if (currentScene) {
-		currentScene->OnMouseMove(x, y);
-	}
-}
-
 void SceneManager::OnMessage(Message* msg)
 {
 	Scene* currentScene = GetCurrentScene();
