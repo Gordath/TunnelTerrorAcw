@@ -173,6 +173,7 @@
     <ClCompile Include="Window_GL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BSphere.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionMessage.h" />
     <ClInclude Include="CollisionSystem.h" />

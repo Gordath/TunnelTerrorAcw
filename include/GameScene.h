@@ -7,6 +7,7 @@
 #include "PipeNetwork.h"
 #include <memory>
 #include "player.h"
+#include "ScoreDisplay.h"
 
 class GameScene : public Scene {
 protected:
@@ -16,6 +17,8 @@ protected:
 	std::unique_ptr<PipeNetwork> _pipeNetwork;
 
 	Player* _player;
+
+	ScoreDisplay* _score;
 
 	glm::mat4 M;
 	glm::mat4 V;

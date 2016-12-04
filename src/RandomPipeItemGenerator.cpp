@@ -30,6 +30,10 @@ void RandomPipeItemGenerator::Generate(PipeTuple& pipeTuple, const PipeDesc& pip
 		xform = glm::scale(xform, randSelection->GetScale());
 		pipeItem->SetExtraXForm(xform);
 
+		pipeItem->ApplyDefaultXform(false);
+		pipeItem->SetPosition(glm::vec3{ 0.0f, pipeDesc.pipeRadius - randSelection->GetScale().y / 2.0f, 0.0f });
+		pipeItem->SetScale(randSelection->GetScale());
+
 		GameObject* parent{ std::get<GameObject*>(pipeTuple) };
 		pipeItem->SetParent(parent);
 

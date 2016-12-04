@@ -1,6 +1,8 @@
 #include "PipeItem.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include "RenderComponent.h"
+#include "CollisionMatrix.h"
+#include "CollisionComponent.h"
 
 PipeItem::PipeItem(Mesh* m) : GameObject("pipeItem")
 {
@@ -8,11 +10,10 @@ PipeItem::PipeItem(Mesh* m) : GameObject("pipeItem")
 	rc->SetMesh(m);
 	rc->SetMaterial(Material{ glm::vec4{ 1.0f, 1.0f, 0.0f, 0.1f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } });
 
-//	_rotater = new GameObject{"rotater"};
-//	RenderComponent *f = new RenderComponent{ _rotater };
-////	f->SetMesh(m);
-////	f->SetMaterial(Material{ glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } });
-//	SetParent(_rotater);
+	CollisionComponent* cc{ new CollisionComponent{ this } };
+	cc->SetCollisionRadius(m->CalculateMaxSize());
+	cc->SetCollisionID(OBSTACLE_ID);
+	cc->SetCollisionMatrixFlag(PLAYER_ID);
 }
 
 void PipeItem::Position(const PipeDesc& pipeDesc, float curveRotation, float ringRotation)

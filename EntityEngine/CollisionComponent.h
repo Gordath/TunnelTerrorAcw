@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjectComponent.h"
 #include "GameObject.h"
+#include <algorithm>
 
 class CollisionComponent
 		: public GameObjectComponent {
@@ -15,7 +16,12 @@ public:
 	CollisionComponent(GameObject* gob);
 	virtual ~CollisionComponent();
 
-	float GetCollisionRadius() const { return _radius * _parent->GetScale().x; }
+	float GetCollisionRadius() const
+	{
+		float m = std::max(std::max(_parent->GetScale().x, _parent->GetScale().y), _parent->GetScale().z);
+		return _radius * m;
+	}
+
 	void SetCollisionRadius(float r) { _radius = r; }
 
 	// Collision matrix

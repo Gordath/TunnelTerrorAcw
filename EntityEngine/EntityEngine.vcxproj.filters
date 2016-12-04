@@ -212,6 +212,9 @@
     <ClInclude Include="MouseClickMessage.h">
       <Filter>Messages</Filter>
     </ClInclude>
+    <ClInclude Include="BSphere.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

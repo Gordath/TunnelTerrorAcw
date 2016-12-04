@@ -63,6 +63,12 @@
     <ClCompile Include="src\RandomPipeItemGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ScoreDisplay.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WordDisplay.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PipeNetwork.h">
@@ -112,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="include\MathUtils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollisionMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ScoreDisplay.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WordDisplay.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
