@@ -7,8 +7,12 @@ protected:
 	glm::vec3 _thrust;
 
 public:
-	ThrustMessage(const glm::vec3& thrustAmt);
-	virtual ~ThrustMessage();
+	ThrustMessage(const glm::vec3& thrustAmt)
+		: Message("thrust"), _thrust(thrustAmt)
+	{
+	}
+	
+	virtual ~ThrustMessage() = default;
 
-	const glm::vec3& GetThrust() const { return _thrust; }
+	const glm::vec3& GetThrust() const noexcept { return _thrust; }
 };

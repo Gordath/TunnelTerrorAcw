@@ -24,7 +24,7 @@ UserInputComponent::~UserInputComponent()
 /******************************************************************************************************************/
 
 // Setup function -- called when parent object is initialised (using its own Start method)
-void UserInputComponent::Start()
+void UserInputComponent::Start() noexcept
 {
 	// Register as a listener
 	_parent->RegisterListener("keypress", this);
@@ -33,7 +33,7 @@ void UserInputComponent::Start()
 /******************************************************************************************************************/
 
 // Main update function (called every frame)
-void UserInputComponent::Update(double deltaTime)
+void UserInputComponent::Update(double deltaTime) noexcept
 {
 
 }
@@ -41,7 +41,7 @@ void UserInputComponent::Update(double deltaTime)
 /******************************************************************************************************************/
 
 // Message handler (called when message occurs)
-void UserInputComponent::OnMessage(Message* msg)
+void UserInputComponent::OnMessage(Message* msg) noexcept
 {
 	if (msg->GetMessageType() == "keypress")
 	{
@@ -52,7 +52,7 @@ void UserInputComponent::OnMessage(Message* msg)
 /******************************************************************************************************************/
 
 // Shutdown function -- called when parent object is destroyed
-void UserInputComponent::End()
+void UserInputComponent::End() noexcept
 {
 	_parent->UnregisterListener("keypress", this);
 }

@@ -107,7 +107,7 @@ void Renderer_DX::Initialise(int width, int height)
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; // how swap chain is to be used
 	scd.OutputWindow = _hWnd; // the window to be used
 	scd.SampleDesc.Count = 4; // how many multisamples
-	scd.Windowed = TRUE; // windowed/full-screen mode
+	scd.Windowed = true; // windowed/full-screen mode
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // allow full-screen switching
 
 	// create a device, device context and swap chain using the information in the scd struct
@@ -170,7 +170,6 @@ void Renderer_DX::Initialise(int width, int height)
 	viewport.MaxDepth = 1;
 
 	_context->RSSetViewports(1, &viewport);
-
 
 	// Initialise shaders
 	InitialiseShaders();

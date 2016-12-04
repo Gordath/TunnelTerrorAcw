@@ -1,9 +1,13 @@
-#include "tunnel_terror_game.h"
+#include "TunnelTerrorGame.h"
 #include "Window_DX.h"
+
+#include <stdlib.h>
+#include <crtdbg.h>
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TunnelTerrorGame game;
 
 	Window_DX window{&game, 1024, 768};

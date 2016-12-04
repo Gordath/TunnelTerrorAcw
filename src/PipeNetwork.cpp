@@ -1,4 +1,4 @@
-#include "pipe_network.h"
+#include "PipeNetwork.h"
 #include <GL/GLM/glm.hpp>
 #include <GL/GLM/gtc/constants.inl>
 #include <iostream>
@@ -6,6 +6,8 @@
 #include "RenderComponent.h"
 #include <ctime>
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include "RandomPipeItemGenerator.h"
+#include "MathUtils.h"
 
 
 // Private methods ---------------------------------------------------------------------------------------------------------------------
@@ -15,12 +17,12 @@ void PipeNetwork::CreateFirstRing(float u, Vertex* vertArr) const
 
 	glm::vec3 posA{ GetPointOnTorus(0.0f, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius) };
 
-	glm::vec3 ringCenterA{ GetPointOnCurve(0.0f) };
+	glm::vec3 ringCenterA{ GetPointOnCurve(_pipeDesc, 0.0f) };
 	glm::vec3 normalA{ glm::normalize(ringCenterA - posA) };
 	glm::vec3 tangentA{ glm::normalize(GetPointOnTorus(0.001f, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius) - posA) };
 
 	glm::vec3 posB{ GetPointOnTorus(u, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius) };
-	glm::vec3 ringCenterB{ GetPointOnCurve(u) };
+	glm::vec3 ringCenterB{ GetPointOnCurve(_pipeDesc, u) };
 	glm::vec3 normalB{ glm::normalize(ringCenterB - posB) };
 	glm::vec3 tangentB{ glm::normalize(GetPointOnTorus(u + 0.001f, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius) - posB) };
 
@@ -52,7 +54,7 @@ void PipeNetwork::CreateRing(float u, int i, Vertex* vertArr) const
 	int ringOffset = _pipeDesc.pipeSegments * 4;
 
 	glm::vec3 pos = GetPointOnTorus(u, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius);
-	glm::vec3 ringCenter{ GetPointOnCurve(u) };
+	glm::vec3 ringCenter{ GetPointOnCurve(_pipeDesc, u) };
 	glm::vec3 tangent{ GetPointOnTorus(u + 0.001f, 0.0f, _pipeDesc.curveRadius, _pipeDesc.pipeRadius) - pos };
 	Vertex vertex{ pos, glm::normalize(ringCenter - pos), tangent, glm::vec2{}, glm::vec4{ 1.0f, 1.0f - u, 1.0f, 1.0f } };
 	for (int v = 1; v <= _pipeDesc.pipeSegments; v++ , i += 4) {
@@ -67,24 +69,12 @@ void PipeNetwork::CreateRing(float u, int i, Vertex* vertArr) const
 	}
 }
 
-glm::vec3 PipeNetwork::GetPointOnTorus(float u, float v, float curveRadius, float pipeRadius)
-{
-	float r = curveRadius + pipeRadius * cos(v);
-	return glm::vec3{ r * sin(u), r * cos(u), pipeRadius * sin(v) };
-}
-
-glm::vec3 PipeNetwork::GetPointOnCurve(float u) const
-{
-	return glm::vec3{ _pipeDesc.curveRadius * sin(u), _pipeDesc.curveRadius * cos(u), 0.0f };
-}
-
 void PipeNetwork::GenerateMesh(Renderer* renderer)
 {
 	int vertCount = _pipeDesc.pipeSegments * _pipeDesc.curveSegments * 4;
 	Vertex* vertices = new Vertex[vertCount];
 
-	float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
-	//	_eulerAngles.z = -uStep * _pipeDesc.curveSegments;
+	float uStep = 2.0f * glm::pi<float>() / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 	CreateFirstRing(uStep, vertices);
 
 	int iDelta = _pipeDesc.pipeSegments * 4;
@@ -102,19 +92,17 @@ void PipeNetwork::GenerateMesh(Renderer* renderer)
 
 void PipeNetwork::GeneratePipe()
 {
-	std::tuple<GameObject*, float> temp = std::make_tuple(new GameObject("Pipe"), 0.0f);
+	PipeTuple temp = std::make_tuple(new GameObject("Pipe"), 0.0f, std::vector<PipeItem*>{});
 	GameObject* pipe{ std::get<GameObject*>(temp) };
 
-	GameObject* parent{ std::get<GameObject*>(_pipesAndRotations[_pipesAndRotations.size() - 1]) };
+	GameObject* parent{ std::get<GameObject*>(_pipeTuples[_pipeTuples.size() - 1]) };
 	pipe->SetParent(parent);
 
-	float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
+	float uStep = 2.0f * glm::pi<float>() / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 	pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, -uStep * _pipeDesc.curveSegments });
 
 	//Calculate a random relative rotation.
-	std::get<float>(temp) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
-
-	pipe->SetPosition(glm::vec3{});
+	std::get<float>(temp) = glm::radians(rand() % _pipeDesc.curveSegments * (360.0f / _pipeDesc.pipeSegments));
 
 	glm::mat4 extraXForm = glm::mat4(1);
 	extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, _pipeDesc.curveRadius, 0.0f });
@@ -128,7 +116,10 @@ void PipeNetwork::GeneratePipe()
 	rc->SetMesh(_pipeMesh);
 
 	_scene->AddGameObject(pipe);
-	_pipesAndRotations.push_back(temp);
+	_pipeTuples.push_back(temp);
+
+	//Generate Obstacles on the last pipe
+	_pipeItemGenerator->Generate(_pipeTuples[_pipeTuples.size() - 1], _pipeDesc);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------
@@ -137,11 +128,10 @@ PipeNetwork::PipeNetwork(const PipeDesc& pipeDesc,
                          const int maxPipes,
                          float speed,
                          Scene* scene) : _pipeDesc(pipeDesc),
-                                               _maxPipes(maxPipes),
-                                               _speed(speed),
-                                               _scene(scene)
+                                         _maxPipes(maxPipes),
+                                         _speed(speed),
+                                         _scene(scene)
 {
-	
 }
 
 PipeNetwork::~PipeNetwork()
@@ -151,11 +141,13 @@ PipeNetwork::~PipeNetwork()
 
 bool PipeNetwork::Initialize(Renderer* renderer)
 {
+	_pipeItemGenerator = new RandomPipeItemGenerator{_pipeItemTemplates, _scene};
+
 	//Seed the rand.
 	srand(time(nullptr));
 
 	//Resize the pipe tuple vector.
-	_pipesAndRotations.resize(_maxPipes);
+	_pipeTuples.resize(_maxPipes);
 
 	//Generate the one and only pipe mesh.
 	GenerateMesh(renderer);
@@ -170,9 +162,9 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 
 	//Create the pipe tupples based on the PipeDesc structure.
 	for (int i = 0; i < _maxPipes; i++) {
-		_pipesAndRotations[i] = std::make_tuple(new GameObject("Pipe"), 0.0f);// new Pipe(7, 1, 20, 20, _sceneManager->GetGame()->GetRenderer());
-		GameObject* pipe{ std::get<GameObject*>(_pipesAndRotations[i]) };
-		
+		_pipeTuples[i] = std::make_tuple(new GameObject("Pipe"), 0.0f, std::vector<PipeItem*>{});
+		GameObject* pipe{ std::get<GameObject*>(_pipeTuples[i]) };
+
 		//Create a new RenderComponent for the GameObject and assign the mesh to it.
 		RenderComponent* rc{ new RenderComponent(pipe) };
 		rc->SetMesh(_pipeMesh);
@@ -184,20 +176,20 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 		}
 		else {
 			//Create the pipe hierarchy.
-			GameObject* parent{ std::get<GameObject*>(_pipesAndRotations[i - 1]) };
+			GameObject* parent{ std::get<GameObject*>(_pipeTuples[i - 1]) };
 			pipe->SetParent(parent);
 
 			float uStep = (2.0f * glm::pi<float>()) / _pipeDesc.curveSegments * _pipeDesc.curveDistance;
 			pipe->SetEulerAngles(glm::vec3{ pipe->GetEulerAngles().xy, -uStep * _pipeDesc.curveSegments });
 
 			//Calculate a random relative rotation.
-			std::get<float>(_pipesAndRotations[i]) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
+			std::get<float>(_pipeTuples[i]) = glm::radians((rand() % _pipeDesc.curveSegments) * (360.0f / _pipeDesc.pipeSegments));
 
 			pipe->SetPosition(glm::vec3{});
 
 			glm::mat4 extraXForm = glm::mat4(1);
 			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, _pipeDesc.curveRadius, 0.0f });
-			extraXForm = glm::rotate(extraXForm, std::get<float>(_pipesAndRotations[i]), glm::vec3{ 1.0f, 0.0f, 0.0f });
+			extraXForm = glm::rotate(extraXForm, std::get<float>(_pipeTuples[i]), glm::vec3{ 1.0f, 0.0f, 0.0f });
 			extraXForm = glm::translate(extraXForm, glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 
 			pipe->SetExtraXForm(extraXForm);
@@ -208,14 +200,22 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	}
 
 	//Align the first pipe with the origin.
-	_currentPipe = std::get<GameObject*>(_pipesAndRotations[0]);
+	_currentPipe = std::get<GameObject*>(_pipeTuples[0]);
 	_currentPipe->SetPosition(glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 
 	return true;
 }
 
-void PipeNetwork::Update(double deltaTime)
+void PipeNetwork::Update(double deltaTime, long time)
 {
+	static long threshold{ 20000 };
+	static long incrementTime = 0;
+
+	if (time - incrementTime >= threshold) {
+		_speed += 0.0006f;
+		incrementTime = time;
+	}
+
 	float delta{ _speed * static_cast<float>(deltaTime) };
 	_distanceTraveled += delta;
 
@@ -224,15 +224,22 @@ void PipeNetwork::Update(double deltaTime)
 	if (_pipeRotation >= 90.0f) {
 		delta = (_pipeRotation - 90.0f) / _distanceToAngle;
 
-		//shift the pipes and update the current pipe
-		std::tuple<GameObject*, float> temp = _pipesAndRotations[0];
-		std::remove(_scene->GetGameObjects().begin(), _scene->GetGameObjects().end(), std::get<GameObject*>(temp));
-		//TODO: check if this is leaky!!!!!
-		//delete std::get<GameObject*>(temp);
-		_pipesAndRotations.pop_front();
+		//Mark the pipe for deletion. Pop it of the network.
+		PipeTuple temp = _pipeTuples[0];
+
+		auto items{ std::get<std::vector<PipeItem*>>(temp) };
+		for (PipeItem* i : items) {
+			i->SetDeleteFlag(true);
+		}
+
+		GameObject* gameObject{ std::get<GameObject*>(temp) };
+		gameObject->SetDeleteFlag(true);
+		_pipeTuples.pop_front();
+
+		//Generate a new one now.
 		GeneratePipe();
 
-		_currentPipe = std::get<GameObject*>(_pipesAndRotations[0]);
+		_currentPipe = std::get<GameObject*>(_pipeTuples[0]);
 		_currentPipe->SetPosition(glm::vec3{ 0.0f, -_pipeDesc.curveRadius, 0.0f });
 		_currentPipe->SetEulerAngles(glm::vec3{});
 		_currentPipe->SetExtraXForm(glm::mat4{ 1 });
@@ -240,7 +247,7 @@ void PipeNetwork::Update(double deltaTime)
 
 		_pipeRotation = delta * _distanceToAngle;
 
-		_networkRotation += glm::degrees(std::get<float>(_pipesAndRotations[0]));
+		_networkRotation += glm::degrees(std::get<float>(_pipeTuples[0]));
 		if (_networkRotation < 0.0f) {
 			_networkRotation += 360.0f;
 		}

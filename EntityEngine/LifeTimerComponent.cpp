@@ -24,7 +24,7 @@ LifeTimerComponent::~LifeTimerComponent()
 /******************************************************************************************************************/
 
 // Setup function -- called when parent object is initialised (using its own Start method)
-void LifeTimerComponent::Start()
+void LifeTimerComponent::Start() noexcept
 {
 	_timeLeft = _startingLifeTime;
 }
@@ -32,7 +32,7 @@ void LifeTimerComponent::Start()
 /******************************************************************************************************************/
 
 // Main update function (called every frame)
-void LifeTimerComponent::Update(double deltaTime)
+void LifeTimerComponent::Update(double deltaTime) noexcept
 {
 	DecreaseLifeTime(deltaTime);
 
@@ -48,14 +48,14 @@ void LifeTimerComponent::Update(double deltaTime)
 /******************************************************************************************************************/
 
 // Message handler (called when message occurs)
-void LifeTimerComponent::OnMessage(Message* msg)
+void LifeTimerComponent::OnMessage(Message* msg) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Shutdown function -- called when parent object is destroyed
-void LifeTimerComponent::End()
+void LifeTimerComponent::End() noexcept
 {
 }
 

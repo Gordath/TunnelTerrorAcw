@@ -110,11 +110,19 @@ void Mesh::CreateBuffers(Renderer* renderer)
 
 float Mesh::CalculateMaxSize()
 {
+	//calc the center of the mesh.
+	glm::vec3 accum;
+	for(auto v : _vertices) {
+		 accum += v.position;
+	}
+
+	glm::vec3 center{ accum / static_cast<float>(NumVertices()) };
+
 	float max = 0;
 	for (int i = 0; i < NumVertices(); i++) {
 		Vertex& v = _vertices[i];
-		glm::vec4 vec(v.position, 1);
-		float dist = vec.length() * vec.length();
+		glm::vec3 vec{ v.position - center};
+		float dist = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;// vec.length() * vec.length();
 		if (dist > max) {
 			max = dist;
 		}
@@ -186,10 +194,10 @@ bool Mesh::LoadFromStream(std::ifstream& in)
 		in >> v.position.x;
 		in >> v.position.y;
 		in >> v.position.z;
-//		in >> v.r;
-//		in >> v.g;
-//		in >> v.b;
-//		in >> v.a;
+		in >> v.colour.r;
+		in >> v.colour.g;
+		in >> v.colour.b;
+		in >> v.colour.a;
 		AddVertex(v);
 	}
 	return true;

@@ -8,7 +8,7 @@
 
 RenderComponent::RenderComponent(GameObject* gob)
 	: GameObjectComponent("render", gob),
-	  _material(Material{glm::vec4{1.0f, 0.0f, 0.0f, 1.0f}, glm::vec4{1.0f, 1.0f, 1.0f, 60.0f}}),
+	  _material(Material{glm::vec4{1.0f, 1.0f, 1.0f, 1.0f}, glm::vec4{1.0f, 1.0f, 1.0f, 60.0f}}),
 	  _mesh(nullptr)
 {
 }
@@ -24,28 +24,28 @@ RenderComponent::~RenderComponent()
 /******************************************************************************************************************/
 
 // Setup function -- called when parent object is initialised (using its own Start method)
-void RenderComponent::Start()
+void RenderComponent::Start() noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Main update function (called every frame)
-void RenderComponent::Update(double deltaTime)
+void RenderComponent::Update(double deltaTime) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Message handler (called when message occurs)
-void RenderComponent::OnMessage(Message* msg)
+void RenderComponent::OnMessage(Message* msg) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Shutdown function -- called when parent object is destroyed
-void RenderComponent::End()
+void RenderComponent::End() noexcept
 {
 }
 

@@ -24,7 +24,7 @@ PhysicsComponent::~PhysicsComponent()
 /******************************************************************************************************************/
 
 // Setup function -- called when parent object is initialised (using its own Start method)
-void PhysicsComponent::Start()
+void PhysicsComponent::Start() noexcept
 {
 	_parent->RegisterListener("thrust", this);
 }
@@ -32,14 +32,14 @@ void PhysicsComponent::Start()
 /******************************************************************************************************************/
 
 // Main update function (called every frame)
-void PhysicsComponent::Update(double deltaTime)
+void PhysicsComponent::Update(double deltaTime) noexcept
 {
 }
 
 /******************************************************************************************************************/
 
 // Message handler (called when message occurs)
-void PhysicsComponent::OnMessage(Message* msg)
+void PhysicsComponent::OnMessage(Message* msg) noexcept
 {
 	if (msg->GetMessageType() == "thrust") {
 		ThrustMessage* tm = static_cast<ThrustMessage*>(msg);
@@ -50,7 +50,7 @@ void PhysicsComponent::OnMessage(Message* msg)
 /******************************************************************************************************************/
 
 // Shutdown function -- called when parent object is destroyed
-void PhysicsComponent::End()
+void PhysicsComponent::End() noexcept
 {
 	_parent->UnregisterListener("thrust", this);
 }

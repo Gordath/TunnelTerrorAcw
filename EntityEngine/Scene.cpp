@@ -2,14 +2,6 @@
 #include "GameObject.h"
 
 /******************************************************************************************************************/
-// Structors
-/******************************************************************************************************************/
-
-Scene::Scene()
-{
-}
-
-/******************************************************************************************************************/
 
 Scene::~Scene()
 {
@@ -36,12 +28,17 @@ void Scene::OnMessage(Message* msg)
 
 void Scene::Update(double deltaTime, long time)
 {
-	// Delete game objects
-	for (size_t i = 0; i < _gameObjects.size(); i++) {
-		if (_gameObjects[i]->ShouldBeDeleted()) {
-			delete _gameObjects[i];
-			_gameObjects.erase(_gameObjects.begin() + i);
-			i--;
+	auto it{ _gameObjects.begin() };
+	while(it != _gameObjects.end()) {
+		//Delete else update.
+		GameObject* gobj{ *it };
+		if (gobj->ShouldBeDeleted()) {
+			delete gobj;
+			it = _gameObjects.erase(it);
+		}
+		else {
+			gobj->Update(deltaTime);
+			++it;
 		}
 	}
 }

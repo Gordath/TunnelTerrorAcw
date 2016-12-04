@@ -24,7 +24,7 @@ GameObjectComponent::~GameObjectComponent()
 // Functions
 /******************************************************************************************************************/
 
-void GameObjectComponent::BroadcastMessage(Message* msg)
+void GameObjectComponent::BroadcastMessage(Message* msg) noexcept
 {
 	Game::TheGame->BroadcastMessage(msg);
 }

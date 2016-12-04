@@ -11,12 +11,18 @@ protected:
 
 	// Structors
 public:
-	CollisionMessage(GameObject* collider, GameObject* collidee);
-	virtual ~CollisionMessage();
+	CollisionMessage(GameObject* collider, GameObject* collidee)
+		: Message("collision"), _collider(collider), _collidee(collidee)
+	{}
+	
+	virtual ~CollisionMessage() = default;
 
-	GameObject* GetCollider() const { return _collider; }
+	GameObject* GetCollider() const noexcept { return _collider; }
 
-	GameObject* GetCollidee() const { return _collidee; }
+	GameObject* GetCollidee() const noexcept { return _collidee; }
 
-	GameObject* GetOtherCollisionObject(GameObject* obj) const { return _collider == obj ? _collidee : _collider; }
+	GameObject* GetOtherCollisionObject(GameObject* obj) const noexcept 
+	{ 
+		return _collider == obj ? _collidee : _collider; 
+	}
 };

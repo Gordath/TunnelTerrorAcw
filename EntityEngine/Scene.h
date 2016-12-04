@@ -15,7 +15,7 @@ protected:
 
 	// Structors
 public:
-	Scene();
+	Scene() = default;
 	virtual ~Scene();
 
 	// Game objects
@@ -27,10 +27,8 @@ public:
 
 	virtual void Initialise() = 0;
 
-	/// Respond to input
+	// Respond to input
 	virtual void OnKeyboard(int key, bool down) = 0;
-
-	virtual void OnMouseMove(int x, int y) = 0;
 
 	// Respond to messages
 	virtual void OnMessage(Message* msg);
@@ -38,7 +36,7 @@ public:
 	/// Update current scene
 	virtual void Update(double deltaTime, long time);
 
-	/// Render current scene
+	// Render current scene
 	virtual void Render(RenderSystem* renderer) = 0;
 
 
