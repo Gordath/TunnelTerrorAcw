@@ -41,7 +41,7 @@ void GameScene::Update(double deltaTime, long time)
 	//Check for collisions.
 	_collisionSystem.Process(_gameObjects, deltaTime);
 
-	_pipeNetwork->Update(deltaTime * 0.3f, time);
+	_pipeNetwork->Update(deltaTime, time);
 
 	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
 
@@ -67,5 +67,5 @@ void GameScene::Render(RenderSystem* renderer)
 	renderer->SetProjectionMatrix(P);
 	renderer->Process(_gameObjects, 0);
 
-	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xffffffff);
+	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xff00ffff);
 }
