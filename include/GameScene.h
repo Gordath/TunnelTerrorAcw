@@ -7,7 +7,6 @@
 #include "PipeNetwork.h"
 #include <memory>
 #include "player.h"
-#include "ScoreDisplay.h"
 
 class GameScene : public Scene {
 protected:

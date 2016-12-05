@@ -2,13 +2,8 @@
 #define TUNNEL_TERROR_GAME_H_
 
 #include "Game.h"
-#include "MultiMesh.h"
 
 class TunnelTerrorGame : public Game {
-private:
-	MultiMesh _digits;
-	MultiMesh _letters;
-
 public:
 	void Initialise(Window* window) override;
 

@@ -77,9 +77,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Pattern Classes</Filter>
     </ClCompile>
-    <ClCompile Include="MultiMesh.cpp">
-      <Filter>Platform Independent</Filter>
-    </ClCompile>
     <ClCompile Include="IBO_DX.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
@@ -184,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Pattern Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiMesh.h">
-      <Filter>Platform Independent</Filter>
     </ClInclude>
     <ClInclude Include="IBO.h">
       <Filter>Platform Independent</Filter>

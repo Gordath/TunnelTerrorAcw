@@ -153,7 +153,6 @@
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Message.cpp" />
-    <ClCompile Include="MultiMesh.cpp" />
     <ClCompile Include="ObserverSubject.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="Message.h" />
     <ClInclude Include="MouseClickMessage.h" />
     <ClInclude Include="MouseMotionMessage.h" />
-    <ClInclude Include="MultiMesh.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverSubject.h" />
     <ClInclude Include="PhysicsComponent.h" />

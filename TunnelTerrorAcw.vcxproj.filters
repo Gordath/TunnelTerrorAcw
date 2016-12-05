@@ -45,29 +45,14 @@
     <ClCompile Include="src\PlayerMouseControllerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextDisplay.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\MultiRenderComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DigitDisplay.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LetterDisplay.cpp">
-      <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\PipeItem.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\RandomPipeItemGenerator.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ScoreDisplay.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WordDisplay.cpp">
-      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,17 +77,8 @@
     <ClInclude Include="include\PlayerMouseControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="include\TextDisplay.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="include\MultiRenderComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DigitDisplay.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\LetterDisplay.h">
-      <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="include\PipeItem.h">
       <Filter>GameObjects</Filter>
@@ -121,12 +97,6 @@
     </ClInclude>
     <ClInclude Include="include\CollisionMatrix.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ScoreDisplay.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\WordDisplay.h">
-      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
