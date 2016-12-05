@@ -18,7 +18,7 @@ protected:
 
 	Player* _player;
 
-	ScoreDisplay* _score;
+	unsigned int _score;
 
 	glm::mat4 M;
 	glm::mat4 V;

@@ -71,8 +71,8 @@
     <LibraryPath>$(SolutionDir)$(Configuration)\;..\CSLib2013;$(DXSDK_DIR)\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - DirectX|Win32'">
-    <IncludePath>C:\usr\include;$(CSLib)\inc;$(DXSDK_DIR)include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)$(Configuration)\;CSLib\lib;$(DXSDK_DIR)\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>C:\Users\agelo\Documents\Visual Studio 2015\Projects\TunnelTerrorAcw\FW1FontWrapper_1_1;C:\usr\include;$(CSLib)\inc;$(DXSDK_DIR)include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\agelo\Documents\Visual Studio 2015\Projects\TunnelTerrorAcw\FW1FontWrapper_1_1\x86;$(SolutionDir)$(Configuration)\;CSLib\lib;$(DXSDK_DIR)\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'">
     <IncludePath>$(CSLib)\inc;$(DXSDK_DIR)include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
@@ -106,6 +106,9 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>FW1FontWrapper.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'">
     <ClCompile>
