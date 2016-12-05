@@ -46,6 +46,10 @@ void Renderer_DX::Destroy()
 	_depthStencil->Release();
 	_device->Release();
 	_context->Release();
+	_blendStateNoBlend->Release();
+	_depthTestOn->Release();
+	_fontWrapper->Release();
+	_factory->Release();
 
 	if (_uniformBuffer) {
 		_uniformBuffer->Release();
@@ -56,6 +60,12 @@ void Renderer_DX::Destroy()
 
 void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material)
 {
+	// set the shader objects
+	_context->VSSetShader(_vertexShader, nullptr, 0);
+	_context->PSSetShader(_pixelShader, nullptr, 0);
+	_context->IASetInputLayout(_layout);
+
+
 	glm::mat4 MV = glm::transpose(V * M);
 	glm::mat4 MVP = glm::transpose(P * V * M);
 	glm::mat4 ITMV = glm::transpose(glm::inverse(MV));
@@ -66,7 +76,7 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, 
 	memcpy(&uniforms.ITMV, &ITMV[0][0], sizeof(DirectX::XMFLOAT4X4));
 	memcpy(&uniforms.diffuse, &material.diffuse.data, sizeof(DirectX::XMFLOAT4));
 	memcpy(&uniforms.specular, &material.specular.data, sizeof(DirectX::XMFLOAT4));
-	uniforms.Vpos = DirectX::XMFLOAT4{0.0f, 0.0f, 0.0f, 0.0f};
+	uniforms.Vpos = DirectX::XMFLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f };
 	uniforms.Lpos = DirectX::XMFLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// Need to update uniform buffer here
@@ -87,6 +97,20 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, 
 	else { //draw normally
 		mesh->GetVBO()->Draw(this);
 	}
+}
+
+void Renderer_DX::DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR)
+{
+	_fontWrapper->DrawString(_context,
+	                        text.c_str(),
+	                        size,
+	                        xPos,
+	                        yPos,
+	                        colorABGR,
+	                        FW1_NOGEOMETRYSHADER);
+
+	_context->OMSetDepthStencilState(_depthTestOn, 1);
+	_context->OMSetBlendState(_blendStateNoBlend, nullptr, 0xffffffff);
 }
 
 /******************************************************************************************************************/
@@ -142,7 +166,7 @@ void Renderer_DX::Initialise(int width, int height)
 	depth_attachment_desc.SampleDesc.Count = 4;
 	depth_attachment_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-	HRESULT res{0};
+	HRESULT res{ 0 };
 	ID3D11Texture2D* p_depth;
 	res = _device->CreateTexture2D(&depth_attachment_desc, nullptr, &p_depth);
 
@@ -173,6 +197,42 @@ void Renderer_DX::Initialise(int width, int height)
 
 	// Initialise shaders
 	InitialiseShaders();
+
+	D3D11_BLEND_DESC BlendState;
+	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
+	BlendState.RenderTarget[0].BlendEnable = FALSE;
+	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	_device->CreateBlendState(&BlendState, &_blendStateNoBlend);
+
+	D3D11_DEPTH_STENCIL_DESC dsDesc;
+
+	// Depth test parameters
+	dsDesc.DepthEnable = true;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	// Stencil test parameters
+	dsDesc.StencilEnable = true;
+	dsDesc.StencilReadMask = 0xFF;
+	dsDesc.StencilWriteMask = 0xFF;
+
+	// Stencil operations if pixel is front-facing
+	dsDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	dsDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// Stencil operations if pixel is back-facing
+	dsDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	dsDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// Create depth stencil state
+	_device->CreateDepthStencilState(&dsDesc, &_depthTestOn);
+
+	FW1CreateFactory(FW1_VERSION, &_factory);
+	_factory->CreateFontWrapper(_device, L"Helvetica", &_fontWrapper);
 }
 
 /******************************************************************************************************************/
@@ -203,11 +263,11 @@ void Renderer_DX::InitialiseShaders()
 	// create the input layout object
 	D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, position), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, normal), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, tangent), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, offsetof(Vertex, texcoord), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(Vertex, colour), D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, position), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, normal), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(Vertex, tangent), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, offsetof(Vertex, texcoord), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(Vertex, colour), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
 	_device->CreateInputLayout(ied, 5, VS->GetBufferPointer(), VS->GetBufferSize(), &_layout);

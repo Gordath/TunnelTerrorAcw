@@ -47,6 +47,8 @@ public:
 	void Update(double deltaTime, long time);
 
 	void AddPipeItemTemplate(PipeItem* item) noexcept { _pipeItemTemplates.push_back(item); }
+
+	float GetDistanceTraveled() const noexcept { return _distanceTraveled; }
 };
 
 #endif //PIPE_NETWORK_H_
