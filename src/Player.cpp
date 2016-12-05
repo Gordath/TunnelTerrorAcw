@@ -2,10 +2,11 @@
 #include <iostream>
 #include "RenderComponent.h"
 #include "PlayerKeyboardControllerComponent.h"
-#include <GL/GLM/gtc/constants.inl>
 #include "PlayerMouseControllerComponent.h"
 #include "CollisionComponent.h"
 #include "CollisionMatrix.h"
+#include "DeadObjectMessage.h"
+#include "Game.h"
 
 
 Player::Player(Mesh* mesh) : GameObject("Player")
@@ -40,7 +41,10 @@ void Player::Update(double deltaTime)
 void Player::OnMessage(Message* msg)
 {
 	if (msg->GetMessageType() == "collision") {
-		std::cout << "DIED!" << std::endl;
+		std::cout << "DIED" << std::endl;
+		DeadObjectMessage* dom{ new DeadObjectMessage{this} };
+		OnMessage(dom);
+		Game::TheGame->ListenToMessage(dom);
 	}
 
 	GameObject::OnMessage(msg);

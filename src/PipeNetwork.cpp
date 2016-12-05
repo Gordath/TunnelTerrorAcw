@@ -136,6 +136,7 @@ PipeNetwork::PipeNetwork(const PipeDesc& pipeDesc,
 
 PipeNetwork::~PipeNetwork()
 {
+
 	delete _pipeMesh;
 }
 

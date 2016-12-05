@@ -24,12 +24,7 @@ Game::Game()
 
 Game::~Game()
 {
-	for (MeshMapIterator i = _meshes.begin();
-	     i != _meshes.end();
-	     ++i) {
-		delete i->second;
-	}
-	_meshes.clear();
+	Cleanup();
 }
 
 /******************************************************************************************************************/
@@ -52,6 +47,8 @@ void Game::OnKeyboard(int key, bool down)
 	KeyPressMessage msg(key, down);
 
 	BroadcastMessage(&msg);
+
+	_sceneManager.OnKeyboard(key, down);
 }
 
 /******************************************************************************************************************/
@@ -87,3 +84,12 @@ void Game::BroadcastMessage(Message* msg)
 }
 
 /******************************************************************************************************************/
+void Game::Cleanup()
+{
+	for (MeshMapIterator i = _meshes.begin();
+		i != _meshes.end();
+		++i) {
+		delete i->second;
+	}
+	_meshes.clear();
+}

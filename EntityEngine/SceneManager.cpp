@@ -14,6 +14,11 @@ SceneManager::SceneManager(Game* game)
 
 SceneManager::~SceneManager()
 {
+	for (int i = 0; i < _scenes.size(); ++i) {
+		auto scene{ _scenes.top() };
+		delete scene;
+		_scenes.pop();
+	}
 }
 
 /******************************************************************************************************************/
@@ -82,6 +87,14 @@ void SceneManager::Render(RenderSystem* renderer)
 }
 
 /******************************************************************************************************************/
+
+void SceneManager::PopScene()
+{
+	auto scene{ _scenes.top() };
+	delete scene;
+	_scenes.pop();
+}
+
 
 void SceneManager::PushScene(Scene* s)
 {

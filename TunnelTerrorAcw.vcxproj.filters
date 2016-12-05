@@ -45,13 +45,13 @@
     <ClCompile Include="src\PlayerMouseControllerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\MultiRenderComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\PipeItem.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\RandomPipeItemGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenuScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +77,6 @@
     <ClInclude Include="include\PlayerMouseControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="include\MultiRenderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="include\PipeItem.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -96,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CollisionMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainMenuScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

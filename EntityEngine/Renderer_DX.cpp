@@ -99,18 +99,19 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, 
 	}
 }
 
-void Renderer_DX::DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR)
+void Renderer_DX::DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR, TextAlignment textAlignment)
 {
 	_fontWrapper->DrawString(_context,
-	                        text.c_str(),
-	                        size,
-	                        xPos,
-	                        yPos,
-	                        colorABGR,
-	                        FW1_NOGEOMETRYSHADER);
+	                         text.c_str(),
+	                         size,
+	                         xPos,
+	                         yPos,
+	                         colorABGR,
+	                         static_cast<unsigned int>(textAlignment));
 
 	_context->OMSetDepthStencilState(_depthTestOn, 1);
 	_context->OMSetBlendState(_blendStateNoBlend, nullptr, 0xffffffff);
+	_context->GSSetShader(nullptr, nullptr, 0);
 }
 
 /******************************************************************************************************************/
@@ -232,7 +233,7 @@ void Renderer_DX::Initialise(int width, int height)
 	_device->CreateDepthStencilState(&dsDesc, &_depthTestOn);
 
 	FW1CreateFactory(FW1_VERSION, &_factory);
-	_factory->CreateFontWrapper(_device, L"Helvetica", &_fontWrapper);
+	_factory->CreateFontWrapper(_device, L"Viner Hand ITC", &_fontWrapper);
 }
 
 /******************************************************************************************************************/

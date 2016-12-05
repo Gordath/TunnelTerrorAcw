@@ -25,11 +25,6 @@ typedef std::map<std::string, Mesh*>::iterator MeshMapIterator;
 
 // Generic game class
 class Game {
-	// "Singleton"
-public:
-	static Game* TheGame;
-
-	// Data
 protected:
 	double _currentTime; // Current time for delta time purposes
 	double _deltaTime; // Time since last frame
@@ -47,8 +42,9 @@ protected:
 	// Scene Manager
 	SceneManager _sceneManager;
 
-	// Structors
 public:
+	static Game* TheGame;
+
 	Game();
 	virtual ~Game();
 
@@ -91,6 +87,8 @@ public:
 	virtual void ListenToMessage(Message* msg)
 	{
 	}
+
+	void Cleanup();
 };
 
 

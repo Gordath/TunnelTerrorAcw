@@ -44,7 +44,7 @@ public:
 	void Render(RenderSystem* renderer);
 
 	/// Pop the top scene. If no scenes remain, we should quit.
-	void PopScene() { _scenes.pop(); }
+	void PopScene();
 
 	/// Push a new scene
 	void PushScene(Scene* s);

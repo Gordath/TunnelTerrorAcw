@@ -1,10 +1,14 @@
+#include "Game.h"
 #include "GameScene.h"
 #include "DebugDummy.h"
 #include "SceneManager.h"
-#include "Game.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
-#include "Window.h"
-#include "../../../../../../../Program Files (x86)/Microsoft DirectX SDK (June 2010)/include/d3dx10.h"
+#include <iostream>
+#include "DeadObjectMessage.h"
+
+GameScene::~GameScene()
+{
+}
 
 void GameScene::Initialise()
 {
@@ -34,8 +38,26 @@ void GameScene::OnKeyboard(int key, bool down)
 {
 }
 
+void GameScene::OnMessage(Message* msg)
+{
+	if (msg->GetMessageType() == "dead") {
+		DeadObjectMessage* dom{ static_cast<DeadObjectMessage*>(msg) };
+
+		if (dom->GetDeadObject()->GetType() == "Player") {
+			_playerDied = true;
+		}
+	}
+
+	Scene::OnMessage(msg);
+}
+
 void GameScene::Update(double deltaTime, long time)
 {
+	if(_playerDied) {
+		_sceneManager->PopScene();
+		return;
+	}
+
 	Scene::Update(deltaTime, time);
 
 	//Check for collisions.
