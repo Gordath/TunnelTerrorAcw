@@ -71,6 +71,7 @@ public:
 	// Initialise the shaders
 	void InitialiseShaders();
 
+	void SetFullscreen() const;
 };
 
 #endif

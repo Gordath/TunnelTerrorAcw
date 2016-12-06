@@ -44,4 +44,6 @@ public:
 	virtual void Resize(int width, int height) = 0;
 
 	virtual void SwapBuffers() = 0;
+
+	virtual void SetFullscreen() const = 0;
 };

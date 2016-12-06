@@ -150,6 +150,8 @@ void Renderer_DX::Initialise(int width, int height)
 	                              nullptr,
 	                              &_context);
 
+	_swapchain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
+
 	// get the address of the back buffer
 	ID3D11Texture2D* p_backbuffer;
 	_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&p_backbuffer));
@@ -241,7 +243,6 @@ void Renderer_DX::Initialise(int width, int height)
 
 void Renderer_DX::Resize(int width, int height)
 {
-	std::cout << "RESIZING!" << std::endl;
 	if (_swapchain) {
 		_context->OMSetRenderTargets(0, nullptr, nullptr);
 
@@ -251,7 +252,7 @@ void Renderer_DX::Resize(int width, int height)
 		HRESULT hr;
 		// Preserve the existing buffer count and format.
 		// Automatically choose the width and height to match the client rect for HWNDs.
-		hr = _swapchain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+		hr = _swapchain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
 
 		// Perform error handling here!
 
@@ -359,6 +360,12 @@ void Renderer_DX::InitialiseShaders()
 	// Create the buffer.
 	_device->CreateBuffer(&cbDesc, &InitData, &_uniformBuffer);
 }
+
+void Renderer_DX::SetFullscreen() const
+{
+	_swapchain->SetFullscreenState(true, nullptr);
+}
+
 
 /******************************************************************************************************************/
 

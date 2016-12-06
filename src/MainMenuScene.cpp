@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Window.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
-#include <algorithm>
 #include <iostream>
 #include "GameScene.h"
 
