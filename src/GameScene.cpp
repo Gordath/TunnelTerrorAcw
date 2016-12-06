@@ -5,6 +5,7 @@
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include <iostream>
 #include "DeadObjectMessage.h"
+#include "ScoreScene.h"
 
 GameScene::~GameScene()
 {
@@ -22,7 +23,6 @@ void GameScene::Initialise()
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
-//	_pipeNetwork->AddPipeItemTemplate(largeObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
 	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
@@ -54,8 +54,7 @@ void GameScene::OnMessage(Message* msg)
 void GameScene::Update(double deltaTime, long time)
 {
 	if(_playerDied) {
-		_sceneManager->PopScene();
-		return;
+		_sceneManager->PushScene(new ScoreScene(_score));
 	}
 
 	Scene::Update(deltaTime, time);
@@ -89,5 +88,5 @@ void GameScene::Render(RenderSystem* renderer)
 	renderer->SetProjectionMatrix(P);
 	renderer->Process(_gameObjects, 0);
 
-	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xff00ffff);
+	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xff0000ff);
 }

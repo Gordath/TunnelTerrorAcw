@@ -22,6 +22,10 @@ class Window;
 typedef std::map<std::string, Mesh*> MeshMap;
 typedef std::map<std::string, Mesh*>::iterator MeshMapIterator;
 
+enum class GameMode {
+	SINGLE_PLAYER,
+	MULTI_PLAYER
+};
 
 // Generic game class
 class Game {
@@ -42,6 +46,8 @@ protected:
 	// Scene Manager
 	SceneManager _sceneManager;
 
+	GameMode _gameMode;
+
 public:
 	static Game* TheGame;
 
@@ -55,6 +61,9 @@ public:
 	// Quit flag
 	bool GetQuitFlag() const { return _quitFlag; }
 	void SetQuitFlag(bool v) { _quitFlag = v; }
+
+	void SetGameMode(GameMode gameMode) noexcept { _gameMode = gameMode; }
+	GameMode GetGameMode() const noexcept { return _gameMode; }
 
 	// Renderer
 	Renderer* GetRenderer() const { return _renderer; }

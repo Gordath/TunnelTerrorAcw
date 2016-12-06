@@ -28,7 +28,7 @@ Player::Player(Mesh* mesh) : GameObject("Player")
 
 	_applyDefaultXform = false;
 
-	SetPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
+	GameObject::SetPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
 	SetScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
 }
 
@@ -41,7 +41,6 @@ void Player::Update(double deltaTime)
 void Player::OnMessage(Message* msg)
 {
 	if (msg->GetMessageType() == "collision") {
-		std::cout << "DIED" << std::endl;
 		DeadObjectMessage* dom{ new DeadObjectMessage{this} };
 		OnMessage(dom);
 		Game::TheGame->ListenToMessage(dom);

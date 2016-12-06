@@ -233,7 +233,7 @@ void Renderer_DX::Initialise(int width, int height)
 	_device->CreateDepthStencilState(&dsDesc, &_depthTestOn);
 
 	FW1CreateFactory(FW1_VERSION, &_factory);
-	_factory->CreateFontWrapper(_device, L"Viner Hand ITC", &_fontWrapper);
+	_factory->CreateFontWrapper(_device, L"OCR A", &_fontWrapper); //Viner Hand ITC OCR A
 }
 
 /******************************************************************************************************************/

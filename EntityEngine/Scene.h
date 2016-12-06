@@ -38,6 +38,4 @@ public:
 
 	// Render current scene
 	virtual void Render(RenderSystem* renderer) = 0;
-
-
 };

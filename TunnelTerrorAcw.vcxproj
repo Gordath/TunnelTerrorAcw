@@ -125,6 +125,7 @@
     <ClCompile Include="src\PlayerKeyboardControllerComponent.cpp" />
     <ClCompile Include="src\PlayerMouseControllerComponent.cpp" />
     <ClCompile Include="src\RandomPipeItemGenerator.cpp" />
+    <ClCompile Include="src\ScoreScene.cpp" />
     <ClCompile Include="src\TunnelTerrorGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="include\PlayerMouseControllerComponent.h" />
     <ClInclude Include="include\RandomPipeItemGenerator.h" />
     <ClInclude Include="include\TunnelTerrorGame.h" />
+    <ClInclude Include="src\ScoreScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders.hlsl">

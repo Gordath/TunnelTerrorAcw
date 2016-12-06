@@ -90,8 +90,6 @@ void SceneManager::Render(RenderSystem* renderer)
 
 void SceneManager::PopScene()
 {
-	auto scene{ _scenes.top() };
-	delete scene;
 	_scenes.pop();
 }
 

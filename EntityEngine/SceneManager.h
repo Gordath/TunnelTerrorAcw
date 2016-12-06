@@ -20,9 +20,14 @@ public:
 
 	Scene* GetCurrentScene() const
 	{
-		if (_scenes.size() > 0) return _scenes.top();
-		else return NULL;
+		if (_scenes.size() > 0) {
+			return _scenes.top();
+		}
+		
+		return nullptr;
 	}
+
+	size_t GetSceneCount() const noexcept { return _scenes.size(); }
 
 	Game* GetGame() const { return _game; }
 
