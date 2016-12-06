@@ -4,6 +4,7 @@
 #include <GL/GLM/detail/_vectorize.hpp>
 #include "PhysicsComponent.h"
 #include "Material.h"
+#include <iostream>
 #if BUILD_DIRECTX
 
 #include "Renderer_DX.h"
@@ -237,6 +238,69 @@ void Renderer_DX::Initialise(int width, int height)
 }
 
 /******************************************************************************************************************/
+
+void Renderer_DX::Resize(int width, int height)
+{
+	std::cout << "RESIZING!" << std::endl;
+	if (_swapchain) {
+		_context->OMSetRenderTargets(0, nullptr, nullptr);
+
+		// Release all outstanding references to the swap chain's buffers.
+		_backbuffer->Release();
+
+		HRESULT hr;
+		// Preserve the existing buffer count and format.
+		// Automatically choose the width and height to match the client rect for HWNDs.
+		hr = _swapchain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+
+		// Perform error handling here!
+
+		// get the address of the back buffer
+		ID3D11Texture2D* p_backbuffer;
+		_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&p_backbuffer));
+
+		// use the back buffer address to create the render target
+		_device->CreateRenderTargetView(p_backbuffer, nullptr, &_backbuffer);
+		p_backbuffer->Release();
+		
+		
+		_depthStencil->Release();
+		D3D11_TEXTURE2D_DESC depth_attachment_desc;
+		ZeroMemory(&depth_attachment_desc, sizeof(depth_attachment_desc));
+		depth_attachment_desc.Width = Window::TheWindow->_width;
+		depth_attachment_desc.Height = Window::TheWindow->_height;
+		depth_attachment_desc.MipLevels = 1;
+		depth_attachment_desc.ArraySize = 1;
+		depth_attachment_desc.Format = DXGI_FORMAT_D32_FLOAT;
+		depth_attachment_desc.SampleDesc.Count = 4;
+		depth_attachment_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+		HRESULT res{ 0 };
+		ID3D11Texture2D* p_depth;
+		res = _device->CreateTexture2D(&depth_attachment_desc, nullptr, &p_depth);
+
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
+		ZeroMemory(&dsvd, sizeof(dsvd));
+		dsvd.Format = DXGI_FORMAT_D32_FLOAT;
+		dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
+
+		res = _device->CreateDepthStencilView(p_depth, &dsvd, &_depthStencil);
+		p_depth->Release();
+
+		// set the render target as the back buffer
+		_context->OMSetRenderTargets(1, &_backbuffer, _depthStencil);
+
+		// Set up the viewport.
+		D3D11_VIEWPORT vp;
+		vp.Width = width;
+		vp.Height = height;
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		_context->RSSetViewports(1, &vp);
+	}
+}
 
 void Renderer_DX::SwapBuffers()
 {

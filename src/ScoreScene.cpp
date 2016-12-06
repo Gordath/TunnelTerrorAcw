@@ -217,7 +217,10 @@ void ScoreScene::Update(double deltaTime, long time)
 	_pipeNetwork->Update(deltaTime, 0);
 
 	P = glm::mat4{ 1.0f };
-	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f);
+
+	float winWidth{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_width) };
+	float winHeight{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_height) };
+	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), winWidth / winHeight, 0.1f, 1000.0f);
 
 	V = glm::mat4{ 1.0f };
 	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });

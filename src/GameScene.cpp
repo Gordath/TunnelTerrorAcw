@@ -6,6 +6,7 @@
 #include <iostream>
 #include "DeadObjectMessage.h"
 #include "ScoreScene.h"
+#include "Window.h"
 
 GameScene::~GameScene()
 {
@@ -64,10 +65,11 @@ void GameScene::Update(double deltaTime, long time)
 
 	_pipeNetwork->Update(deltaTime, time);
 
-	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
-
 	P = glm::mat4{ 1.0f };
-	P *= proj;
+
+	float winWidth{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_width) };
+	float winHeight{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_height) };
+	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), winWidth / winHeight, 0.1f, 1000.0f);
 
 	V = glm::mat4{ 1.0f };
 //	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });

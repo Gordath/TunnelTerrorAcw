@@ -34,7 +34,7 @@ protected:
 	double _deltaTime; // Time since last frame
 	bool _keyStates[256]; // Keyboard status
 	bool _quitFlag; // Quit flag; when true, we quit
-	Renderer* _renderer; // The renderer
+	Renderer* _renderer { nullptr }; // The renderer
 	Window* _window; // The game window
 
 	// Meshes
@@ -82,6 +82,8 @@ public:
 	virtual void OnMouseMove(int x, int y);
 
 	virtual void OnMouseClick(MouseButtonType button, int x, int y, bool pressed);
+
+	virtual void OnResize(int width, int height);
 
 	// Draw everything
 	virtual void Render() = 0;

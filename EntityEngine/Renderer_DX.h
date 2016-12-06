@@ -64,6 +64,8 @@ public:
 	
 	void Initialise(int width, int height) override;
 
+	void Resize(int width, int height) override;
+
 	void SwapBuffers() override;
 
 	// Initialise the shaders

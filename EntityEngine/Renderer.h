@@ -41,5 +41,7 @@ public:
 
 	virtual void Initialise(int width, int height) = 0;
 
+	virtual void Resize(int width, int height) = 0;
+
 	virtual void SwapBuffers() = 0;
 };

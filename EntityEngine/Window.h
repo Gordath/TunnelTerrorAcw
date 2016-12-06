@@ -25,5 +25,4 @@ public:
 	Renderer* GetRenderer() const { return _renderer; }
 
 	virtual void Initialise() = 0;
-
 };
