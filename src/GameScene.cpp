@@ -26,9 +26,9 @@ void GameScene::Initialise()
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
-	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
-
-	_gameObjects.push_back(_player);
+	for (auto player : _players) {
+		_gameObjects.push_back(player);
+	}
 
 	for (auto gameObject : _gameObjects) {
 		gameObject->Start();

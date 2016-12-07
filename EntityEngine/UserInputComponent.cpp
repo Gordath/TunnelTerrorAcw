@@ -6,8 +6,8 @@
 // Structors
 /******************************************************************************************************************/
 
-UserInputComponent::UserInputComponent(GameObject* gob)
-	: GameObjectComponent("input", gob)
+UserInputComponent::UserInputComponent(GameObject* gob, const std::string& type)
+	: GameObjectComponent(type, gob)
 {
 
 }

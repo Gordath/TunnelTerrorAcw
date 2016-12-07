@@ -4,7 +4,7 @@
 class UserInputComponent
 		: public GameObjectComponent {
 public:
-	UserInputComponent(GameObject* gob);
+	UserInputComponent(GameObject* gob, const std::string &type);
 	virtual ~UserInputComponent();
 
 	// Setup function -- called when parent object is initialised (using its own Start method)

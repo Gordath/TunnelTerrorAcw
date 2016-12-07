@@ -14,9 +14,9 @@ protected:
 
 	std::unique_ptr<PipeNetwork> _pipeNetwork;
 
-	Player* _player;
+	std::vector<Player*> _players;
 
-	unsigned int _score;
+	unsigned int _score{ 0 };
 	bool _playerDied{ false };
 
 	glm::mat4 M;
@@ -24,6 +24,10 @@ protected:
 	glm::mat4 P;
 
 public:
+	GameScene(const std::vector<Player*>& players) : _players(players)
+	{
+	}
+
 	~GameScene();
 
 	void Initialise() override;

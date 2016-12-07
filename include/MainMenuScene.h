@@ -4,6 +4,12 @@
 #include "PipeNetwork.h"
 #include <memory>
 
+enum class MainMenuState {
+	INITIAL_MENU,
+	SP_CONTROLS_SELECTION,
+	TP_CONTROLS_SELECTION
+};
+
 class MainMenuScene : public Scene {
 protected:
 	std::unique_ptr<PipeNetwork> _pipeNetwork;
@@ -11,6 +17,14 @@ protected:
 	glm::mat4 M;
 	glm::mat4 V;
 	glm::mat4 P;
+
+	MainMenuState _menuState{ MainMenuState::INITIAL_MENU };
+	bool _controlsSelected{ false };
+
+	void DrawGameTitle(Renderer* renderer) const noexcept;
+	void DrawInitialMenuText(Renderer* renderer) const noexcept;
+	void DrawSPControlsSelectionText(Renderer* renderer) const noexcept;
+	void DrawTPControlsSelectionText(Renderer* renderer) const noexcept;
 
 public:
 	void Initialise() override;

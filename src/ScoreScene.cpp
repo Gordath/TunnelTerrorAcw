@@ -53,7 +53,7 @@ void ScoreScene::DrawHighScoreTables(RenderSystem* renderer) const
 		auto score{ std::to_wstring(std::get<unsigned int>(_singlePlayerHighScores[i])) };
 		
 		verticalPos += verticalOffset;
-		renderer->GetRenderer()->DrawString(str + L"   " + score, 30, winWidth / 6, verticalPos, 0xff0000ff, TextAlignment::LEFT);
+		renderer->GetRenderer()->DrawString(str + L"   " + score, 30, winWidth / 4, verticalPos, 0xff0000ff, TextAlignment::CENTER);
 	}
 
 	verticalPos = winHeight / 6;
@@ -63,7 +63,7 @@ void ScoreScene::DrawHighScoreTables(RenderSystem* renderer) const
 		auto score{ std::to_wstring(std::get<unsigned int>(_twoPlayerHighScores[i])) };
 
 		verticalPos += verticalOffset;
-		renderer->GetRenderer()->DrawString(str + L"   " + score, 30, winWidth - winWidth / 3, verticalPos, 0xff0000ff, TextAlignment::LEFT);
+		renderer->GetRenderer()->DrawString(str + L"   " + score, 30, winWidth - winWidth / 4, verticalPos, 0xff0000ff, TextAlignment::CENTER);
 	}
 }
 
@@ -72,7 +72,7 @@ bool ScoreScene::LoadSinglePlayerScore()
 	std::wifstream ifstr{ "singleplayer.scores" };
 
 	if (!ifstr.is_open()) {
-		std::cerr << "Failed to open file!" << std::endl;
+		std::cerr << "Failed to open file! singleplayer.scores" << std::endl;
 		return false;
 	}
 
@@ -98,6 +98,30 @@ bool ScoreScene::LoadSinglePlayerScore()
 
 bool ScoreScene::LoadTwoPlayerScore()
 {
+	std::wifstream ifstr{ "twoplayer.scores" };
+
+	if (!ifstr.is_open()) {
+		std::cerr << "Failed to open file! twoplayer.scores" << std::endl;
+		return false;
+	}
+
+	std::wstring line;
+	int counter = 0;
+	while (std::getline(ifstr, line) && counter < 10) {
+
+		unsigned int idx{ line.find_first_of(',') };
+
+		std::wstring initials{ line.substr(0, idx) };
+
+		std::wstringstream ss;
+		ss << line.substr(++idx, line.length());
+		unsigned int score;
+		ss >> score;
+
+		_twoPlayerHighScores[counter] = std::make_tuple(initials, score);
+		++counter;
+	}
+
 	return true;
 }
 
@@ -139,7 +163,16 @@ bool ScoreScene::PersistTwoPlayerScore()
 
 	std::wstring initials{ _initials[0], _initials[1], _initials[2] };
 
-	ofstr << initials + L"," + std::to_wstring(_score);
+	_twoPlayerHighScores.push_back(std::make_tuple(initials, _score));
+
+	std::sort(_twoPlayerHighScores.begin(), _twoPlayerHighScores.end(),
+		[](auto a, auto b) {
+		return std::get<unsigned int>(a) > std::get<unsigned int>(b);
+	});
+
+	for (auto highScoreTuple : _twoPlayerHighScores) {
+		ofstr << std::get<std::wstring>(highScoreTuple) + L"," + std::to_wstring(std::get<unsigned int>(highScoreTuple)) + L"\n";
+	}
 
 	ofstr.close();
 
@@ -163,6 +196,7 @@ void ScoreScene::Initialise()
 
 	//Load high scores from files
 	LoadSinglePlayerScore();
+	LoadTwoPlayerScore();
 }
 
 void ScoreScene::OnKeyboard(int key, bool down)
@@ -172,8 +206,15 @@ void ScoreScene::OnKeyboard(int key, bool down)
 		switch (key) {
 		case 13: //enter
 			if (!_initialsSaved) {
-				if (!PersistSinglePlayerScore()) {
-					break;
+				if (_sceneManager->GetGame()->GetGameMode() == GameMode::SINGLE_PLAYER) {
+					if (!PersistSinglePlayerScore()) {
+						break;
+					}
+				}
+				else {
+					if (!PersistTwoPlayerScore()) {
+						break;
+					}
 				}
 				_initialsSaved = true;
 			}

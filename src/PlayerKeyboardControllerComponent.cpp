@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "KeyPressMessage.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
-#include <iostream>
+
 
 void PlayerKeyboardControllerComponent::CalculateXformMatrix(glm::mat4& matrix) const noexcept
 {
@@ -11,8 +11,8 @@ void PlayerKeyboardControllerComponent::CalculateXformMatrix(glm::mat4& matrix) 
 	matrix = glm::scale(matrix, _playerLocalScale);
 }
 
-PlayerKeyboardControllerComponent::PlayerKeyboardControllerComponent(GameObject* gameObject)
-	: UserInputComponent(gameObject)
+PlayerKeyboardControllerComponent::PlayerKeyboardControllerComponent(GameObject* gameObject, const std::string& type)
+	: UserInputComponent(gameObject, type)
 {
 }
 

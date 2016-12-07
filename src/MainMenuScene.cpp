@@ -5,6 +5,75 @@
 #include <iostream>
 #include "GameScene.h"
 
+
+// Private methods ----------------------------------------------------------------------------------
+void MainMenuScene::DrawGameTitle(Renderer* renderer) const noexcept
+{
+	int winWidth{ _sceneManager->GetGame()->GetWindow()->_width };
+	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
+
+	int verticalOffset = winHeight / 8;
+	int verticalPos = verticalOffset;
+
+	renderer->DrawString(L"TUNNEL TERROR", 100, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+}
+
+void MainMenuScene::DrawInitialMenuText(Renderer* renderer) const noexcept
+{
+	int winWidth{ _sceneManager->GetGame()->GetWindow()->_width };
+	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
+
+	int verticalOffset = winHeight / 8;
+
+	int verticalPos = winHeight / 2;
+	renderer->DrawString(L"1. SINGLE PLAYER", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"2. TWO PLAYER", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"3. EXIT GAME", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset + 20;
+	renderer->DrawString(L"DEVELOPED BY ANGELOS GKOUNTIS FOR THE UNIVERSITY OF HULL", 25, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+}
+
+void MainMenuScene::DrawSPControlsSelectionText(Renderer* renderer) const noexcept
+{
+	int winWidth{ _sceneManager->GetGame()->GetWindow()->_width };
+	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
+
+	int verticalOffset = winHeight / 8;
+
+	int verticalPos = winHeight / 2;
+	renderer->DrawString(L"1. KEYBOARD", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"2. MOUSE", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"3. BACK", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+}
+
+void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexcept
+{
+	int winWidth{ _sceneManager->GetGame()->GetWindow()->_width };
+	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
+
+	int verticalOffset = winHeight / 8;
+
+	int verticalPos = winHeight / 2;
+	renderer->DrawString(L"1. PLAYER1 KEYBOARD    PLAYER2 MOUSE", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"2. PLAYER1 MOUSE    PLAYER2 KEYBOARD", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	verticalPos += verticalOffset;
+	renderer->DrawString(L"3. BACK", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+}
+
+// --------------------------------------------------------------------------------------------------
+
 void MainMenuScene::Initialise()
 {
 	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
@@ -16,19 +85,81 @@ void MainMenuScene::Initialise()
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 }
 
+
 void MainMenuScene::OnKeyboard(int key, bool down)
 {
-	switch(down) {
+	switch (down) {
 	case true:
 		switch (key) {
-		case '1':
-			_sceneManager->PushScene(new GameScene);
-			break;
 		default:
 			break;
 		}
+		break;
 	case false:
 		switch (key) {
+		case '1':
+			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
+				Material m{ glm::vec4{0.0f, 0.0f, 1.0f, 1.0f}, glm::vec4{1.0f, 1.0f, 1.0f, 60.0f} };
+				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
+				break;
+			}
+
+			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
+				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::MOUSE, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+				break;
+			}
+
+			if (_menuState == MainMenuState::INITIAL_MENU) {
+				_menuState = MainMenuState::SP_CONTROLS_SELECTION;
+			}
+			break;
+
+		case '2':
+			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
+				Material m{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
+				break;
+			}
+
+			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
+				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::KEYBOARD, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+				break;
+			}
+
+			if (_menuState == MainMenuState::INITIAL_MENU) {
+				_menuState = MainMenuState::TP_CONTROLS_SELECTION;
+			}
+			break;
+		case '3':
+			if (_menuState == MainMenuState::INITIAL_MENU) {
+				_sceneManager->GetGame()->SetQuitFlag(true);
+			}
+			else if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
+				_menuState = MainMenuState::INITIAL_MENU;
+			}
+			else {
+				_menuState = MainMenuState::INITIAL_MENU;
+			}
+			
+			break;
 		default:
 			break;
 		}
@@ -64,23 +195,15 @@ void MainMenuScene::Render(RenderSystem* renderer)
 	renderer->SetProjectionMatrix(P);
 	renderer->Process(_gameObjects, 0);
 
-	int winWidth{ _sceneManager->GetGame()->GetWindow()->_width };
-	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
+	DrawGameTitle(renderer->GetRenderer());
 
-	int verticalOffset = winHeight / 8;
-	int verticalPos = verticalOffset;
-
-	renderer->GetRenderer()->DrawString(L"TUNNEL TERROR", 100, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
-
-	verticalPos = winHeight / 2;
-	renderer->GetRenderer()->DrawString(L"1. SINGLE PLAYER", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
-
-	verticalPos += verticalOffset;
-	renderer->GetRenderer()->DrawString(L"2. TWO PLAYER", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
-
-	verticalPos += verticalOffset;
-	renderer->GetRenderer()->DrawString(L"3. OPTIONS", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
-
-	verticalPos += verticalOffset + 20;
-	renderer->GetRenderer()->DrawString(L"DEVELOPED BY ANGELOS GKOUNTIS FOR THE UNIVERSITY OF HULL", 25, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+	if (_menuState == MainMenuState::INITIAL_MENU) {
+		DrawInitialMenuText(renderer->GetRenderer());
+	}
+	else if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
+		DrawSPControlsSelectionText(renderer->GetRenderer());
+	}
+	else {
+		DrawTPControlsSelectionText(renderer->GetRenderer());
+	}
 }
