@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "GameScene.h"
 #include <sstream>
+#include "MainMenuScene.h"
 
 void TunnelTerrorGame::Initialise(Window* window)
 {
@@ -265,7 +266,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 		mesh.second->CreateBuffers(_renderer);
 	}
 
-	_sceneManager.PushScene(new GameScene);
+	_sceneManager.PushScene(new MainMenuScene);
 }
 
 void TunnelTerrorGame::OnKeyboard(int key, bool down)
@@ -292,4 +293,5 @@ void TunnelTerrorGame::Run()
 
 void TunnelTerrorGame::ListenToMessage(Message* msg)
 {
+	_sceneManager.OnMessage(msg);
 }

@@ -1,10 +1,16 @@
+#include "Game.h"
 #include "GameScene.h"
 #include "DebugDummy.h"
 #include "SceneManager.h"
-#include "Game.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include <iostream>
+#include "DeadObjectMessage.h"
+#include "ScoreScene.h"
 #include "Window.h"
-#include "../../../../../../../Program Files (x86)/Microsoft DirectX SDK (June 2010)/include/d3dx10.h"
+
+GameScene::~GameScene()
+{
+}
 
 void GameScene::Initialise()
 {
@@ -18,12 +24,11 @@ void GameScene::Initialise()
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
-//	_pipeNetwork->AddPipeItemTemplate(largeObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
-	_player = new Player(_sceneManager->GetGame()->GetMesh("cube"));
-
-	_gameObjects.push_back(_player);
+	for (auto player : _players) {
+		_gameObjects.push_back(player);
+	}
 
 	for (auto gameObject : _gameObjects) {
 		gameObject->Start();
@@ -34,8 +39,25 @@ void GameScene::OnKeyboard(int key, bool down)
 {
 }
 
+void GameScene::OnMessage(Message* msg)
+{
+	if (msg->GetMessageType() == "dead") {
+		DeadObjectMessage* dom{ static_cast<DeadObjectMessage*>(msg) };
+
+		if (dom->GetDeadObject()->GetType() == "Player") {
+			_playerDied = true;
+		}
+	}
+
+	Scene::OnMessage(msg);
+}
+
 void GameScene::Update(double deltaTime, long time)
 {
+	if(_playerDied) {
+		_sceneManager->PushScene(new ScoreScene(_score));
+	}
+
 	Scene::Update(deltaTime, time);
 
 	//Check for collisions.
@@ -43,10 +65,11 @@ void GameScene::Update(double deltaTime, long time)
 
 	_pipeNetwork->Update(deltaTime, time);
 
-	glm::mat4 proj{ glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), 1024.0f / 768.0f, 0.1f, 1000.0f) };
-
 	P = glm::mat4{ 1.0f };
-	P *= proj;
+
+	float winWidth{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_width) };
+	float winHeight{ static_cast<float>(_sceneManager->GetGame()->GetWindow()->_height) };
+	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), winWidth / winHeight, 0.1f, 1000.0f);
 
 	V = glm::mat4{ 1.0f };
 //	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
@@ -67,5 +90,5 @@ void GameScene::Render(RenderSystem* renderer)
 	renderer->SetProjectionMatrix(P);
 	renderer->Process(_gameObjects, 0);
 
-	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xff00ffff);
+	renderer->GetRenderer()->DrawString(L"Score:" + std::to_wstring(_score), 50.0f, 0.0f, 0.0f, 0xff0000ff);
 }

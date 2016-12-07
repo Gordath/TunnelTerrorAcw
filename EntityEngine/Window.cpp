@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-Window* Window::TheWindow = 0;
+Window* Window::TheWindow{ nullptr };
 
 /******************************************************************************************************************/
 
 Window::Window(Game* game, int width, int height)
-	: _renderer(0),
+	: _renderer(nullptr),
 	  _game(game),
 	  _width(width),
 	  _height(height)

@@ -59,6 +59,9 @@ LRESULT CALLBACK Window_DX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	case WM_SIZE:
+		TheWindow->GetGame()->OnResize(LOWORD(lParam), HIWORD(lParam));
+		break;
 	case WM_KEYDOWN:
 		TheWindow->GetGame()->OnKeyboard(wParam, true);
 		break;

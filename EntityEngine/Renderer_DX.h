@@ -60,15 +60,18 @@ public:
 
 	void Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material) override;
 
-	void DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR) override;
+	void DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR, TextAlignment textAlignment) override;
 	
 	void Initialise(int width, int height) override;
+
+	void Resize(int width, int height) override;
 
 	void SwapBuffers() override;
 
 	// Initialise the shaders
 	void InitialiseShaders();
 
+	void SetFullscreen() const;
 };
 
 #endif

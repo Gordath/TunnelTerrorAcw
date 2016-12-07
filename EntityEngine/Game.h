@@ -22,20 +22,19 @@ class Window;
 typedef std::map<std::string, Mesh*> MeshMap;
 typedef std::map<std::string, Mesh*>::iterator MeshMapIterator;
 
+enum class GameMode {
+	SINGLE_PLAYER,
+	MULTI_PLAYER
+};
 
 // Generic game class
 class Game {
-	// "Singleton"
-public:
-	static Game* TheGame;
-
-	// Data
 protected:
 	double _currentTime; // Current time for delta time purposes
 	double _deltaTime; // Time since last frame
 	bool _keyStates[256]; // Keyboard status
 	bool _quitFlag; // Quit flag; when true, we quit
-	Renderer* _renderer; // The renderer
+	Renderer* _renderer { nullptr }; // The renderer
 	Window* _window; // The game window
 
 	// Meshes
@@ -47,8 +46,11 @@ protected:
 	// Scene Manager
 	SceneManager _sceneManager;
 
-	// Structors
+	GameMode _gameMode;
+
 public:
+	static Game* TheGame;
+
 	Game();
 	virtual ~Game();
 
@@ -59,6 +61,9 @@ public:
 	// Quit flag
 	bool GetQuitFlag() const { return _quitFlag; }
 	void SetQuitFlag(bool v) { _quitFlag = v; }
+
+	void SetGameMode(GameMode gameMode) noexcept { _gameMode = gameMode; }
+	GameMode GetGameMode() const noexcept { return _gameMode; }
 
 	// Renderer
 	Renderer* GetRenderer() const { return _renderer; }
@@ -78,6 +83,8 @@ public:
 
 	virtual void OnMouseClick(MouseButtonType button, int x, int y, bool pressed);
 
+	virtual void OnResize(int width, int height);
+
 	// Draw everything
 	virtual void Render() = 0;
 
@@ -91,6 +98,8 @@ public:
 	virtual void ListenToMessage(Message* msg)
 	{
 	}
+
+	void Cleanup();
 };
 
 

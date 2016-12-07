@@ -2,32 +2,47 @@
 #include <iostream>
 #include "RenderComponent.h"
 #include "PlayerKeyboardControllerComponent.h"
-#include <GL/GLM/gtc/constants.inl>
 #include "PlayerMouseControllerComponent.h"
 #include "CollisionComponent.h"
 #include "CollisionMatrix.h"
+#include "DeadObjectMessage.h"
+#include "Game.h"
 
 
-Player::Player(Mesh* mesh) : GameObject("Player")
+Player::Player(Mesh* mesh, const Material& material, PlayerControls controls, const glm::vec3& localPosition) : GameObject("Player")
 {
 	RenderComponent* rc{ new RenderComponent{ this } };
 	rc->SetMesh(mesh);
 	rc->ShouldDraw(true);
-	rc->SetMaterial(Material{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 80.0f } });
+	rc->SetMaterial(material);
 
 	CollisionComponent* cc{ new CollisionComponent{ this } };
 	cc->SetCollisionRadius(mesh->CalculateMaxSize());
 	cc->SetCollisionID(PLAYER_ID);
 	cc->SetCollisionMatrixFlag(OBSTACLE_ID);
 
-	PlayerKeyboardControllerComponent* kc{ new PlayerKeyboardControllerComponent{ this } };
-	kc->SetRotationSpeed(glm::pi<float>());
-	kc->SetPlayerLocalPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
-	kc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
+	switch(controls) {
+	case PlayerControls::KEYBOARD: {
+		PlayerKeyboardControllerComponent* kc{ new PlayerKeyboardControllerComponent{ this, "KeyboardPlayerController" } };
+		kc->SetRotationSpeed(glm::pi<float>());
+		kc->SetPlayerLocalPosition(localPosition);
+		kc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
+	}
+		break;
+	case PlayerControls::MOUSE: {
+		PlayerMouseControllerComponent* mc{ new PlayerMouseControllerComponent{ this, "MousePlayerController" } };
+		mc->SetRotationSpeed(glm::pi<float>());
+		mc->SetPlayerLocalPosition(localPosition);
+		mc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
+	}
+		break;
+	default: 
+		break;
+	}
 
 	_applyDefaultXform = false;
 
-	SetPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
+	GameObject::SetPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
 	SetScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
 }
 
@@ -40,7 +55,9 @@ void Player::Update(double deltaTime)
 void Player::OnMessage(Message* msg)
 {
 	if (msg->GetMessageType() == "collision") {
-		std::cout << "DIED!" << std::endl;
+		DeadObjectMessage* dom{ new DeadObjectMessage{this} };
+		OnMessage(dom);
+		Game::TheGame->ListenToMessage(dom);
 	}
 
 	GameObject::OnMessage(msg);

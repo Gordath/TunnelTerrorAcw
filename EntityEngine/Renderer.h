@@ -11,6 +11,12 @@ class Game;
 class RenderComponent;
 class Mesh;
 
+enum class TextAlignment {
+	LEFT,
+	CENTER,
+	RIGHT
+};
+
 // Platform independent renderer base class
 // Basically represents a graphics context and its active shaders
 class Renderer {
@@ -29,11 +35,15 @@ public:
 	virtual void Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, const Material& material) = 0;
 	virtual void Draw(RenderComponent* gob, glm::mat4 M, glm::mat4 V, glm::mat4 P);
 
-	virtual void DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR) = 0;
+	virtual void DrawString(const std::wstring text, float size, float xPos, float yPos, unsigned int colorABGR, TextAlignment textAlignment = TextAlignment::LEFT) = 0;
 
 	virtual void Destroy() = 0;
 
 	virtual void Initialise(int width, int height) = 0;
 
+	virtual void Resize(int width, int height) = 0;
+
 	virtual void SwapBuffers() = 0;
+
+	virtual void SetFullscreen() const = 0;
 };

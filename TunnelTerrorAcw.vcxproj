@@ -118,21 +118,22 @@
     <ClCompile Include="src\DebugDummy.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MultiRenderComponent.cpp" />
+    <ClCompile Include="src\MainMenuScene.cpp" />
     <ClCompile Include="src\PipeItem.cpp" />
     <ClCompile Include="src\PipeNetwork.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerKeyboardControllerComponent.cpp" />
     <ClCompile Include="src\PlayerMouseControllerComponent.cpp" />
     <ClCompile Include="src\RandomPipeItemGenerator.cpp" />
+    <ClCompile Include="src\ScoreScene.cpp" />
     <ClCompile Include="src\TunnelTerrorGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CollisionMatrix.h" />
     <ClInclude Include="include\DebugDummy.h" />
     <ClInclude Include="include\GameScene.h" />
+    <ClInclude Include="include\MainMenuScene.h" />
     <ClInclude Include="include\MathUtils.h" />
-    <ClInclude Include="include\MultiRenderComponent.h" />
     <ClInclude Include="include\PipeDescription.h" />
     <ClInclude Include="include\PipeItem.h" />
     <ClInclude Include="include\PipeItemGenerator.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="include\PlayerMouseControllerComponent.h" />
     <ClInclude Include="include\RandomPipeItemGenerator.h" />
     <ClInclude Include="include\TunnelTerrorGame.h" />
+    <ClInclude Include="src\ScoreScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders.hlsl">

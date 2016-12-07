@@ -2,8 +2,12 @@
 #define TUNNEL_TERROR_GAME_H_
 
 #include "Game.h"
+#include <map>
 
 class TunnelTerrorGame : public Game {
+private:
+	
+
 public:
 	void Initialise(Window* window) override;
 

@@ -4,6 +4,7 @@
 #include "KeyPressMessage.h"
 #include "MouseMotionMessage.h"
 #include "MouseClickMessage.h"
+#include <iostream>
 
 
 Game* Game::TheGame = nullptr;
@@ -24,12 +25,7 @@ Game::Game()
 
 Game::~Game()
 {
-	for (MeshMapIterator i = _meshes.begin();
-	     i != _meshes.end();
-	     ++i) {
-		delete i->second;
-	}
-	_meshes.clear();
+	Cleanup();
 }
 
 /******************************************************************************************************************/
@@ -52,6 +48,8 @@ void Game::OnKeyboard(int key, bool down)
 	KeyPressMessage msg(key, down);
 
 	BroadcastMessage(&msg);
+
+	_sceneManager.OnKeyboard(key, down);
 }
 
 /******************************************************************************************************************/
@@ -68,6 +66,15 @@ void Game::OnMouseClick(MouseButtonType button, int x, int y, bool pressed)
 	BroadcastMessage(&msg);
 }
 
+void Game::OnResize(int width, int height)
+{
+	_window->_width = width;
+	_window->_height = height;
+
+	if(_renderer) {
+		_renderer->Resize(width, height);
+	}
+}
 
 void Game::Run()
 {
@@ -87,3 +94,12 @@ void Game::BroadcastMessage(Message* msg)
 }
 
 /******************************************************************************************************************/
+void Game::Cleanup()
+{
+	for (MeshMapIterator i = _meshes.begin();
+		i != _meshes.end();
+		++i) {
+		delete i->second;
+	}
+	_meshes.clear();
+}

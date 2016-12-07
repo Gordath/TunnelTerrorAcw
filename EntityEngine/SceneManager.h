@@ -20,9 +20,14 @@ public:
 
 	Scene* GetCurrentScene() const
 	{
-		if (_scenes.size() > 0) return _scenes.top();
-		else return NULL;
+		if (_scenes.size() > 0) {
+			return _scenes.top();
+		}
+		
+		return nullptr;
 	}
+
+	size_t GetSceneCount() const noexcept { return _scenes.size(); }
 
 	Game* GetGame() const { return _game; }
 
@@ -44,7 +49,7 @@ public:
 	void Render(RenderSystem* renderer);
 
 	/// Pop the top scene. If no scenes remain, we should quit.
-	void PopScene() { _scenes.pop(); }
+	void PopScene();
 
 	/// Push a new scene
 	void PushScene(Scene* s);
