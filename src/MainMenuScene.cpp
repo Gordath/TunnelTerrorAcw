@@ -104,6 +104,9 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 				m.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 				m.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
 				m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+
 				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
 				_menuState = MainMenuState::INITIAL_MENU;
@@ -112,13 +115,25 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			}
 
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
-//				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-//				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-//				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-//				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::MOUSE, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
-//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
-//				_menuState = MainMenuState::INITIAL_MENU;
-//				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+				Material m1;
+				m1.diffuse = glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f };
+				m1.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m1.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m1.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m1.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+
+				Material m2;
+				m2.diffuse = glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f };
+				m2.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m2.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m2.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m2.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+				
+				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::MOUSE, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
 				break;
 			}
 
@@ -129,22 +144,39 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 
 		case '2':
 			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
-//				Material m{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-//				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
-//				_menuState = MainMenuState::INITIAL_MENU;
-//				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
+				Material m;
+				m.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+				m.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+
+				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
 				break;
 			}
 
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
-//				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-//				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-//				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-//				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::KEYBOARD, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
-//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
-//				_menuState = MainMenuState::INITIAL_MENU;
-//				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+				Material m1;
+				m1.diffuse = glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f };
+				m1.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m1.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m1.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m1.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+
+				Material m2;
+				m2.diffuse = glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f };
+				m2.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m2.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
+				m2.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"testSpec.png");
+				m2.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"testNorm.png");
+				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::KEYBOARD, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+				_menuState = MainMenuState::INITIAL_MENU;
+				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
 				break;
 			}
 
