@@ -245,3 +245,4 @@ ModelManifest.xml
 *.idb
 CSLib/
 EntityEngine/Debug - DirectX/*
+*.png
