@@ -15,10 +15,7 @@ GameScene::~GameScene()
 void GameScene::Initialise()
 {
 	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
-	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.2f, 0.3f });
-
-	PipeItem* largeObstacleTemplate{ new PipeItem{_sceneManager->GetGame()->GetMesh("cube")} };
-	largeObstacleTemplate->SetScale(glm::vec3{ 0.3f, 2.0f, 0.3f });
+	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.3f, 0.3f });
 
 
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };

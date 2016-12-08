@@ -7,10 +7,11 @@
 
 class ResourceManager {
 private:
-	std::map<std::string, Resource*> _resourcesByName;
+	std::map<std::wstring, Resource*> _resourcesByName;
 	std::map<unsigned int, Resource*> _resourcesById;
 
 public:
+	ResourceManager() = default;
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager& operator=(const ResourceManager&) = delete;
 
@@ -24,7 +25,7 @@ public:
 	}
 
 	template<typename T>
-	bool Load(const std::string& fileName) 
+	bool Load(const std::wstring& fileName) 
 	{
 		static int id = 0;
 		T* resource{ new T };
@@ -40,12 +41,13 @@ public:
 	}
 
 	template<typename T>
-	T* Get(const std::string& fileName) 
+	T* Get(const std::wstring& fileName) 
 	{
 		Resource* resource{ _resourcesByName[fileName] };
 		
 		if(!resource) {
-			resource->Load(fileName);
+			Load<T>(fileName);
+			resource = _resourcesByName[fileName];
 		}
 
 		T* res{ dynamic_cast<T*>(resource) };

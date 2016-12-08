@@ -6,9 +6,6 @@
 class Mesh;
 
 class PipeItem : public GameObject {
-private:
-	GameObject* _rotater{ nullptr };
-
 public:
 	PipeItem(Mesh *m);
 	void Position(const PipeDesc& pipeDesc, float curveRotation, float ringRotation);
@@ -22,8 +19,6 @@ public:
 	void End() override;
 
 	void Reset() override;
-
-	GameObject* GetRotaterObject() const noexcept { return _rotater; }
 };
 
 #endif //PIPE_ITEM_H_

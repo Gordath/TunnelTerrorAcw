@@ -3,37 +3,25 @@
 #include "RenderComponent.h"
 #include "CollisionMatrix.h"
 #include "CollisionComponent.h"
+#include "Game.h"
+#include "Texture_DX.h"
 
 PipeItem::PipeItem(Mesh* m) : GameObject("pipeItem")
 {
 	RenderComponent* rc{ new RenderComponent(this) };
 	rc->SetMesh(m);
-	rc->SetMaterial(Material{ glm::vec4{ 1.0f, 1.0f, 0.0f, 0.1f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } });
+	Material mat;
+	mat.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	mat.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	mat.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"obstacleDiff.png");
+	mat.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"obstacleSpec.png");
+	mat.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"obstacleNorm.png");
+	rc->SetMaterial(mat);
 
 	CollisionComponent* cc{ new CollisionComponent{ this } };
 	cc->SetCollisionRadius(m->CalculateMaxSize());
 	cc->SetCollisionID(OBSTACLE_ID);
 	cc->SetCollisionMatrixFlag(PLAYER_ID);
-}
-
-void PipeItem::Position(const PipeDesc& pipeDesc, float curveRotation, float ringRotation)
-{
-	glm::mat4 mat;
-//	_rotater->SetPosition(glm::vec3{ 0.0f, pipeDesc.curveRadius, 0.0f });
-////	mat = glm::translate(mat, glm::vec3{ 0.0f, pipeDesc.pipeRadius, 0.0f });
-//	mat = glm::rotate(mat, ringRotation, glm::vec3{ 1.0f, 0.0f, 0.0f });
-//	_rotater->SetExtraXForm(mat);
-//
-//	static float f;
-//	glm::mat4 xform;
-//	xform = glm::rotate(xform, curveRotation, glm::vec3{ 0.0f, 0.0f, 1.0f });
-//	xform = glm::translate(xform, glm::vec3{ 0.0f, pipeDesc.pipeRadius, 0.0f });
-//	
-//	xform = glm::scale(xform, glm::vec3{ 0.3f, 0.2f, 0.3f });
-//
-//	f += glm::radians(20.0f);
-//
-//	_extraXform = xform;
 }
 
 void PipeItem::Start()

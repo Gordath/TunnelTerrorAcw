@@ -184,7 +184,7 @@ bool ScoreScene::PersistTwoPlayerScore()
 void ScoreScene::Initialise()
 {
 	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
-	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.2f, 0.3f });
+	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.3f, 0.3f });
 
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
@@ -255,7 +255,7 @@ void ScoreScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);
 
-	_pipeNetwork->Update(deltaTime, 0);
+	_pipeNetwork->Update(deltaTime, time, false);
 
 	P = glm::mat4{ 1.0f };
 

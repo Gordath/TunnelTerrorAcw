@@ -145,9 +145,11 @@
   <ItemGroup>
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="Context_DX.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
+    <ClCompile Include="GAPIContexLocator.cpp" />
     <ClCompile Include="IBO_DX.cpp" />
     <ClCompile Include="LifeTimerComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="ShaderObject_GL.cpp" />
     <ClCompile Include="ShaderProgram_GL.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="Texture_DX.cpp" />
     <ClCompile Include="UserInputComponent.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="VBO_GL.cpp" />
@@ -179,9 +182,12 @@
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionMessage.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="Context_DX.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectComponent.h" />
+    <ClInclude Include="GAPIContext.h" />
+    <ClInclude Include="GAPIContextLocator.h" />
     <ClInclude Include="IBO.h" />
     <ClInclude Include="IBO_DX.h" />
     <ClInclude Include="KeyPressMessage.h" />
@@ -210,6 +216,8 @@
     <ClInclude Include="ShaderObject_GL.h" />
     <ClInclude Include="ShaderProgram_GL.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture_DX.h" />
     <ClInclude Include="ThrustMessage.h" />
     <ClInclude Include="UserInputComponent.h" />
     <ClInclude Include="VBO.h" />

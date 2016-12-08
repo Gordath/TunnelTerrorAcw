@@ -83,6 +83,15 @@
     <ClCompile Include="LightComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Texture_DX.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GAPIContexLocator.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Context_DX.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -208,6 +217,21 @@
     </ClInclude>
     <ClInclude Include="BSphere.h">
       <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_DX.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GAPIContext.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="GAPIContextLocator.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Context_DX.h">
+      <Filter>DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

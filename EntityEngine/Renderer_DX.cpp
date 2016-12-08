@@ -1,12 +1,12 @@
-#include "Window.h"
 #include <d3dx11async.h>
-#include <GL/GLM/detail/_vectorize.hpp>
-#include <GL/GLM/detail/_vectorize.hpp>
+#include "Texture_DX.h"
+#if BUILD_DIRECTX
+#include "Window.h"
 #include "PhysicsComponent.h"
 #include "Material.h"
 #include <iostream>
-#if BUILD_DIRECTX
-
+#include "GAPIContextLocator.h"
+#include "Context_DX.h"
 #include "Renderer_DX.h"
 #include "Mesh.h"
 #include "GameObject.h"
@@ -51,6 +51,7 @@ void Renderer_DX::Destroy()
 	_depthTestOn->Release();
 	_fontWrapper->Release();
 	_factory->Release();
+	_sampleState->Release();
 
 	if (_uniformBuffer) {
 		_uniformBuffer->Release();
@@ -65,6 +66,34 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, 
 	_context->VSSetShader(_vertexShader, nullptr, 0);
 	_context->PSSetShader(_pixelShader, nullptr, 0);
 	_context->IASetInputLayout(_layout);
+
+	std::vector<ID3D11ShaderResourceView*> textures;
+	if(material.textures[TEX_DIFFUSE]) {
+		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_DIFFUSE])->GetShaderResourceView());
+	}
+//	else {
+//		ID3D11ShaderResourceView* nullSRV { nullptr };
+//		_context->PSSetShaderResources(0, 1, &nullSRV);
+//	}
+
+	if (material.textures[TEX_SPECULAR]) {
+		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_SPECULAR])->GetShaderResourceView());
+	}
+//	else {
+//		ID3D11ShaderResourceView* nullSRV{ nullptr };
+//		_context->PSSetShaderResources(0, 1, &nullSRV);
+//	}
+
+	if (material.textures[TEX_NORMAL]) {
+		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_NORMAL])->GetShaderResourceView());
+	}
+//	else {
+//		ID3D11ShaderResourceView* nullSRV{ nullptr };
+//		_context->PSSetShaderResources(0, 1, &nullSRV);
+//	}
+	
+	_context->PSSetShaderResources(0, textures.size(), textures.data());
+	_context->PSSetSamplers(0, 1, &_sampleState);
 
 
 	glm::mat4 MV = glm::transpose(V * M);
@@ -237,6 +266,27 @@ void Renderer_DX::Initialise(int width, int height)
 
 	FW1CreateFactory(FW1_VERSION, &_factory);
 	_factory->CreateFontWrapper(_device, L"OCR A", &_fontWrapper); //Viner Hand ITC OCR A
+
+	GAPIContextLocator::Provide(new Context_DX{ _device, _context });
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	res = _device->CreateSamplerState(&samplerDesc, &_sampleState);
 }
 
 /******************************************************************************************************************/

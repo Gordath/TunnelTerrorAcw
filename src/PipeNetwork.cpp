@@ -1,6 +1,5 @@
 #include "PipeNetwork.h"
 #include <GL/GLM/glm.hpp>
-#include <GL/GLM/gtc/constants.inl>
 #include <iostream>
 #include <algorithm>
 #include "RenderComponent.h"
@@ -8,7 +7,12 @@
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include "RandomPipeItemGenerator.h"
 #include "MathUtils.h"
+#include "Game.h"
+#include "Texture_DX.h"
 
+
+static std::vector<Material> tunnelMaterials;
+static int materialIndex;
 
 // Private methods ---------------------------------------------------------------------------------------------------------------------
 void PipeNetwork::CreateFirstRing(float u, Vertex* vertArr) const
@@ -82,6 +86,14 @@ void PipeNetwork::GenerateMesh(Renderer* renderer)
 		CreateRing(u * uStep, i, vertices);
 	}
 
+
+	for (int i = 0; i < vertCount; i += 4) {
+		vertices[i].texcoord = glm::vec2{ 0, 0 };
+		vertices[i + 1].texcoord = glm::vec2{ 0, 1 };
+		vertices[i + 2].texcoord = glm::vec2{ 1, 0 };
+		vertices[i + 3].texcoord = glm::vec2{ 1, 1 };
+	}
+
 	_pipeMesh = new Mesh;
 	_pipeMesh->SetVertexData(vertices, vertCount);
 	_pipeMesh->GenerateIndices(VertexWinding::ANTICLOCKWISE);
@@ -113,6 +125,7 @@ void PipeNetwork::GeneratePipe()
 
 	//Create a new RenderComponent for the GameObject and assign the mesh to it.
 	RenderComponent* rc{ new RenderComponent(pipe) };
+	rc->SetMaterial(tunnelMaterials[materialIndex]);
 	rc->SetMesh(_pipeMesh);
 
 	_scene->AddGameObject(pipe);
@@ -136,13 +149,51 @@ PipeNetwork::PipeNetwork(const PipeDesc& pipeDesc,
 
 PipeNetwork::~PipeNetwork()
 {
-
 	delete _pipeMesh;
 }
 
 bool PipeNetwork::Initialize(Renderer* renderer)
 {
-	_pipeItemGenerator = new RandomPipeItemGenerator{_pipeItemTemplates, _scene};
+	materialIndex = 0;
+
+	Material m;
+	m.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	m.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff.jpg");
+	m.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec.png");
+	m.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm.png");
+
+	Material m2;
+	m2.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	m2.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	m2.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff2.jpg");
+	m2.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec2.png");
+	m2.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm2.png");
+
+	Material m3;
+	m3.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	m3.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	m3.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff3.png");
+	m3.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec3.png");
+	m3.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm3.png");
+
+	Material m4;
+	m4.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	m4.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	m4.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff4.jpg");
+	m4.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec4.png");
+	m4.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm4.png");
+
+	Material m5;
+	m5.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	m5.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+	m5.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff5.png");
+	m5.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec5.png");
+	m5.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm5.png");
+
+	tunnelMaterials = {m5, m2, m3, m4, m};
+
+	_pipeItemGenerator = new RandomPipeItemGenerator{ _pipeItemTemplates, _scene };
 
 	//Seed the rand.
 	srand(time(nullptr));
@@ -168,6 +219,7 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 
 		//Create a new RenderComponent for the GameObject and assign the mesh to it.
 		RenderComponent* rc{ new RenderComponent(pipe) };
+		rc->SetMaterial(tunnelMaterials[materialIndex]);
 		rc->SetMesh(_pipeMesh);
 
 		if (i == 0) {
@@ -207,14 +259,18 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	return true;
 }
 
-void PipeNetwork::Update(double deltaTime, long time)
+void PipeNetwork::Update(double deltaTime, long time, bool increaseSpeed)
 {
 	static long threshold{ 20000 };
 	static long incrementTime = 0;
 
 	if (time - incrementTime >= threshold) {
-		_speed += 0.0006f;
+		if(increaseSpeed) {
+			_speed += 0.0006f;
+		}
 		incrementTime = time;
+
+		materialIndex = rand() % (tunnelMaterials.size() - 1);
 	}
 
 	float delta{ _speed * static_cast<float>(deltaTime) };
