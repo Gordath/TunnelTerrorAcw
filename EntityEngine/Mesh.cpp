@@ -7,6 +7,8 @@
 #endif
 #include <fstream>
 #include "IBO_DX.h"
+#include "tiny_obj_loader.h"
+#include <iostream>
 using namespace std;
 
 /******************************************************************************************************************/
@@ -49,8 +51,6 @@ bool Mesh::AddVertex(Vertex v)
 	}
 }
 
-/******************************************************************************************************************/
-
 bool Mesh::DeleteVertex(int i)
 {
 	if (!_locked) {
@@ -61,8 +61,6 @@ bool Mesh::DeleteVertex(int i)
 	return false;
 }
 
-/******************************************************************************************************************/
-
 bool Mesh::Clear()
 {
 	if (!_locked) {
@@ -72,7 +70,11 @@ bool Mesh::Clear()
 	return false;
 }
 
-/******************************************************************************************************************/
+bool Mesh::Load(const std::wstring& fileName)
+{
+
+	return true;
+}
 
 void Mesh::Reset()
 {
@@ -80,8 +82,6 @@ void Mesh::Reset()
 	_vbo = nullptr;
 	_locked = false;
 }
-
-/******************************************************************************************************************/
 
 void Mesh::CreateBuffers(Renderer* renderer)
 {
@@ -106,14 +106,12 @@ void Mesh::CreateBuffers(Renderer* renderer)
 	}
 }
 
-/******************************************************************************************************************/
-
 float Mesh::CalculateMaxSize()
 {
 	//calc the center of the mesh.
 	glm::vec3 accum;
-	for(auto v : _vertices) {
-		 accum += v.position;
+	for (auto v : _vertices) {
+		accum += v.position;
 	}
 
 	glm::vec3 center{ accum / static_cast<float>(NumVertices()) };
@@ -121,7 +119,7 @@ float Mesh::CalculateMaxSize()
 	float max = 0;
 	for (int i = 0; i < NumVertices(); i++) {
 		Vertex& v = _vertices[i];
-		glm::vec3 vec{ v.position - center};
+		glm::vec3 vec{ v.position - center };
 		float dist = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;// vec.length() * vec.length();
 		if (dist > max) {
 			max = dist;
@@ -151,56 +149,8 @@ void Mesh::GenerateIndices(VertexWinding winding)
 			break;
 		default:
 			break;
-		} 
-		
+		}
+
 		_indices[i + 5] = j + 3;
 	}
 }
-
-/******************************************************************************************************************/
-
-bool Mesh::LoadFromFile(std::string filename)
-{
-	ifstream in(filename);
-	if (in) {
-		int numVertices;
-		in >> numVertices;
-		for (int i = 0; i < numVertices; i++) {
-			Vertex v;
-			in >> v.position.x;
-			in >> v.position.y;
-			in >> v.position.z;
-//			in >> v.r;
-//			in >> v.g;
-//			in >> v.b;
-//			in >> v.a;
-			AddVertex(v);
-		}
-		return true;
-	}
-
-	// Could not open file
-	return false;
-}
-
-/******************************************************************************************************************/
-
-bool Mesh::LoadFromStream(std::ifstream& in)
-{
-	int numVertices;
-	in >> numVertices;
-	for (int i = 0; i < numVertices; i++) {
-		Vertex v;
-		in >> v.position.x;
-		in >> v.position.y;
-		in >> v.position.z;
-		in >> v.colour.r;
-		in >> v.colour.g;
-		in >> v.colour.b;
-		in >> v.colour.a;
-		AddVertex(v);
-	}
-	return true;
-}
-
-/******************************************************************************************************************/

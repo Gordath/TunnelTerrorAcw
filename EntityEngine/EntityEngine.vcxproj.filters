@@ -92,6 +92,9 @@
     <ClCompile Include="Context_DX.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cc">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Context_DX.h">
       <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Platform Independent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

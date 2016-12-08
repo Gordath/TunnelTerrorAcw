@@ -64,8 +64,8 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - DirectX|Win32'">
-    <IncludePath>$(SolutiontDir)EntityEngine;C:\usr\include;$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\usr\lib;$(SolutionDir)Debug - DirectX;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutiontDir)EntityEngine;$(SolutionDir)deps\include;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)deps\lib;$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'">
     <ClCompile>

@@ -260,6 +260,8 @@ void TunnelTerrorGame::Initialise(Window* window)
 		}
 	);
 
+	Mesh* a = Game::_resourceManager.Get<Mesh>(L"shipA_OBJ.obj");
+
 	AddMesh("cube", cube);
 
 	for (auto mesh : _meshes) {
