@@ -10,6 +10,7 @@
 
 #include "SceneManager.h"
 #include "MouseClickMessage.h"
+#include "ResourceManager.h"
 
 // Forward declarations
 class GameObject;
@@ -50,6 +51,7 @@ protected:
 
 public:
 	static Game* TheGame;
+	static ResourceManager _resourceManager;
 
 	Game();
 	virtual ~Game();

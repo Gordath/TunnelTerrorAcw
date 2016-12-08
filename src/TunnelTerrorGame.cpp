@@ -3,6 +3,7 @@
 #include "GameScene.h"
 #include <sstream>
 #include "MainMenuScene.h"
+#include "Texture_DX.h"
 
 void TunnelTerrorGame::Initialise(Window* window)
 {
@@ -18,7 +19,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, -0.5f },
 			glm::vec3{ 0.0f, 0.0f, -1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -28,7 +29,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5, 0.5f, -0.5f },
 			glm::vec3{ 0.0f, 0.0f, -1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -38,7 +39,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, -0.5f },
 			glm::vec3{ 0.0f, 0.0f, -1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -48,7 +49,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, -0.5f },
 			glm::vec3{ 0.0f, 0.0f, -1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -59,7 +60,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, -0.5f },
 			glm::vec3{ 1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -69,7 +70,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, -0.5f },
 			glm::vec3{ 1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -80,7 +81,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, 0.5f },
 			glm::vec3{ 1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -90,7 +91,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, 0.5f },
 			glm::vec3{ 1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -101,7 +102,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, 0.5f },
 			glm::vec3{ -1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -111,7 +112,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, 0.5f, 0.5f },
 			glm::vec3{ -1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -121,7 +122,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, -0.5f },
 			glm::vec3{ -1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -131,7 +132,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, 0.5f, -0.5f },
 			glm::vec3{ -1.0f, 0.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -142,7 +143,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, 0.5f },
 			glm::vec3{ 0.0f, 0.0f, 1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -152,7 +153,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, 0.5f },
 			glm::vec3{ 0.0f, 0.0f, 1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -162,7 +163,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, 0.5f },
 			glm::vec3{ 0.0f, 0.0f, 1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -172,7 +173,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, 0.5f, 0.5f },
 			glm::vec3{ 0.0f, 0.0f, 1.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -183,7 +184,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, 0.5f, -0.5f },
 			glm::vec3{ 0.0f, 1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -193,7 +194,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, 0.5f, 0.5f },
 			glm::vec3{ 0.0f, 1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -203,7 +204,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, -0.5f },
 			glm::vec3{ 0.0f, 1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -213,7 +214,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, 0.5f, 0.5f },
 			glm::vec3{ 0.0f, 1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -224,7 +225,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, -0.5f },
 			glm::vec3{ 0.0f, -1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -234,7 +235,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ 0.5f, -0.5f, 0.5f },
 			glm::vec3{ 0.0f, -1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{0, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -244,7 +245,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, -0.5f },
 			glm::vec3{ 0.0f, -1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 0},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -254,7 +255,7 @@ void TunnelTerrorGame::Initialise(Window* window)
 			glm::vec3{ -0.5f, -0.5f, 0.5f },
 			glm::vec3{ 0.0f, -1.0f, 0.0f },
 			glm::vec3{},
-			glm::vec2{},
+			glm::vec2{1, 1},
 			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }
 		}
 	);
@@ -265,6 +266,8 @@ void TunnelTerrorGame::Initialise(Window* window)
 		mesh.second->GenerateIndices(VertexWinding::CLOCKWISE);
 		mesh.second->CreateBuffers(_renderer);
 	}
+
+	_resourceManager.Load<Texture_DX>(L"test.png");
 
 	_sceneManager.PushScene(new MainMenuScene);
 }

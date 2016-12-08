@@ -4,6 +4,7 @@
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include <iostream>
 #include "GameScene.h"
+#include "Texture_DX.h"
 
 
 // Private methods ----------------------------------------------------------------------------------
@@ -77,7 +78,7 @@ void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexce
 void MainMenuScene::Initialise()
 {
 	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
-	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.2f, 0.3f });
+	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.3f, 0.3f });
 
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
@@ -99,7 +100,10 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 		switch (key) {
 		case '1':
 			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
-				Material m{ glm::vec4{0.0f, 0.0f, 1.0f, 1.0f}, glm::vec4{1.0f, 1.0f, 1.0f, 60.0f} };
+				Material m;
+				m.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+				m.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
+				m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"test.png");
 				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
 				_menuState = MainMenuState::INITIAL_MENU;
@@ -108,13 +112,13 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			}
 
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
-				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::MOUSE, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
-				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
-				_menuState = MainMenuState::INITIAL_MENU;
-				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+//				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+//				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+//				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::KEYBOARD, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+//				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::MOUSE, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+//				_menuState = MainMenuState::INITIAL_MENU;
+//				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
 				break;
 			}
 
@@ -125,22 +129,22 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 
 		case '2':
 			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
-				Material m{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
-				_menuState = MainMenuState::INITIAL_MENU;
-				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
+//				Material m{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+//				Player* player{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
+//				_menuState = MainMenuState::INITIAL_MENU;
+//				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
 				break;
 			}
 
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
-				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
-				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
-				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::KEYBOARD, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
-				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
-				_menuState = MainMenuState::INITIAL_MENU;
-				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
+//				Material m1{ glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+//				Material m2{ glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f } };
+//				Player* player1{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m1, PlayerControls::MOUSE, glm::vec3{ 0.85f, -0.75f, 0.0f } } };
+//				Player* player2{ new Player{ _sceneManager->GetGame()->GetMesh("cube"), m2, PlayerControls::KEYBOARD, glm::vec3{ 1.1f, -0.75f, 0.0f } } };
+//				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
+//				_menuState = MainMenuState::INITIAL_MENU;
+//				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
 				break;
 			}
 

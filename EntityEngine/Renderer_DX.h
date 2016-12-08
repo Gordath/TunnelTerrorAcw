@@ -36,6 +36,8 @@ protected:
 	ID3D11BlendState* _blendStateNoBlend;
 	ID3D11DepthStencilState * _depthTestOn;
 
+	ID3D11SamplerState* _sampleState;
+
 	IFW1Factory* _factory;
 	IFW1FontWrapper* _fontWrapper;
 
