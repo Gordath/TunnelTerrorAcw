@@ -255,7 +255,7 @@ void ScoreScene::Update(double deltaTime, long time)
 {
 	Scene::Update(deltaTime, time);
 
-	_pipeNetwork->Update(deltaTime, 0);
+	_pipeNetwork->Update(deltaTime, time, false);
 
 	P = glm::mat4{ 1.0f };
 

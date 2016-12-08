@@ -14,6 +14,7 @@ struct VOut
 	float4 colour : COLOR;
 	float3 Vdir : VDIR;
 	float3 Ldir : LDIR;
+	float3 t : TANGENT;
 };
 
 cbuffer uniforms
@@ -40,8 +41,11 @@ VOut VShader(VIn input)
 	output.colour = input.colour;
 
 	float3 tangent = mul(input.tangent, ITMV).xyz;
+	output.t = tangent;
 	
 	float3 binormal = cross(normal.xyz, tangent.xyz);
+
+	//float3 binormal = cross(tangent, normal.xyz);
 
 	float3x3 TBN = float3x3(tangent,
 							binormal,
@@ -79,5 +83,5 @@ float4 PShader(VOut input) : SV_TARGET
 	float4 diffColor = diffTexel * diffuse * diffLight;
 	float4 specColor = float4(specTexel * specular.xyz * specLight, 0.0);
 
-	return diffColor + specColor + float4(0.05, 0.05, 0.05, 1.0);
+	return diffColor + specColor + float4(0.05, 0.05, 0.05, 0.0);
 }

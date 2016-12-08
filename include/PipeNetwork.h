@@ -44,7 +44,7 @@ public:
 	~PipeNetwork();
 
 	bool Initialize(Renderer* renderer);
-	void Update(double deltaTime, long time);
+	void Update(double deltaTime, long time, bool increaseSpeed = true);
 
 	void AddPipeItemTemplate(PipeItem* item) noexcept { _pipeItemTemplates.push_back(item); }
 
