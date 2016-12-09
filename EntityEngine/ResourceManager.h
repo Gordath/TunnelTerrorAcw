@@ -18,7 +18,7 @@ public:
 	~ResourceManager()
 	{
 		for (auto resource : _resourcesByName) {
-			//delete resource.second;
+			delete resource.second;
 		}
 		_resourcesByName.clear();
 		_resourcesById.clear();
