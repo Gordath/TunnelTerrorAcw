@@ -2,8 +2,6 @@
 #include "GameObject.h"
 #include "CollisionComponent.h"
 #include "CollisionMessage.h"
-#include <iostream>
-#include "../include/CollisionMatrix.h"
 
 /******************************************************************************************************************/
 // Structors
@@ -77,7 +75,7 @@ bool CollisionSystem::CollideWith(const CollisionComponent* collidee, const Coll
 
 	glm::vec3 diff = sph_center - sph_center2;
 	float len = glm::length(diff);
-	float radsum = collidee->GetCollisionRadius() * 0.9f + collider->GetCollisionRadius() * 0.9f;
+	float radsum = collidee->GetCollisionRadius() * 0.9f + collider->GetCollisionRadius();
 
 	bool res = len < radsum;
 

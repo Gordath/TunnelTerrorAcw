@@ -10,7 +10,7 @@ class RenderComponent
 protected:
 	Mesh* _mesh; // Vertex info
 	Material _material;
-	bool _shouldDraw; // Whether or not to draw
+	bool _shouldDraw = true; // Whether or not to draw
 
 	// RenderComponent
 public:

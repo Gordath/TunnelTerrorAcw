@@ -71,26 +71,14 @@ void Renderer_DX::Draw(const Mesh* mesh, glm::mat4 M, glm::mat4 V, glm::mat4 P, 
 	if(material.textures[TEX_DIFFUSE]) {
 		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_DIFFUSE])->GetShaderResourceView());
 	}
-//	else {
-//		ID3D11ShaderResourceView* nullSRV { nullptr };
-//		_context->PSSetShaderResources(0, 1, &nullSRV);
-//	}
 
 	if (material.textures[TEX_SPECULAR]) {
 		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_SPECULAR])->GetShaderResourceView());
 	}
-//	else {
-//		ID3D11ShaderResourceView* nullSRV{ nullptr };
-//		_context->PSSetShaderResources(0, 1, &nullSRV);
-//	}
 
 	if (material.textures[TEX_NORMAL]) {
 		textures.push_back(static_cast<Texture_DX*>(material.textures[TEX_NORMAL])->GetShaderResourceView());
 	}
-//	else {
-//		ID3D11ShaderResourceView* nullSRV{ nullptr };
-//		_context->PSSetShaderResources(0, 1, &nullSRV);
-//	}
 	
 	_context->PSSetShaderResources(0, textures.size(), textures.data());
 	_context->PSSetSamplers(0, 1, &_sampleState);

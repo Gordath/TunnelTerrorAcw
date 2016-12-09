@@ -5,6 +5,9 @@
 #include <iostream>
 #include "Resource.h"
 
+static const std::wstring MODELS_PATH{ L"data\\models\\" };
+static const std::wstring TEXTURE_PATH{ L"data\\textures\\" };
+
 class ResourceManager {
 private:
 	std::map<std::wstring, Resource*> _resourcesByName;

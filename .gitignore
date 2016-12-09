@@ -246,3 +246,8 @@ ModelManifest.xml
 CSLib/
 EntityEngine/Debug - DirectX/*
 *.png
+*.tga
+Release - DirectX/TunnelTerrorAcw.iobj
+Release - DirectX/TunnelTerrorAcw.ipdb
+*.exp
+data/

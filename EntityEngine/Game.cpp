@@ -4,7 +4,6 @@
 #include "KeyPressMessage.h"
 #include "MouseMotionMessage.h"
 #include "MouseClickMessage.h"
-#include <iostream>
 
 
 Game* Game::TheGame = nullptr;
@@ -71,6 +70,7 @@ void Game::OnResize(int width, int height)
 {
 	_window->_width = width;
 	_window->_height = height;
+
 
 	if(_renderer) {
 		_renderer->Resize(width, height);

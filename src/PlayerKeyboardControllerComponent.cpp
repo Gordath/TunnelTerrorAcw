@@ -6,9 +6,11 @@
 
 void PlayerKeyboardControllerComponent::CalculateXformMatrix(glm::mat4& matrix) const noexcept
 {
+
 	matrix = glm::rotate(matrix, static_cast<float>(_rotationAngle), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	matrix = glm::translate(matrix, _playerLocalPos);
-	matrix = glm::scale(matrix, _playerLocalScale);
+	matrix = glm::rotate(matrix, glm::radians(-90.0f), glm::vec3{ 0.0f, 1.0f, 0.0f });
+	matrix = glm::rotate(matrix, glm::radians(-90.0f), glm::vec3{ 1.0f, 0.0f, 0.0f });
 }
 
 PlayerKeyboardControllerComponent::PlayerKeyboardControllerComponent(GameObject* gameObject, const std::string& type)

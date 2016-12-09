@@ -35,8 +35,8 @@ protected:
 	double _deltaTime; // Time since last frame
 	bool _keyStates[256]; // Keyboard status
 	bool _quitFlag; // Quit flag; when true, we quit
-	Renderer* _renderer { nullptr }; // The renderer
-	Window* _window; // The game window
+	Renderer* _renderer{ nullptr }; // The renderer
+	Window* _window{ nullptr }; // The game window
 
 	// Meshes
 	MeshMap _meshes; // The map of meshes
@@ -59,6 +59,8 @@ public:
 	// Meshes
 	Mesh* GetMesh(std::string name);
 	void AddMesh(std::string name, Mesh* mesh) { _meshes[name] = mesh; }
+
+	void SetWindow(Window* w) noexcept { _window = w; }
 
 	// Quit flag
 	bool GetQuitFlag() const { return _quitFlag; }

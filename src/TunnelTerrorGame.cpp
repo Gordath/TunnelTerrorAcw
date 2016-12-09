@@ -262,12 +262,16 @@ void TunnelTerrorGame::Initialise(Window* window)
 
 	AddMesh("cube", cube);
 
+	Mesh* m = _resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx");
+	m->CreateBuffers(_renderer);
+
+	m = _resourceManager.Get<Mesh>(MODELS_PATH + L"obstacle.fbx");
+	m->CreateBuffers(_renderer);
+
 	for (auto mesh : _meshes) {
 		mesh.second->GenerateIndices(VertexWinding::CLOCKWISE);
 		mesh.second->CreateBuffers(_renderer);
 	}
-
-	_resourceManager.Load<Texture_DX>(L"test.png");
 
 	_sceneManager.PushScene(new MainMenuScene);
 }

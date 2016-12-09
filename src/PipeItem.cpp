@@ -13,9 +13,9 @@ PipeItem::PipeItem(Mesh* m) : GameObject("pipeItem")
 	Material mat;
 	mat.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	mat.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	mat.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"obstacleDiff.png");
-	mat.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"obstacleSpec.png");
-	mat.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"obstacleNorm.png");
+	mat.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"obstacle1Diff.png");
+	mat.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"obstacle1Spec.png");
+	mat.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"obstacle1Norm.png");
 	rc->SetMaterial(mat);
 
 	CollisionComponent* cc{ new CollisionComponent{ this } };

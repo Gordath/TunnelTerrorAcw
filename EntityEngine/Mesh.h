@@ -3,6 +3,7 @@
 #include "VBO.h"
 #include "Vertex.h"
 #include "IBO.h"
+#include "Resource.h"
 
 class Renderer;
 
@@ -11,7 +12,7 @@ enum class VertexWinding {
 	ANTICLOCKWISE
 };
 
-class Mesh {
+class Mesh : public Resource {
 private:
 	bool _locked; // True once we've made the VBO; can no longer add vertices etc unless reset
 	VBO* _vbo;
@@ -37,11 +38,7 @@ public:
 	bool Clear();
 	bool DeleteVertex(int i);
 
-	// Loads the Mesh from a file (returns true if loaded OK)
-	bool LoadFromFile(std::string filename);
-
-	// Loads the Mesh from an existing stream (returns true if OK)
-	bool Mesh::LoadFromStream(std::ifstream& in);
+	bool Load(const std::wstring& fileName) override;
 
 	// Unlocks the mesh but also deletes the VBO
 	void Reset();
