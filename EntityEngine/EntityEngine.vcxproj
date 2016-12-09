@@ -173,7 +173,6 @@
     <ClCompile Include="ShaderProgram_GL.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Texture_DX.cpp" />
-    <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="UserInputComponent.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="VBO_GL.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture_DX.h" />
     <ClInclude Include="ThrustMessage.h" />
-    <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="UserInputComponent.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBO_DX.h" />
