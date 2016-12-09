@@ -60,7 +60,7 @@ void GameScene::Update(double deltaTime, long time)
 	//Check for collisions.
 	_collisionSystem.Process(_gameObjects, deltaTime);
 
-	_pipeNetwork->Update(deltaTime * 0.2, time);
+	_pipeNetwork->Update(deltaTime, time);
 
 	P = glm::mat4{ 1.0f };
 
@@ -69,8 +69,8 @@ void GameScene::Update(double deltaTime, long time)
 	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), winWidth / winHeight, 0.1f, 1000.0f);
 
 	V = glm::mat4{ 1.0f };
-//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 4.0f });
-	
+//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 8.0f });
+//
 	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
 	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
 	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });

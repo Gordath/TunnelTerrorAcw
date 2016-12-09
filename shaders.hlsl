@@ -45,8 +45,6 @@ VOut VShader(VIn input)
 	
 	float3 binormal = cross(normal.xyz, tangent.xyz);
 
-	//float3 binormal = cross(tangent, normal.xyz);
-
 	float3x3 TBN = float3x3(tangent,
 							binormal,
 							normal.xyz);
@@ -80,8 +78,9 @@ float4 PShader(VOut input) : SV_TARGET
 	float specLight = pow(max(dot(n, h), 0.0), specular.a);
 	float diffLight = max(dot(n, l), 0.0);
 
+	float4 ambient = diffTexel * diffuse * 0.2;
 	float4 diffColor = diffTexel * diffuse * diffLight;
 	float4 specColor = float4(specTexel * specular.xyz * specLight, 0.0);
 
-	return diffColor + specColor + float4(0.05, 0.05, 0.05, 0.0);
+	return diffColor + specColor + ambient;
 }

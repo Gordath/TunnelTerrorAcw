@@ -26,14 +26,12 @@ Player::Player(Mesh* mesh, const Material& material, PlayerControls controls, co
 		PlayerKeyboardControllerComponent* kc{ new PlayerKeyboardControllerComponent{ this, "KeyboardPlayerController" } };
 		kc->SetRotationSpeed(glm::pi<float>());
 		kc->SetPlayerLocalPosition(localPosition);
-		kc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
 	}
 		break;
 	case PlayerControls::MOUSE: {
 		PlayerMouseControllerComponent* mc{ new PlayerMouseControllerComponent{ this, "MousePlayerController" } };
 		mc->SetRotationSpeed(glm::pi<float>());
 		mc->SetPlayerLocalPosition(localPosition);
-		mc->SetPlayerLocalScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
 	}
 		break;
 	default: 

@@ -9,7 +9,7 @@ private:
 	float _rotationSpeed{ 0.0f };
 	float _rotationAngle{ 0.0f };
 	glm::vec3 _playerLocalPos;
-	glm::vec3 _playerLocalScale{ 0.2f, 0.2f, 0.2f };
+	glm::vec3 _playerLocalScale;
 
 	bool _rotateLeft{ false };
 	bool _rotateRight{ false };

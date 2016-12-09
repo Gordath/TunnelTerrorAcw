@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "PipeNetwork.h"
 #include <memory>
+#include "Material.h"
 
 enum class MainMenuState {
 	INITIAL_MENU,
@@ -20,6 +21,9 @@ protected:
 
 	MainMenuState _menuState{ MainMenuState::INITIAL_MENU };
 	bool _controlsSelected{ false };
+
+	Material player1Material;
+	Material player2Material;
 
 	void DrawGameTitle(Renderer* renderer) const noexcept;
 	void DrawInitialMenuText(Renderer* renderer) const noexcept;

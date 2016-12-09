@@ -249,3 +249,4 @@ EntityEngine/Debug - DirectX/*
 *.tga
 Release - DirectX/TunnelTerrorAcw.iobj
 Release - DirectX/TunnelTerrorAcw.ipdb
+*.exp
