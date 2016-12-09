@@ -60,7 +60,7 @@ void GameScene::Update(double deltaTime, long time)
 	//Check for collisions.
 	_collisionSystem.Process(_gameObjects, deltaTime);
 
-	_pipeNetwork->Update(deltaTime, time);
+	_pipeNetwork->Update(deltaTime * 0.2, time);
 
 	P = glm::mat4{ 1.0f };
 

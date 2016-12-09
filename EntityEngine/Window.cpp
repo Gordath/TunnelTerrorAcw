@@ -1,6 +1,5 @@
 #include "Window.h"
-#include <stdlib.h>
-#include <time.h>
+#include "Game.h"
 
 Window* Window::TheWindow{ nullptr };
 
@@ -14,6 +13,7 @@ Window::Window(Game* game, int width, int height)
 {
 	// Set static singleton
 	TheWindow = this;
+	game->SetWindow(static_cast<Window*>(this));
 }
 
 /******************************************************************************************************************/

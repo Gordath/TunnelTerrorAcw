@@ -4,7 +4,6 @@
 #include "KeyPressMessage.h"
 #include "MouseMotionMessage.h"
 #include "MouseClickMessage.h"
-#include <iostream>
 
 
 Game* Game::TheGame = nullptr;
@@ -20,7 +19,6 @@ Game::Game()
 	_currentTime = clock();
 
 	TheGame = this;
-	_window = nullptr;
 }
 
 /******************************************************************************************************************/
