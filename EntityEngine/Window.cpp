@@ -7,16 +7,13 @@ Window* Window::TheWindow{ nullptr };
 /******************************************************************************************************************/
 
 Window::Window(Game* game, int width, int height)
-	: _renderer(nullptr),
-	  _game(game),
+	: _game(game),
+	  _renderer(nullptr),
 	  _width(width),
 	  _height(height)
 {
 	// Set static singleton
 	TheWindow = this;
-
-	// Reset RNG
-	srand(time(nullptr));
 }
 
 /******************************************************************************************************************/

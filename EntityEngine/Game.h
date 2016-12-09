@@ -60,6 +60,8 @@ public:
 	Mesh* GetMesh(std::string name);
 	void AddMesh(std::string name, Mesh* mesh) { _meshes[name] = mesh; }
 
+	void SetWindow(Window* w) noexcept { _window = w; }
+
 	// Quit flag
 	bool GetQuitFlag() const { return _quitFlag; }
 	void SetQuitFlag(bool v) { _quitFlag = v; }

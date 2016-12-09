@@ -20,6 +20,7 @@ Game::Game()
 	_currentTime = clock();
 
 	TheGame = this;
+	_window = nullptr;
 }
 
 /******************************************************************************************************************/
@@ -71,6 +72,7 @@ void Game::OnResize(int width, int height)
 {
 	_window->_width = width;
 	_window->_height = height;
+
 
 	if(_renderer) {
 		_renderer->Resize(width, height);

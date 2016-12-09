@@ -9,6 +9,8 @@
 Window_DX::Window_DX(Game* game, int width, int height)
 	: Window(game, width, height)
 {
+	game->SetWindow(static_cast<Window*>(this));
+
 	// Reset RNG
 	srand(time(nullptr));
 
