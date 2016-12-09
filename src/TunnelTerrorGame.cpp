@@ -262,11 +262,11 @@ void TunnelTerrorGame::Initialise(Window* window)
 
 	AddMesh("cube", cube);
 
-	Mesh* mesh = _resourceManager.Get<Mesh>(L"player11.fbx");
-	mesh->CreateBuffers(_renderer);
+	Mesh* m = _resourceManager.Get<Mesh>(L"player11.fbx");
+	m->CreateBuffers(_renderer);
 
-	mesh = _resourceManager.Get<Mesh>(L"drone1.fbx");
-	mesh->CreateBuffers(_renderer);
+	m = _resourceManager.Get<Mesh>(L"obstacle.fbx");
+	m->CreateBuffers(_renderer);
 
 	for (auto mesh : _meshes) {
 		mesh.second->GenerateIndices(VertexWinding::CLOCKWISE);

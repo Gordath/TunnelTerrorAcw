@@ -77,8 +77,7 @@ void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexce
 
 void MainMenuScene::Initialise()
 {
-	PipeItem* smallObstacleTemplate{ new PipeItem{ _sceneManager->GetGame()->GetMesh("cube") } };
-	smallObstacleTemplate->SetScale(glm::vec3{ 0.3f, 0.3f, 0.3f });
+	PipeItem* smallObstacleTemplate{ new PipeItem{ Game::_resourceManager.Get<Mesh>(L"obstacle.fbx") } };
 
 	player1Material.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	player1Material.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };

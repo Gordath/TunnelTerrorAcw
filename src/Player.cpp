@@ -41,7 +41,7 @@ Player::Player(Mesh* mesh, const Material& material, PlayerControls controls, co
 	_applyDefaultXform = false;
 
 	GameObject::SetPosition(glm::vec3{ 0.85f, -0.75f, 0.0f });
-	SetScale(glm::vec3{ 0.2f, 0.2f, 0.2f });
+	SetScale(glm::vec3{ 0.8f, 0.8f, 0.8f });
 }
 
 void Player::Update(double deltaTime)

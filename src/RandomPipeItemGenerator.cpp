@@ -26,12 +26,12 @@ void RandomPipeItemGenerator::Generate(PipeTuple& pipeTuple, const PipeDesc& pip
 		xform = glm::translate(xform, pos);
 		xform = glm::rotate(xform, -glm::radians(angle), glm::vec3{ 0.0f, 0.0f, 1.0f });
 		xform = glm::rotate(xform, randV, glm::vec3{ 1.0f, 0.0f, 0.0f });
-		xform = glm::translate(xform, glm::vec3{ 0.0f, pipeDesc.pipeRadius - randSelection->GetScale().y / 2.0f, 0.0f });
+		xform = glm::translate(xform, glm::vec3{ 0.0f, pipeDesc.pipeRadius - 0.15, 0.0f });
 		xform = glm::scale(xform, randSelection->GetScale());
 		pipeItem->SetExtraXForm(xform);
 
 		pipeItem->ApplyDefaultXform(false);
-		pipeItem->SetPosition(glm::vec3{ 0.0f, pipeDesc.pipeRadius - randSelection->GetScale().y / 2.0f, 0.0f });
+		pipeItem->SetPosition(glm::vec3{ 0.0f, pipeDesc.pipeRadius - 0.15, 0.0f });
 		pipeItem->SetScale(randSelection->GetScale());
 
 		GameObject* parent{ std::get<GameObject*>(pipeTuple) };
