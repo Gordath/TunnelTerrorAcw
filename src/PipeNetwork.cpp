@@ -159,37 +159,37 @@ bool PipeNetwork::Initialize(Renderer* renderer)
 	Material m;
 	m.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	m.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff.jpg");
-	m.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec.png");
-	m.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm.png");
+	m.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelDiff.jpg");
+	m.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelSpec.png");
+	m.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelNorm.png");
 
 	Material m2;
 	m2.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	m2.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	m2.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff2.jpg");
-	m2.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec2.png");
-	m2.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm2.png");
+	m2.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelDiff2.jpg");
+	m2.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelSpec2.png");
+	m2.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelNorm2.png");
 
 	Material m3;
 	m3.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	m3.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	m3.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff3.png");
-	m3.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec3.png");
-	m3.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm3.png");
+	m3.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelDiff3.png");
+	m3.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelSpec3.png");
+	m3.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelNorm3.png");
 
 	Material m4;
 	m4.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	m4.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	m4.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff4.jpg");
-	m4.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec4.png");
-	m4.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm4.png");
+	m4.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelDiff4.jpg");
+	m4.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelSpec4.png");
+	m4.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelNorm4.png");
 
 	Material m5;
 	m5.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	m5.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	m5.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"tunnelDiff5.png");
-	m5.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"tunnelSpec5.png");
-	m5.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"tunnelNorm5.png");
+	m5.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelDiff5.png");
+	m5.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelSpec5.png");
+	m5.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"tunnelNorm5.png");
 
 	tunnelMaterials = {m5, m2, m3, m4, m};
 

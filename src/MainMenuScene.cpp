@@ -77,19 +77,19 @@ void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexce
 
 void MainMenuScene::Initialise()
 {
-	PipeItem* smallObstacleTemplate{ new PipeItem{ Game::_resourceManager.Get<Mesh>(L"obstacle.fbx") } };
+	PipeItem* smallObstacleTemplate{ new PipeItem{ Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"obstacle.fbx") } };
 
 	player1Material.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	player1Material.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	player1Material.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"player1Diff.png");
-	player1Material.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"player1Spec.png");
-	player1Material.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"player1Norm.png");
+	player1Material.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player1Diff.png");
+	player1Material.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player1Spec.png");
+	player1Material.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player1Norm.png");
 
 	player2Material.diffuse = glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f };
 	player2Material.specular = glm::vec4{ 1.0f, 1.0f, 1.0f, 60.0f };
-	player2Material.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(L"player2Diff.png");
-	player2Material.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(L"player1Spec.png");
-	player2Material.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(L"player1Norm.png");
+	player2Material.textures[TEX_DIFFUSE] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player2Diff.png");
+	player2Material.textures[TEX_SPECULAR] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player1Spec.png");
+	player2Material.textures[TEX_NORMAL] = Game::_resourceManager.Get<Texture_DX>(TEXTURE_PATH + L"player1Norm.png");
 
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
@@ -112,7 +112,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 		case '1':
 			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
 				Player* player{
-					new Player{ Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+					new Player{ Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player1Material,
 						PlayerControls::KEYBOARD,
 						glm::vec3{ 0.85f, -0.75f, 0.0f }
@@ -128,7 +128,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
 				Player* player1{
 					new Player{
-						Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+						Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player1Material, PlayerControls::KEYBOARD,
 						glm::vec3{ 0.85f, -0.75f, 0.0f }
 					}
@@ -136,7 +136,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 
 				Player* player2{
 					new Player{
-						Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+						Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player2Material,
 						PlayerControls::MOUSE,
 						glm::vec3{ 1.2f, -0.75f, 0.0f }
@@ -158,7 +158,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
 				Player* player{
 					new Player{
-						Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+						Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player1Material,
 						PlayerControls::MOUSE,
 						glm::vec3{ 0.85f, -0.75f, 0.0f }
@@ -174,7 +174,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			if (_menuState == MainMenuState::TP_CONTROLS_SELECTION) {
 				Player* player1{
 					new Player{
-						Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+						Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player1Material,
 						PlayerControls::MOUSE,
 						glm::vec3{ 0.85f, -0.75f, 0.0f }
@@ -183,7 +183,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 
 				Player* player2{
 					new Player{
-						Game::_resourceManager.Get<Mesh>(L"player11.fbx"),
+						Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"player11.fbx"),
 						player2Material,
 						PlayerControls::KEYBOARD,
 						glm::vec3{ 1.2f, -0.75f, 0.0f }

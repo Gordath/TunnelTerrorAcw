@@ -183,7 +183,7 @@ bool ScoreScene::PersistTwoPlayerScore()
 
 void ScoreScene::Initialise()
 {
-	PipeItem* smallObstacleTemplate{ new PipeItem{ Game::_resourceManager.Get<Mesh>(L"obstacle.fbx") } };
+	PipeItem* smallObstacleTemplate{ new PipeItem{ Game::_resourceManager.Get<Mesh>(MODELS_PATH + L"obstacle.fbx") } };
 
 	PipeDesc pipeDesc{ 7.0f, 1.0f, 20, 20, 0.25f };
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
