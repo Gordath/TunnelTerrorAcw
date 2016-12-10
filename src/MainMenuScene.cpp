@@ -95,6 +95,17 @@ void MainMenuScene::Initialise()
 	_pipeNetwork = std::make_unique<PipeNetwork>(pipeDesc, 3, 0.0055f, this);
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
+
+//	stream.open("engines_of_war.ogg");
+//
+//	sample = new AudioSample;
+//	sample->load("data/audio/coolant.ogg");
+//
+//	source = new AudioSource;
+//	source->set_sample(sample);
+//	source->play();
+
+	Game::_audioManager.play_stream("engines_of_war.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
 }
 
 
@@ -238,6 +249,8 @@ void MainMenuScene::Update(double deltaTime, long time)
 	V = glm::rotate(V, glm::radians(time / 60.0f), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	V = glm::rotate(V, cos(time / 1000.0f) * glm::pi<float>() / 7.5f, glm::vec3{ 0.0f, 1.0f, 0.0f });
 	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
+
+	//stream->play(AUDIO_PLAYMODE_ONCE);
 }
 
 void MainMenuScene::Render(RenderSystem* renderer)

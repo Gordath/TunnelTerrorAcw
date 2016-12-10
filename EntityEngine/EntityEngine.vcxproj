@@ -100,14 +100,15 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>BUILD_DIRECTX;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_DIRECTX;_CRT_SECURE_NO_WARNINGS;_MBCS;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>FW1FontWrapper.lib;zlibstaticd.lib;assimp-vc140-mt-static-deb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FW1FontWrapper.lib;zlibstaticd.lib;assimp-vc140-mt-static-deb.lib;OpenAL32.lib;pthreadVC2.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'">
@@ -118,7 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>BUILD_DIRECTX;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD_DIRECTX;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;_MBCS;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -126,7 +127,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>FW1FontWrapper.lib;assimp-vc140-mt-static-rel.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FW1FontWrapper.lib;assimp-vc140-mt-static-rel.lib;zlibstatic.lib;OpenAL32.lib;pthreadVC2.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - OpenGL|Win32'">
@@ -146,9 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Context_DX.cpp" />
+    <ClCompile Include="Datapath.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
@@ -156,9 +160,11 @@
     <ClCompile Include="IBO_DX.cpp" />
     <ClCompile Include="LifeTimerComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="ObserverSubject.cpp" />
+    <ClCompile Include="Ovstream.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
@@ -166,13 +172,17 @@
     <ClCompile Include="Renderer_DX.cpp" />
     <ClCompile Include="Renderer_GL.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObject_GL.cpp" />
     <ClCompile Include="ShaderProgram_GL.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Stream.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Texture_DX.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UserInputComponent.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="VBO_GL.cpp" />
@@ -181,11 +191,14 @@
     <ClCompile Include="Window_GL.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BSphere.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionMessage.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Context_DX.h" />
+    <ClInclude Include="Datapath.h" />
+    <ClInclude Include="Dataset.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectComponent.h" />
@@ -197,6 +210,7 @@
     <ClInclude Include="DeadObjectMessage.h" />
     <ClInclude Include="LifeTimerComponent.h" />
     <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
@@ -204,6 +218,8 @@
     <ClInclude Include="MouseMotionMessage.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverSubject.h" />
+    <ClInclude Include="OpenAL.h" />
+    <ClInclude Include="Ovstream.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="RenderComponent.h" />
@@ -213,15 +229,19 @@
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Sample.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderObject_GL.h" />
     <ClInclude Include="ShaderProgram_GL.h" />
+    <ClInclude Include="Source.h" />
+    <ClInclude Include="Stream.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture_DX.h" />
     <ClInclude Include="ThrustMessage.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UserInputComponent.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBO_DX.h" />
@@ -233,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Dataset.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

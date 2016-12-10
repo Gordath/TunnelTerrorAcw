@@ -92,6 +92,33 @@
     <ClCompile Include="Context_DX.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Ovstream.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Stream.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Datapath.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Platform Independent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -215,9 +242,6 @@
     <ClInclude Include="MouseClickMessage.h">
       <Filter>Messages</Filter>
     </ClInclude>
-    <ClInclude Include="BSphere.h">
-      <Filter>Platform Independent</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Platform Independent</Filter>
     </ClInclude>
@@ -233,9 +257,45 @@
     <ClInclude Include="Context_DX.h">
       <Filter>DirectX</Filter>
     </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenAL.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Ovstream.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Stream.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Datapath.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Dataset.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Platform Independent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Dataset.inl">
+      <Filter>Platform Independent</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

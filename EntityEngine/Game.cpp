@@ -4,10 +4,14 @@
 #include "KeyPressMessage.h"
 #include "MouseMotionMessage.h"
 #include "MouseClickMessage.h"
+#include "datapath.h"
+#include "Mesh.h"
+#include "Audio.h"
 
 
 Game* Game::TheGame = nullptr;
 ResourceManager Game::_resourceManager;
+AudioManager Game::_audioManager;
 
 /******************************************************************************************************************/
 
@@ -34,6 +38,9 @@ void Game::Initialise(Window* w)
 {
 	_window = w;
 	_renderer = w->GetRenderer();
+
+	add_data_path("data/audio");
+	init_audio();
 
 	_renderSystem.SetRenderer(_renderer);
 }
@@ -103,4 +110,6 @@ void Game::Cleanup()
 		delete i->second;
 	}
 	_meshes.clear();
+
+	destroy_audio();
 }

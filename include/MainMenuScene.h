@@ -4,6 +4,7 @@
 #include "PipeNetwork.h"
 #include <memory>
 #include "Material.h"
+#include "AudioManager.h"
 
 enum class MainMenuState {
 	INITIAL_MENU,
@@ -29,6 +30,10 @@ protected:
 	void DrawInitialMenuText(Renderer* renderer) const noexcept;
 	void DrawSPControlsSelectionText(Renderer* renderer) const noexcept;
 	void DrawTPControlsSelectionText(Renderer* renderer) const noexcept;
+
+	OggVorbisStream stream;
+	AudioSource* source;
+	AudioSample* sample;
 
 public:
 	void Initialise() override;
