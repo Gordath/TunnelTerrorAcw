@@ -5,6 +5,8 @@
 // Structors
 /******************************************************************************************************************/
 
+static std::vector<GameObject*> emptyVec;
+
 SceneManager::SceneManager(Game* game)
 	: _game(game)
 {
@@ -41,7 +43,8 @@ std::vector<GameObject*>& SceneManager::GetGameObjects()
 	if (currentScene) {
 		return currentScene->GetGameObjects();
 	}
-	return std::vector<GameObject*>();
+	
+	return emptyVec;
 }
 
 /******************************************************************************************************************/

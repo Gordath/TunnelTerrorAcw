@@ -28,6 +28,8 @@ void GameScene::Initialise()
 	for (auto gameObject : _gameObjects) {
 		gameObject->Start();
 	}
+
+	Game::_audioManager.play_stream("breach.ogg", 1.0f, AUDIO_PLAYMODE_LOOP);
 }
 
 void GameScene::OnKeyboard(int key, bool down)
@@ -50,6 +52,7 @@ void GameScene::OnMessage(Message* msg)
 void GameScene::Update(double deltaTime, long time)
 {
 	if(_playerDied) {
+		Game::_audioManager.stop_streams();
 		_sceneManager->PushScene(new ScoreScene(_score));
 	}
 

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include "TunnelTerrorGame.h"
 
 // Private methods --------------------------------------------------------------------------------------------
 void ScoreScene::DrawScoreAndInitialsText(RenderSystem* renderer) const
@@ -196,6 +197,8 @@ void ScoreScene::Initialise()
 	//Load high scores from files
 	LoadSinglePlayerScore();
 	LoadTwoPlayerScore();
+
+	Game::_audioManager.play_stream("mad_science_trimmed2.ogg", 0.9f, AUDIO_PLAYMODE_LOOP);
 }
 
 void ScoreScene::OnKeyboard(int key, bool down)
@@ -204,6 +207,7 @@ void ScoreScene::OnKeyboard(int key, bool down)
 	case true:
 		switch (key) {
 		case 13: //enter
+			Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 			if (!_initialsSaved) {
 				if (_sceneManager->GetGame()->GetGameMode() == GameMode::SINGLE_PLAYER) {
 					if (!PersistSinglePlayerScore()) {
@@ -227,16 +231,20 @@ void ScoreScene::OnKeyboard(int key, bool down)
 				for (auto scene : popedScenes) {
 					delete scene;
 				}
+				Game::_audioManager.stop_streams();
+				Game::_audioManager.play_stream("hyper_sun.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
 			}
 			break;
 		case 8: //backspace
 			if (_initialsIndex) {
 				--_initialsIndex;
 				_initials[_initialsIndex] = '_';
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiCancel, 1.0f, AUDIO_PLAYMODE_ONCE);
 			}
 			break;
 		default:
 			if (key >= 32 && key < 127 && _initialsIndex < 3) {
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_initials[_initialsIndex] = std::toupper(static_cast<wchar_t>(key), std::locale());
 				++_initialsIndex;
 			}
@@ -268,7 +276,7 @@ void ScoreScene::Update(double deltaTime, long time)
 	V = glm::translate(V, glm::vec3{ 0.0f, 0.0f, sin(time / 1000.0f) * 0.25f });
 	V = glm::rotate(V, glm::radians(time / 60.0f), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	V = glm::rotate(V, cos(time / 1000.0f) * glm::pi<float>() / 7.5f, glm::vec3{ 0.0f, 1.0f, 0.0f });
-	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
+	V = glm::translate(V, glm::vec3{ 0.0f, -0.3, 0.0f });
 }
 
 void ScoreScene::Render(RenderSystem* renderer)

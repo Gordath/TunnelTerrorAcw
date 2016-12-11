@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include <deque>
 #include "PipeItemGenerator.h"
+#include "sample.h"
 
 using PipeTuple = std::tuple< GameObject*, float, std::vector<PipeItem*> >;
 
