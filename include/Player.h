@@ -13,6 +13,15 @@ enum class PlayerControls {
 };
 
 class Player : public GameObject {
+private:
+	bool _timeWarpCharge{ true };
+	bool _timeWarpRecharged{ false };
+	bool _timeWarpWarning{ false };
+	bool _timeWarpExpired{ true };
+	double _timeWarpActivationTime{ 0.0 };
+
+	float _warpValue{ 0.0f };
+
 public:
 	Player(Mesh* mesh, const Material& material, PlayerControls controls, const glm::vec3& localPosition);
 	void Update(double deltaTime) override;

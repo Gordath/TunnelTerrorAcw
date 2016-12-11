@@ -1,8 +1,9 @@
 #include "PlayerMouseControllerComponent.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
 #include "GameObject.h"
-#include <GL/GLM/gtc/constants.inl>
 #include "MouseClickMessage.h"
+#include "Game.h"
+#include "TimeWarpActivationMessage.h"
 
 void PlayerMouseControllerComponent::CalculateXformMatrix(glm::mat4& matrix) const noexcept
 {
@@ -50,6 +51,24 @@ void PlayerMouseControllerComponent::OnMessage(Message* msg) noexcept
 				break;
 			default:
 				break;
+			}
+
+			if (!mcm->GetState()) {
+				switch (mcm->GetMouseButton()) {
+				case MouseButtonType::M_BUTTON: {
+					if (Game::TheGame->GetGameMode() == GameMode::SINGLE_PLAYER) {
+						TimeWarpActivationMessage* twam{ new TimeWarpActivationMessage{ 0.9f, Game::TheGame->GetCurrentTime() } };
+						_parent->OnMessage(twam);
+					}
+					else {
+						TimeWarpActivationMessage* twam{ new TimeWarpActivationMessage{ 0.45f, Game::TheGame->GetCurrentTime() } };
+						_parent->OnMessage(twam);
+					}
+				}
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}

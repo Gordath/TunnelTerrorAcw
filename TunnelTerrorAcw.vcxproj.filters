@@ -19,6 +19,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{b172389f-e08c-40ba-a7cd-fd806d7b435f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{413d89e0-75ef-4e04-b63b-b55253926e24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -103,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="src\ScoreScene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TimeWarpActivationMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TimeWarpExpirationMessage.h">
+      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

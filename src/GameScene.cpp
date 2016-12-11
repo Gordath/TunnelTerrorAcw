@@ -7,6 +7,10 @@
 #include "DeadObjectMessage.h"
 #include "ScoreScene.h"
 #include "Window.h"
+#include "TimeWarpActivationMessage.h"
+
+
+static float timeWarpAccum{ 1.0f };
 
 GameScene::~GameScene()
 {
@@ -29,7 +33,7 @@ void GameScene::Initialise()
 		gameObject->Start();
 	}
 
-	Game::_audioManager.play_stream("breach.ogg", 1.0f, AUDIO_PLAYMODE_LOOP);
+	Game::_audioManager.play_stream("breach.ogg", 0.4f, AUDIO_PLAYMODE_LOOP);
 }
 
 void GameScene::OnKeyboard(int key, bool down)
@@ -46,6 +50,21 @@ void GameScene::OnMessage(Message* msg)
 		}
 	}
 
+	if (msg->GetMessageType() == "TimeWarpActivation") {
+		TimeWarpActivationMessage* twam{ static_cast<TimeWarpActivationMessage*>(msg) };
+		timeWarpAccum -= twam->GetWarpValue();
+		return;
+	}
+
+	if (msg->GetMessageType() == "TimeWarpExpiration") {
+		TimeWarpActivationMessage* twam{ static_cast<TimeWarpActivationMessage*>(msg) };
+		timeWarpAccum += twam->GetWarpValue();
+		if(timeWarpAccum > 1.0f) {
+			timeWarpAccum = 1.0f;
+		}
+		return;
+	}
+
 	Scene::OnMessage(msg);
 }
 
@@ -58,10 +77,9 @@ void GameScene::Update(double deltaTime, long time)
 
 	Scene::Update(deltaTime, time);
 
-	//Check for collisions.
 	_collisionSystem.Process(_gameObjects, deltaTime);
 
-	_pipeNetwork->Update(deltaTime, time);
+	_pipeNetwork->Update(deltaTime * timeWarpAccum, time);
 
 	P = glm::mat4{ 1.0f };
 
@@ -70,15 +88,11 @@ void GameScene::Update(double deltaTime, long time)
 	P *= glm::perspectiveLH(static_cast<float>(glm::radians(90.0f)), winWidth / winHeight, 0.1f, 1000.0f);
 
 	V = glm::mat4{ 1.0f };
-//	V = glm::translate(V, glm::vec3{ 0.0, 0.0, 8.0f });
-//
 	V = glm::rotate(V, static_cast<float>(glm::radians(-15.0f)), glm::vec3{ 1, 0, 0 });
 	V = glm::rotate(V, static_cast<float>(glm::radians(-90.0f)), glm::vec3{ 0, 1, 0 });
 	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
 
 	_score = static_cast<int>(_pipeNetwork->GetDistanceTraveled() * 2000.0f);
-//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorX / 10.0f), glm::vec3{ 0, 1, 0 });
-//	V = glm::rotate(V, static_cast<float>(_sceneManager->GetGame()->GetWindow()->_cursorY / 10.0f), glm::vec3{ 1, 0, 0 });
 }
 
 void GameScene::Render(RenderSystem* renderer)

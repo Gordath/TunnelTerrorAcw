@@ -9,12 +9,18 @@ public:
 	static AudioSample* _speedUp;
 	static AudioSample* _uiAction;
 	static AudioSample* _uiCancel;
+	static AudioSample* _timeWarpActivation;
+	static AudioSample* _timeWarpWarning;
+	static AudioSample* _timeWarpReady;
 
 	~TunnelTerrorGame()
 	{
 		delete _speedUp;
 		delete _uiAction;
 		delete _uiCancel;
+		delete _timeWarpActivation;
+		delete _timeWarpWarning;
+		delete _timeWarpReady;
 	}
 
 	void Initialise(Window* window) override;

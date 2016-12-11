@@ -146,6 +146,8 @@
     <ClInclude Include="include\PlayerKeyboardControllerComponent.h" />
     <ClInclude Include="include\PlayerMouseControllerComponent.h" />
     <ClInclude Include="include\RandomPipeItemGenerator.h" />
+    <ClInclude Include="include\TimeWarpActivationMessage.h" />
+    <ClInclude Include="include\TimeWarpExpirationMessage.h" />
     <ClInclude Include="include\TunnelTerrorGame.h" />
     <ClInclude Include="src\ScoreScene.h" />
   </ItemGroup>

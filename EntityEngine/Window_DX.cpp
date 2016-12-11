@@ -40,7 +40,7 @@ Window_DX::Window_DX(Game* game, int width, int height)
 	                           nullptr,
 	                           GetModuleHandle(nullptr),
 	                           nullptr);
-
+	ShowCursor(false);
 	ShowWindow(_hWnd, SW_SHOWDEFAULT);
 }
 
@@ -80,6 +80,12 @@ LRESULT CALLBACK Window_DX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		TheWindow->GetGame()->OnMouseClick(MouseButtonType::L_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, false);
 		break;
 	case WM_LBUTTONDBLCLK:
+		break;
+	case WM_MBUTTONDOWN:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::M_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, true);
+		break;
+	case WM_MBUTTONUP:
+		TheWindow->GetGame()->OnMouseClick(MouseButtonType::M_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, false);
 		break;
 	case WM_RBUTTONDOWN:
 		TheWindow->GetGame()->OnMouseClick(MouseButtonType::R_BUTTON, TheWindow->_cursorX, TheWindow->_cursorY, true);
