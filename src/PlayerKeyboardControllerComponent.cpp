@@ -1,12 +1,14 @@
 #include "PlayerKeyboardControllerComponent.h"
 #include "GameObject.h"
 #include "KeyPressMessage.h"
+#include "TimeWarpActivationMessage.h"
 #include <GL/GLM/GTC/matrix_transform.inl>
+#include <iostream>
+#include "Game.h"
 
 
 void PlayerKeyboardControllerComponent::CalculateXformMatrix(glm::mat4& matrix) const noexcept
 {
-
 	matrix = glm::rotate(matrix, static_cast<float>(_rotationAngle), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	matrix = glm::translate(matrix, _playerLocalPos);
 	matrix = glm::rotate(matrix, glm::radians(-90.0f), glm::vec3{ 0.0f, 1.0f, 0.0f });
@@ -45,7 +47,7 @@ void PlayerKeyboardControllerComponent::OnMessage(Message* msg) noexcept
 	if (msg->GetMessageType() == "keypress") {
 		KeyPressMessage* kpm{ dynamic_cast<KeyPressMessage*>(msg) };
 
-		if(kpm) {
+		if (kpm) {
 			switch (kpm->GetKey()) {
 			case 97: //a
 			case 65: //A
@@ -59,6 +61,24 @@ void PlayerKeyboardControllerComponent::OnMessage(Message* msg) noexcept
 				break;
 			default:
 				break;
+			}
+			
+			if(!kpm->GetDown()) {
+				switch (kpm->GetKey()) {
+				case 32: { //space
+					if(Game::TheGame->GetGameMode() == GameMode::SINGLE_PLAYER) {
+						TimeWarpActivationMessage* twam{ new TimeWarpActivationMessage{ 0.9f, Game::TheGame->GetCurrentTime() } };
+						_parent->OnMessage(twam);
+					}
+					else {
+						TimeWarpActivationMessage* twam{ new TimeWarpActivationMessage{ 0.45f, Game::TheGame->GetCurrentTime() } };
+						_parent->OnMessage(twam);
+					}
+				}
+						 break;
+				default:
+					break;
+				}
 			}
 		}
 	}

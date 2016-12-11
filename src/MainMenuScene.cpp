@@ -97,7 +97,7 @@ void MainMenuScene::Initialise()
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
-	Game::_audioManager.play_stream("hyper_sun.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
+	Game::_audioManager.play_stream("hyper_sun.ogg", 0.4f, AUDIO_PLAYMODE_LOOP);
 }
 
 

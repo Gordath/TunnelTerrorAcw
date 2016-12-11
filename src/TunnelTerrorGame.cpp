@@ -8,6 +8,9 @@
 AudioSample* TunnelTerrorGame::_speedUp{ nullptr };
 AudioSample* TunnelTerrorGame::_uiAction{ nullptr };
 AudioSample* TunnelTerrorGame::_uiCancel{ nullptr };
+AudioSample* TunnelTerrorGame::_timeWarpActivation{ nullptr };
+AudioSample* TunnelTerrorGame::_timeWarpWarning{ nullptr };
+AudioSample* TunnelTerrorGame::_timeWarpReady{ nullptr };
 
 void TunnelTerrorGame::Initialise(Window* window)
 {
@@ -22,7 +25,16 @@ void TunnelTerrorGame::Initialise(Window* window)
 	_uiCancel = new AudioSample;
 	_uiCancel->load("data/audio/ui_cancel.ogg");
 
-	_renderer->SetClearColour(glm::vec4{ 0.3f, 0.3f, 0.3f, 0.0f });
+	_timeWarpActivation = new AudioSample;
+	_timeWarpActivation->load("data/audio/time_warp_activation.ogg");
+	
+	_timeWarpWarning = new AudioSample;
+	_timeWarpWarning->load("data/audio/time_warp_warning.ogg");
+
+	_timeWarpReady = new AudioSample;
+	_timeWarpReady->load("data/audio/time_warp_ready.ogg");
+
+	_renderer->SetClearColour(glm::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 	Mesh* cube = new Mesh();
 

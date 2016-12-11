@@ -198,7 +198,7 @@ void ScoreScene::Initialise()
 	LoadSinglePlayerScore();
 	LoadTwoPlayerScore();
 
-	Game::_audioManager.play_stream("mad_science_trimmed2.ogg", 0.9f, AUDIO_PLAYMODE_LOOP);
+	Game::_audioManager.play_stream("mad_science_trimmed2.ogg", 0.4f, AUDIO_PLAYMODE_LOOP);
 }
 
 void ScoreScene::OnKeyboard(int key, bool down)
@@ -232,7 +232,7 @@ void ScoreScene::OnKeyboard(int key, bool down)
 					delete scene;
 				}
 				Game::_audioManager.stop_streams();
-				Game::_audioManager.play_stream("hyper_sun.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
+				Game::_audioManager.play_stream("hyper_sun.ogg", 0.4f, AUDIO_PLAYMODE_LOOP);
 			}
 			break;
 		case 8: //backspace

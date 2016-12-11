@@ -275,6 +275,12 @@ void Renderer_DX::Initialise(int width, int height)
 
 	// Create the texture sampler state.
 	res = _device->CreateSamplerState(&samplerDesc, &_sampleState);
+
+	_swapchain->SetFullscreenState(true, nullptr);
+	RECT desktop;
+	const HWND deskWin = GetDesktopWindow();
+	GetWindowRect(deskWin, &desktop);
+	Resize(desktop.right, desktop.bottom);
 }
 
 /******************************************************************************************************************/

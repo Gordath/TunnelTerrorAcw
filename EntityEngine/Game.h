@@ -58,6 +58,8 @@ public:
 	Game();
 	virtual ~Game();
 
+	double GetCurrentTime() const noexcept { return _currentTime; }
+
 	// Meshes
 	Mesh* GetMesh(std::string name);
 	void AddMesh(std::string name, Mesh* mesh) { _meshes[name] = mesh; }
