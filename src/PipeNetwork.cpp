@@ -9,6 +9,7 @@
 #include "MathUtils.h"
 #include "Game.h"
 #include "Texture_DX.h"
+#include "TunnelTerrorGame.h"
 
 
 static std::vector<Material> tunnelMaterials;
@@ -153,7 +154,7 @@ PipeNetwork::~PipeNetwork()
 }
 
 bool PipeNetwork::Initialize(Renderer* renderer)
-{
+{	
 	materialIndex = 0;
 
 	Material m;
@@ -266,6 +267,7 @@ void PipeNetwork::Update(double deltaTime, long time, bool increaseSpeed)
 
 	if (time - incrementTime >= threshold) {
 		if(increaseSpeed) {
+			Game::_audioManager.play_sample(TunnelTerrorGame::_speedUp, 1.0f, AUDIO_PLAYMODE_ONCE);
 			_speed += 0.0006f;
 		}
 		incrementTime = time;

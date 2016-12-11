@@ -5,6 +5,7 @@
 #include <iostream>
 #include "GameScene.h"
 #include "Texture_DX.h"
+#include "TunnelTerrorGame.h"
 
 
 // Private methods ----------------------------------------------------------------------------------
@@ -96,16 +97,7 @@ void MainMenuScene::Initialise()
 	_pipeNetwork->AddPipeItemTemplate(smallObstacleTemplate);
 	_pipeNetwork->Initialize(_sceneManager->GetGame()->GetRenderer());
 
-//	stream.open("engines_of_war.ogg");
-//
-//	sample = new AudioSample;
-//	sample->load("data/audio/coolant.ogg");
-//
-//	source = new AudioSource;
-//	source->set_sample(sample);
-//	source->play();
-
-	Game::_audioManager.play_stream("engines_of_war.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
+	Game::_audioManager.play_stream("hyper_sun.ogg", 1.0, AUDIO_PLAYMODE_LOOP);
 }
 
 
@@ -130,6 +122,8 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 					}
 				};
 
+				Game::_audioManager.stop_streams();
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
 				_menuState = MainMenuState::INITIAL_MENU;
 				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
@@ -154,6 +148,8 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 					}
 				};
 
+				Game::_audioManager.stop_streams();
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
 				_menuState = MainMenuState::INITIAL_MENU;
 				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
@@ -161,6 +157,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			}
 
 			if (_menuState == MainMenuState::INITIAL_MENU) {
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_menuState = MainMenuState::SP_CONTROLS_SELECTION;
 			}
 			break;
@@ -176,6 +173,8 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 					}
 				};
 
+				Game::_audioManager.stop_streams();
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player }));
 				_menuState = MainMenuState::INITIAL_MENU;
 				_sceneManager->GetGame()->SetGameMode(GameMode::SINGLE_PLAYER);
@@ -201,6 +200,8 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 					}
 				};
 
+				Game::_audioManager.stop_streams();
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_sceneManager->PushScene(new GameScene(std::vector<Player*>{ player1, player2 }));
 				_menuState = MainMenuState::INITIAL_MENU;
 				_sceneManager->GetGame()->SetGameMode(GameMode::MULTI_PLAYER);
@@ -208,6 +209,7 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 			}
 
 			if (_menuState == MainMenuState::INITIAL_MENU) {
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiAction, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_menuState = MainMenuState::TP_CONTROLS_SELECTION;
 			}
 			break;
@@ -216,9 +218,11 @@ void MainMenuScene::OnKeyboard(int key, bool down)
 				_sceneManager->GetGame()->SetQuitFlag(true);
 			}
 			else if (_menuState == MainMenuState::SP_CONTROLS_SELECTION) {
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiCancel, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_menuState = MainMenuState::INITIAL_MENU;
 			}
 			else {
+				Game::_audioManager.play_sample(TunnelTerrorGame::_uiCancel, 1.0f, AUDIO_PLAYMODE_ONCE);
 				_menuState = MainMenuState::INITIAL_MENU;
 			}
 
@@ -248,7 +252,7 @@ void MainMenuScene::Update(double deltaTime, long time)
 	V = glm::translate(V, glm::vec3{ 0.0f, 0.0f, sin(time / 1000.0f) * 0.25f });
 	V = glm::rotate(V, glm::radians(time / 60.0f), glm::vec3{ 1.0f, 0.0f, 0.0f });
 	V = glm::rotate(V, cos(time / 1000.0f) * glm::pi<float>() / 7.5f, glm::vec3{ 0.0f, 1.0f, 0.0f });
-	V = glm::translate(V, glm::vec3{ 0.0f, -0.35, 0.0f });
+	V = glm::translate(V, glm::vec3{ 0.0f, -0.3, 0.0f });
 
 	//stream->play(AUDIO_PLAYMODE_ONCE);
 }

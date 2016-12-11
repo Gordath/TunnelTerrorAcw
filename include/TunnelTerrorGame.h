@@ -5,10 +5,18 @@
 #include <map>
 
 class TunnelTerrorGame : public Game {
-private:
-	
-
 public:
+	static AudioSample* _speedUp;
+	static AudioSample* _uiAction;
+	static AudioSample* _uiCancel;
+
+	~TunnelTerrorGame()
+	{
+		delete _speedUp;
+		delete _uiAction;
+		delete _uiCancel;
+	}
+
 	void Initialise(Window* window) override;
 
 	void OnKeyboard(int key, bool down) override;

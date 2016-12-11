@@ -5,9 +5,22 @@
 #include "MainMenuScene.h"
 #include "Texture_DX.h"
 
+AudioSample* TunnelTerrorGame::_speedUp{ nullptr };
+AudioSample* TunnelTerrorGame::_uiAction{ nullptr };
+AudioSample* TunnelTerrorGame::_uiCancel{ nullptr };
+
 void TunnelTerrorGame::Initialise(Window* window)
 {
 	Game::Initialise(window);
+
+	_speedUp = new AudioSample;
+	_speedUp->load("data/audio/speed_up.ogg");
+
+	_uiAction = new AudioSample;
+	_uiAction->load("data/audio/ui_action.ogg");
+
+	_uiCancel = new AudioSample;
+	_uiCancel->load("data/audio/ui_cancel.ogg");
 
 	_renderer->SetClearColour(glm::vec4{ 0.3f, 0.3f, 0.3f, 0.0f });
 

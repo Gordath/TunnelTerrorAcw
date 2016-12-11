@@ -31,10 +31,6 @@ protected:
 	void DrawSPControlsSelectionText(Renderer* renderer) const noexcept;
 	void DrawTPControlsSelectionText(Renderer* renderer) const noexcept;
 
-	OggVorbisStream stream;
-	AudioSource* source;
-	AudioSample* sample;
-
 public:
 	void Initialise() override;
 
