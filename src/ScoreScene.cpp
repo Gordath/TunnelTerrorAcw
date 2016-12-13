@@ -44,6 +44,7 @@ void ScoreScene::DrawHighScoreTables(RenderSystem* renderer) const
 	int winHeight{ _sceneManager->GetGame()->GetWindow()->_height };
 
 	renderer->GetRenderer()->DrawString(L"HIGH SCORES", 80, winWidth / 2, 0, 0xff0000ff, TextAlignment::CENTER);
+	renderer->GetRenderer()->DrawString(L"PRESS ENTER TO CONTINUE", 30, winWidth / 2, winHeight - winHeight / 10, 0xff0000ff, TextAlignment::CENTER);
 	renderer->GetRenderer()->DrawString(L"SINGLE PLAYER", 40, winWidth / 4, winHeight / 6, 0xff0000ff, TextAlignment::CENTER);
 	renderer->GetRenderer()->DrawString(L"TWO PLAYER", 40, winWidth - winWidth / 4, winHeight / 6, 0xff0000ff, TextAlignment::CENTER);
 

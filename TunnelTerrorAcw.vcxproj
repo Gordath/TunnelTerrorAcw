@@ -22,7 +22,6 @@
     <ProjectGuid>{5FA6B86E-0364-47DB-A358-3D405DCD338D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TunnelTerrorAcw</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - DirectX|Win32'" Label="Configuration">

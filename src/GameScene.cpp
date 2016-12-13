@@ -71,6 +71,7 @@ void GameScene::OnMessage(Message* msg)
 void GameScene::Update(double deltaTime, long time)
 {
 	if(_playerDied) {
+		timeWarpAccum = 1.0f;
 		Game::_audioManager.stop_streams();
 		_sceneManager->PushScene(new ScoreScene(_score));
 	}

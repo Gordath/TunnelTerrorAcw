@@ -55,6 +55,9 @@ void MainMenuScene::DrawSPControlsSelectionText(Renderer* renderer) const noexce
 
 	verticalPos += verticalOffset;
 	renderer->DrawString(L"3. BACK", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	renderer->DrawString(L"KEYBOARD - PRESS THE SPACE BAR TO ACTIVATE TIME WARP", 30, winWidth / 2, winHeight - winHeight / 9, 0xff0000ff, TextAlignment::CENTER);
+	renderer->DrawString(L"MOUSE - PRESS THE MIDDLE MOUSE BUTTON TO ACTIVATE TIME WARP", 30, winWidth / 2, winHeight - winHeight / 13, 0xff0000ff, TextAlignment::CENTER);
 }
 
 void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexcept
@@ -72,6 +75,9 @@ void MainMenuScene::DrawTPControlsSelectionText(Renderer* renderer) const noexce
 
 	verticalPos += verticalOffset;
 	renderer->DrawString(L"3. BACK", 50, winWidth / 2, verticalPos, 0xff0000ff, TextAlignment::CENTER);
+
+	renderer->DrawString(L"KEYBOARD - PRESS THE SPACE BAR TO ACTIVATE TIME WARP", 30, winWidth / 2, winHeight - winHeight / 9, 0xff0000ff, TextAlignment::CENTER);
+	renderer->DrawString(L"MOUSE - PRESS THE MIDDLE MOUSE BUTTON TO ACTIVATE TIME WARP", 30, winWidth / 2, winHeight - winHeight / 13, 0xff0000ff, TextAlignment::CENTER);
 }
 
 // --------------------------------------------------------------------------------------------------
