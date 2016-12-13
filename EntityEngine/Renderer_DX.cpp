@@ -1,6 +1,6 @@
+#if BUILD_DIRECTX
 #include <d3dx11async.h>
 #include "Texture_DX.h"
-#if BUILD_DIRECTX
 #include "Window.h"
 #include "PhysicsComponent.h"
 #include "Material.h"
@@ -10,6 +10,7 @@
 #include "Renderer_DX.h"
 #include "Mesh.h"
 #include "GameObject.h"
+#include <fstream>
 
 /******************************************************************************************************************/
 
@@ -358,9 +359,64 @@ void Renderer_DX::SwapBuffers()
 void Renderer_DX::InitialiseShaders()
 {
 	// load and compile the two shaders
-	ID3D10Blob *VS, *PS;
-	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "VShader", "vs_4_0", 0, 0, nullptr, &VS, nullptr, nullptr);
-	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "PShader", "ps_4_0", 0, 0, nullptr, &PS, nullptr, nullptr);
+	ID3D10Blob *VS, *PS, *err;
+	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "VShader", "vs_4_0", 0, 0, nullptr, &VS, &err, nullptr);
+
+	if (err) {
+		char* compileErrors;
+		unsigned long bufferSize, i;
+		std::ofstream fout;
+		// Get a pointer to the error message text buffer.
+		compileErrors = static_cast<char*>(err->GetBufferPointer());
+
+		// Get the length of the message.
+		bufferSize = err->GetBufferSize();
+
+		// Open a file to write the error message to.
+		fout.open("shader-error.txt");
+
+		// Write out the error message.
+		for (i = 0; i<bufferSize; i++)
+		{
+			fout << compileErrors[i];
+		}
+
+		// Close the file.
+		fout.close();
+
+		// Release the error message.
+		err->Release();
+		err = nullptr;
+	}
+
+	D3DX11CompileFromFile(L"shaders.hlsl", nullptr, nullptr, "PShader", "ps_4_0", 0, 0, nullptr, &PS, &err, nullptr);
+
+	if (err) {
+		char* compileErrors;
+		unsigned long bufferSize, i;
+		std::ofstream fout;
+		// Get a pointer to the error message text buffer.
+		compileErrors = static_cast<char*>(err->GetBufferPointer());
+
+		// Get the length of the message.
+		bufferSize = err->GetBufferSize();
+
+		// Open a file to write the error message to.
+		fout.open("shader-error.txt");
+
+		// Write out the error message.
+		for (i = 0; i<bufferSize; i++)
+		{
+			fout << compileErrors[i];
+		}
+
+		// Close the file.
+		fout.close();
+
+		// Release the error message.
+		err->Release();
+		err = nullptr;
+	}
 
 	// encapsulate both shaders into shader objects
 	_device->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), nullptr, &_vertexShader);

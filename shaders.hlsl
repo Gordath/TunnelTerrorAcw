@@ -53,7 +53,7 @@ VOut VShader(VIn input)
 
 	float4 calculatedVpos = mul(input.position, MV);
 	output.Vdir = mul(-calculatedVpos.xyz, TBN);
-	output.Ldir = mul(Lpos - calculatedVpos, TBN);
+	output.Ldir = mul((Lpos - calculatedVpos).xyz, TBN);
 
 	return output;
 }
@@ -80,7 +80,7 @@ float4 PShader(VOut input) : SV_TARGET
 
 	float4 ambient = diffTexel * diffuse * 0.2;
 	float4 diffColor = diffTexel * diffuse * diffLight;
-	float4 specColor = float4(specTexel * specular.xyz * specLight, 0.0);
+	float4 specColor = float4(specTexel.xyz * specular.xyz * specLight, 0.0);
 
 	return diffColor + specColor + ambient;
 }
